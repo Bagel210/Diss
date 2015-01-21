@@ -22,21 +22,36 @@
 \tableofcontents
 \chapter{Introduction}
 The aim of this project is to find a mapping between spoken text and discrete head motions in order to synthesise realistic, natural head motions for a life like avatar. Currently we have a system that generates head motions using Hidden Markov Models and recorded speech, but this project will focus only on the text.
-
+\section{Text to Speech}
 Speech contains a lot of information to help portray what the person is trying to say to the listener. Speech has stresses, intonation and pauses which all help to further our understanding of what is being said. When we read transcribed text this information is simply just not there. In order for us to get as much data out of transcribed text we need to synthesise spoken speech using the transcribed text so we can generate information that will help us synthesise realistic head motions.
 
 To do this we will use a text to speech synthesis system called Festival. Festival uses many different Natural Language Processing techniques in the text to speech pipeline to break down the sentence into an \"Utterance\". An Utterance will hold all the information about the synthesised speech from the text. Festival is a great research tool in text to speech because each step in the pipeline can be individually inspected so we can understand what is happening and each stage and how this will affect the generated speech.
+\section{Data Set}
+The data used for this project consists of audio recordings with motion tracked data that was recorded from many different speakers. The recordings are accompanied with transcriptions of the speech. As motion can be represented with many different parameters we will convert the recorded motions into into Euler angles which represent the head motions in terms of three values : yaw, pitch and roll. This is suitable for the project as we are focusing on the head motions alone and translation will not be considered.
+\section{3D Modelling}
+To visualise the head motions that we will be synthesising we needed animation software that we would allow us to manipulate characters autonomously with the aid of scripts. The first software I looked at was called Poser developed by SmithMicro. The software widely used by animators and researchers in this area of Computer Science and the software focuses on 3D character animation allowing the user to load in preset character models from a library. Poser has a python extension called PoserPython with a comprehensive online manual and direct integration with the software out of the box so that character models can be manipulated using scripts. Poser can be loaded with many different extensions to streamline animation and there is an extension that allows character models to automatically lip-sync with audio and as the project aims to create realistic 3D avatars this feature may prove useful in the evaluation stage.
+\\
+\\
+Another piece of software I looked into was an open source animation software called Blender. Like Poser this software has a python extension called Blender/Python allowing the manipulation of objects. The software itself however has a steeper learning curve than Poser so I chose to use Poser.
+\section{Evaluation}
+To evaluate the Text-Driven Head Motion System I will be performing objective evaluation and subjective evaluation.
 
+To evaluate the head motions system objectively 
+Subjective Evaluation 
+Dynamic Time Warping
+Objective Evaluation
 \chapter{Background}
 \section{Festival}
-Festival has many different steps in the Text to Speech pipeline. Tokenisation breaks the string of characters into a list of tokens, this removes whitespace and identifies the words in the sentence which will then be assigned Parts-of-speech tags. Parts-of-Speech tags (POS tags) indicate what syntactic classification the word is, meaning that the word will be assigned a value indicating whether it is a determiner, noun, verb, etc. Assigning POS tags is a very important step in the text to speech pipeline as this helps understand the structure of the text in order to perform phrase break predication, in which Festival will assign a phrase break \'strength\' after each word indicating how likely this is the end of a phrase and the next word will be the beginning of a phrase. This plays a large role when we actually synthesise speech as Festival will be able to calculate where the stress in the speech will be, which will affect the head motions relating to the speech.
+Festival has many different steps in the Text to Speech pipeline. Tokenisation breaks the string of characters into a list of tokens, this removes whitespace and identifies the words in the sentence which will then be assigned Parts-of-speech tags. Parts-of-Speech tags (POS tags) indicate what syntactic classification the word is, meaning that the word will be assigned a value indicating whether it is a determiner, noun, verb, etc. Assigning POS tags is a very important step in the text to speech pipeline as this helps understand the structure of the text in order to perform phrase break predication, in which Festival will assign a phrase break strength after each word indicating how likely this is the end of a phrase and the next word will be the beginning of a phrase. This plays a large role when we actually synthesise speech as Festival will be able to calculate where the stress in the speech will be, which will affect the head motions relating to the speech.
 
 Using all the information calculated so far Festival can then break the utterance into speech segments and perform a lexical lookup to find the pronunciation of said segments. Festival uses these pronunciations, represented by a phonetic spelling to assign intonations to the segments called ToBI (Tones and break indices) tags. ToBi tags are represented symbolically using a combination of letters and symbols. Durations can be calculated using a myriad of methods in Festival, the default method of assigning the duration is simply just a constant value, however this can be swapped out in place of more interesting methods like Klatt Durations or CART Durations. 
 
 Once the durations and intonations have been assigned Festival then applies signal processing methods in order to perform waveform generation for the utterance to output the resulting speech. The data contained in the utterance will be vital in predicting head motions and Festival was the obvious choice for a Text to Speech system as the components can be examined individually.
-\section{The Data}
+
 
 \section{Poser}
+
+\section{Evaluation}
 
 
 \chapter{Text-Driven Head Motion System}
