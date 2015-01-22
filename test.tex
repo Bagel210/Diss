@@ -23,6 +23,8 @@
 %\section*{Acknowledgements}
 %Acknowledgements go here. 
 \tableofcontents
+
+% ======================== Introduction ======================== %
 \chapter{Introduction}
 The aim of this project is to find a mapping between spoken text and discrete head motions in order to synthesise realistic, natural head motions for a life like avatar. Currently we have a system that generates head motions using Hidden Markov Models and recorded speech, but this project will focus only on the text.
 \section{Text to Speech}
@@ -36,30 +38,37 @@ To visualise the head motions that we will be synthesising we needed animation s
 \\
 \\
 Another piece of software I looked into was an open source animation software called Blender. Like Poser this software has a python extension called Blender/Python allowing the manipulation of objects. The software itself however has a steeper learning curve than Poser so I chose to use Poser.
+
+% ======================== Background ======================== %
 \chapter{Background}
 \section{Festival}
 Festival has many different steps in the Text to Speech pipeline. Tokenisation breaks the string of characters into a list of tokens, this removes whitespace and identifies the words in the sentence which will then be assigned Parts-of-speech tags. Parts-of-Speech tags (POS tags) indicate what syntactic classification the word is, meaning that the word will be assigned a value indicating whether it is a determiner, noun, verb, etc. Assigning POS tags is a very important step in the text to speech pipeline as this helps understand the structure of the text in order to perform phrase break predication, in which Festival will assign a phrase break strength after each word indicating how likely this is the end of a phrase and the next word will be the beginning of a phrase. This plays a large role when we actually synthesise speech as Festival will be able to calculate where the stress in the speech will be, which will affect the head motions relating to the speech.
-
+\\
+\\
 Using all the information calculated so far Festival can then break the utterance into speech segments and perform a lexical lookup to find the pronunciation of said segments. Festival uses these pronunciations, represented by a phonetic spelling to assign intonations to the segments called ToBI (Tones and break indices) tags. ToBi tags are represented symbolically using a combination of letters and symbols. Durations can be calculated using a myriad of methods in Festival, the default method of assigning the duration is simply just a constant value, however this can be swapped out in place of more interesting methods like Klatt Durations or CART Durations. 
-
+\\
+\\
 Once the durations and intonations have been assigned Festival then applies signal processing methods in order to perform waveform generation for the utterance to output the resulting speech. The data contained in the utterance will be vital in predicting head motions and Festival was the obvious choice for a Text to Speech system as the components can be examined individually.
-
-
-\section{Poser}
-
-\section{Evaluation}
-
-
+\\
+\\
+\section{Hidden Markov Models and HTK}
+To predict head motions using Machine learning techniques we will be using a toolkit for handling Hidden Markov Models called HTK. Hidden Markov Models are finite state machines with probabilities assigned to their transitions and are used widely in machine learning for pattern matching. Their power for machine learning comes from it's memoryless Markov property stating that the future is independent of the past, meaning at
+\\
+\\
+% ======================== The System ======================== %
 \chapter{Text-Driven Head Motion System}
-
 \section{Discrete head motion mappings}
+In order to build the Text-Driven Head Motion System we will be mapping discrete head motions to the text. This will be done in two ways: A Rule based method that will be manually coded and a machine learning based approach which will use a portion of the dataset as training data to predict head motions automatically using Hidden Markov Models.
+\\
+\\
 \includegraphics[scale=0.5]{fsm}
 \section{Rule Based Method}
 CART Trees
+\\
 Sentiment Analysis
-
 \section{Machine Learning Based Method}
-HMM
+HMM's
+\\
 Hidden Markov Toolkit
 \section{Evaluation}
 To evaluate the Text-Driven Head Motion System I will be performing both objective  and subjective evaluation. This is to ensure that the Text Driven Talking Head system renders synthesises head motions that seem natural to humans and to evaluate how accurate the system is at synthesising head motions that match the original recorded head motions.
@@ -71,7 +80,7 @@ To evaluate the head motions system objectively I will use a local distance meas
 To set up the subjective analysis environment, we will show recordings of  the the real-life recorded head motions with recordings of the synthesised head motions side-by-side to test subjects and ask them to evaluate the synthesised head motions. In order to ensure that the test subject is only evaluating the head motions and is not influenced by other factors we will try to keep the environment as similar as possible. This will involve mapping the recorded head motions onto the same 3D character model as used for the synthesised head motions and using the synthesised audio for the transcribed speech for both heads. In the case that the audio recording and the synthesised speech do not map directly we will perform dynamic time warping to fit the recorded head motions with the synthesised speech.
 \\
 \\
-
+% ======================== Results ======================== %
 \chapter{Results}
 
 
