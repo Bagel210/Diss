@@ -1,7 +1,10 @@
 
 % to choose your degree
 % please un-comment just one of the following
-\documentclass[bsc,frontabs,twoside,singlespacing,parskip]{infthesis}     % for BSc, BEng etc.
+\documentclass[bsc,frontabs,twoside,singlespacing,parskip]{infthesis} 
+\usepackage{graphicx}
+\graphicspath{ {images/} }
+    % for BSc, BEng etc.
 % \documentclass[minf,frontabs,twoside,singlespacing,parskip]{infthesis}  % for MInf
 
 \begin{document}
@@ -33,13 +36,6 @@ To visualise the head motions that we will be synthesising we needed animation s
 \\
 \\
 Another piece of software I looked into was an open source animation software called Blender. Like Poser this software has a python extension called Blender/Python allowing the manipulation of objects. The software itself however has a steeper learning curve than Poser so I chose to use Poser.
-\section{Evaluation}
-To evaluate the Text-Driven Head Motion System I will be performing objective evaluation and subjective evaluation.
-
-To evaluate the head motions system objectively 
-Subjective Evaluation 
-Dynamic Time Warping
-Objective Evaluation
 \chapter{Background}
 \section{Festival}
 Festival has many different steps in the Text to Speech pipeline. Tokenisation breaks the string of characters into a list of tokens, this removes whitespace and identifies the words in the sentence which will then be assigned Parts-of-speech tags. Parts-of-Speech tags (POS tags) indicate what syntactic classification the word is, meaning that the word will be assigned a value indicating whether it is a determiner, noun, verb, etc. Assigning POS tags is a very important step in the text to speech pipeline as this helps understand the structure of the text in order to perform phrase break predication, in which Festival will assign a phrase break strength after each word indicating how likely this is the end of a phrase and the next word will be the beginning of a phrase. This plays a large role when we actually synthesise speech as Festival will be able to calculate where the stress in the speech will be, which will affect the head motions relating to the speech.
@@ -56,16 +52,28 @@ Once the durations and intonations have been assigned Festival then applies sign
 
 \chapter{Text-Driven Head Motion System}
 
-\section{Text to Speech Synthesis}
 \section{Discrete head motion mappings}
+\includegraphics[scale=0.5]{fsm}
 \section{Rule Based Method}
+CART Trees
+Sentiment Analysis
+
 \section{Machine Learning Based Method}
+HMM
+Hidden Markov Toolkit
+\section{Evaluation}
+To evaluate the Text-Driven Head Motion System I will be performing both objective  and subjective evaluation. This is to ensure that the Text Driven Talking Head system renders synthesises head motions that seem natural to humans and to evaluate how accurate the system is at synthesising head motions that match the original recorded head motions.
+\\
+\\
+To evaluate the head motions system objectively I will use a local distance measure periodically in the animation to check how close the synthesised head position is to the recorded. This may however provide bad results if the head motions are of the same type (yaw, pitch and roll) but different directions. For example, if the recorded head tilted to the right and the synthesised head motions tilted to the left. Another way to perform objective analysis could be to convert the recorded head motions into their discrete head motion counterparts and compare the discrete head motions directly. This method would leave some area for variability and give good results if the head motions are of the same type but may be difficult to convert the recorded head motions into discrete head motions.
+\\
+\\
+To set up the subjective analysis environment, we will show recordings of  the the real-life recorded head motions with recordings of the synthesised head motions side-by-side to test subjects and ask them to evaluate the synthesised head motions. In order to ensure that the test subject is only evaluating the head motions and is not influenced by other factors we will try to keep the environment as similar as possible. This will involve mapping the recorded head motions onto the same 3D character model as used for the synthesised head motions and using the synthesised audio for the transcribed speech for both heads. In the case that the audio recording and the synthesised speech do not map directly we will perform dynamic time warping to fit the recorded head motions with the synthesised speech.
+\\
+\\
 
-\chapter{Evaluation}
+\chapter{Results}
 
-\section{}
-\section{}
-\section{}
 
 \bibliographystyle{plain}
 \bibliography{mybibfile}
