@@ -58,18 +58,31 @@ To predict head motions using Machine learning techniques we will be using a too
 % ======================== The System ======================== %
 \chapter{Text-Driven Head Motion System}
 \section{Discrete head motion mappings}
-In order to build the Text-Driven Head Motion System we will be mapping discrete head motions to the text. This will be done in two ways: A Rule based method that will be manually coded and a machine learning based approach which will use a portion of the dataset as training data to predict head motions automatically using Hidden Markov Models.
+In order to build the Text-Driven Head Motion System we will be mapping discrete head motions to the text. This will be done in two ways : A Rule based method that will be manually coded and a machine learning based approach which will use a portion of the dataset as training data to predict head motions automatically using Hidden Markov Models. I will represent the discrete head motions and their relation to the transcribed speech as a Finite State machine with the states representing the words in the speech (or phonemes to give more precise control) and transitions being the discrete head motions between these states. 
 \\
 \\
-\includegraphics[scale=0.5]{fsm}
+This means that any transition between states will be a combination of head motions which will sum together to get the overall shape of text. An example of this would be a nodding motion being assigned to the whole text with a slight tilt being assigned to a certain state within that.
+\\
+\\
+We can use the trigonometric sine function to generate smooth head motions which will be assigned to the discrete head motions rather than use example from the recorded data, as a "nod" in the recordings may have additional data unrelated to the nod and so would be a bad baseline, potentially causing issues with the final synthesised head motions. 
+\\
+%\includegraphics[scale=0.8]{fsm} Image of FSM
 \section{Rule Based Method}
-CART Trees
-\\
-Sentiment Analysis
+To be implemented.
+
+\begin{itemize}
+	\item{CART Trees}
+	\item{Sentiment Analysis}
+\end{itemize}
+
 \section{Machine Learning Based Method}
-HMM's
-\\
-Hidden Markov Toolkit
+
+To be implemented.
+\begin{itemize}
+	\item{ HMM's}
+	\item{Hidden Markov Toolkit}
+\end{itemize}
+
 \section{Evaluation}
 To evaluate the Text-Driven Head Motion System I will be performing both objective  and subjective evaluation. This is to ensure that the Text Driven Talking Head system renders synthesises head motions that seem natural to humans and to evaluate how accurate the system is at synthesising head motions that match the original recorded head motions.
 \\
@@ -81,8 +94,19 @@ To set up the subjective analysis environment, we will show recordings of  the t
 \\
 \\
 % ======================== Results ======================== %
-\chapter{Results}
+\chapter{Results / Progress}
 
+Completed
+\begin{itemize}
+	\item{Research into festival}
+	\item{Research into HTK}
+	\item{Built very basic system to tie together Festival and Poser}
+\end{itemize}
+Incomplete/ Yet to be implemented
+\begin{itemize}
+	\item{Rule-based Method}
+	\item{Machine Learning Based Method}
+\end{itemize}
 
 \bibliographystyle{plain}
 \bibliography{mybibfile}
