@@ -1,28 +1,8 @@
-
-% to choose your degree
-% please un-comment just one of the following
 \documentclass[bsc,frontabs,twoside,singlespacing,parskip]{infthesis} 
 \usepackage{graphicx}
 %\usepackage{natbib}
 \graphicspath{ {images/} }
 
-%	BASIC CRITERIA
-%	-	Understanding of the problem
-%	-	Completion of the project.
-%	-	Quality of the work
-%	-	Quality of the report
-
-%	ADDITIONAL CRITERIA
-%	-	Knowledge of the literature
-%	-	Critical evaluation of previous work
-%	-	Critical evaluation of own work
-%	-	Justification of the design decisions
-%	-	Solution of any conceptual problems
-%	-	Amount of work
-
-%	EXCEPTIONAL CRITERIA
-%	-	Evidence of originality
-%	-	Outstanding scholarship and/or publishable research
 
 \begin{document}
 
@@ -43,6 +23,10 @@
 
 % ============================================================= %
 \chapter{Introduction}
+
+The Introduction chapter should always provide a 'roadmap' to the report. Of course it should provide an introduction to the problem being considered, but it should also give some details of what you did - do not leave this to the conclusion. You should give forward references into the rest of the report - e.g., "In Chapter 2 how algorithms and heuristics are used to deal with approximate counting are discussed", "The design of the system is presented in Chapter 4", "In Chapter 3 the reasons for choosing to focus on the bounded-degree case of this problem are explained"
+
+
 - Head motion is very important when it comes to human communication\\
 - Dialogue is much harder to fully understand without the non-verbal information\\
 - Generating Lifelike avatars in many applications, VR, video games, shopping assistant \\
@@ -54,16 +38,40 @@
 % ============================================================= %
 \chapter{Background Information}
 
+\section{Human Computer Interaction}
+
+Human Computer Interaction is a field of Computer Science in constant change. Conversational agents have had been found to enhance the interactions with computers  \cite{conv_agents}  and researchers are perpetually improving systems in order to increase user satisfaction. 
+
+The intelligibility of speech produced in noise is also improve when a speaker's face is visible \cite{emotion_head_motion}
+
+\section{Uncanny Valley}
+
+\begin{figure}[h!]
+	\caption{Graph representing the uncanny valley}
+	\centering
+	\includegraphics[width=0.8\textwidth]{uncanny}
+\end{figure}
+
 \section{Data and Task}
 
-\subsection{Recordings}
-- Participants asked to read fairy tails \\
-- Wearing Motion capture software \\
-- Recordings transcribed \\
+
+
+The task for the project was as follows: Using only text transcriptions of speech can we synthesise life-like head motions that seem realistic and natural to humans. The project aimed to investigate the correlation between head motions and the information present in speech unique to the speaker. The difficulty of the task comes from the lack of unique information about the speech, as we are only using the transcribed text. To tackle this we will be using a Text-to-Speech system called Festival.
+
+\subsection{Data Recordings}
+
+The data used for the project was data recordings from the Centre of Speech and Technology Research at Edinburgh University. The recordings consisted of optical motion capture sessions in which participants wore 4 reflective markers on their torso and a hat with 3 reflective markers. There were 7 V100:R2 cameras that tracked the reflective markers at a sampling rate of 100Hz. Participants were asked to read out transcriptions of fairy tales.
+
+\begin{figure}[h!]
+	\caption{Setup of the mo-cap environment}
+	\centering
+	\includegraphics[width=.5\textwidth]{mocap.png}
+\end{figure}
+
 
 \subsection{Euler Angles}
-- Commonly used in robotics \\
-- Represent 3 dimensional movements in terms of 3 variables\\
+
+Euler angles are three angles that represent the orientation of a rigid body in 3-Dimensional space, typically referred to as 'yaw', 'pitch' and 'roll'. Euler angles allows us to reduce the number of parameters normally used to represent rigid body orientation down to 3 parameters. It is a very popular method because of the reduced complexity and is commonly used in robotics and 3D animation software because of this. 
 
 \begin{figure}[h!]
 	\caption{Euler Angles in Robotics}
@@ -71,23 +79,39 @@
 	\includegraphics[width=.5\textwidth]{euler_angles.png}
 \end{figure}
 
-\subsection{Poser Animation}
-- 3D Animation software \\
-- Has Python Extension to allow scripting \\
-- Euler Angle manipulation \\
+As the project focused on rigid head motions there was no translation taken into account when designing the 3D avatar head motions. This allowed the project to use Euler angles as the sole units of movement in the project.
+
 
 % ============================================================= %
 \chapter{Text-Driven Head Motion Synthesis}
 % This will be the theoretical implementation details 
 
 \section{Hypotheses}
+ CITE the first article read in my room
 \subsection{Prosodic Features}
+- Falling intonation == lowering of head\\
+\cite{kendon}
+
 \subsection{Speech Content}
 \subsection{Phrasing}
 \subsection{Sentiment}
+- intensifiers
+\cite{emotion_head_motion}
+
+\cite{kendon}
+
 \section{Tools}
+
 \subsection{Festival}
-\subsection{Poser}
+
+Festival applies various Natural Language Processing techniques to the text to generate information  so that it can synthesise speech.  There are many steps in this pipeline, each adding a little bit more information to the text before Festival can then apply signal processing to generate audio. 
+
+\subsection{Poser Animation}
+
+
+- 3D Animation software \\
+- Has Python Extension to allow scripting \\
+- Euler Angle manipulation \\
 
 
 % - To develop a system that is capable of synthesising a life-like talking head from text.
@@ -104,9 +128,20 @@ The goal of this project was to develop a system that was capable of synthesisin
 % ============================================================= %
 \chapter{Implementation}
 
+- Had to tie in a lot of things together \\
+- Implemented the project using python \\
+- LISP scripts for Festival \\
+- Pre-existing scripts for data preparation
+
 \section{Basic System}
+-The most basic head motion is nodding \\
+- Paper - first one about head motions \\
+- We want the avatar to seem familiar \\
+- So we want to apply nodding \\
 
 \subsection{Trignomietric Functions}
+- Nodding motion similar to sine wave \\
+- So for the basic system used sine wave formula to change just one euler angle \\
 
 \section{Random System}
 
@@ -114,11 +149,14 @@ The goal of this project was to develop a system that was capable of synthesisin
 - Represent Head Motions as discrete N dimensional vectors \\
 - Apply smoothing methods to generate overall head shape \\
 - Looked into Spherical Linear interpolation \\
-- \ cite- people who hiroshi don't like\\
+\cite{rigid_head_motion}
+- Correlation with words
+
 
 \subsection{Bezier Smoothing}
 
 - Went with Bezier smoothing, similar to SLERP\\
+- INTERPOLATION
 - Bezier Formula
 - Bezier doesn't reach the discrete points\\
 - This was good for the head motions \\
@@ -134,10 +172,23 @@ The goal of this project was to develop a system that was capable of synthesisin
 - Didn't look too natural \\
 - Introduced a probability based addition or subtraction\\
 
+\begin{figure}
+	\caption{Output from random system}
+	\centering
+	\includegraphics[width=.5\textwidth]{fightclub1.png}
+%	\includegraphics[width=.19\textwidth]{fightclub2.png}
+	\includegraphics[width=.5\textwidth]{fightclub3.png}
+	\includegraphics[width=.5\textwidth]{fightclub4.png}
+%	\includegraphics[width=.19\textwidth]{fightclub5.png}
+\end{figure}
+
 \section{Rule-Based System}
+
+\subsection{Using the information form festival}
 
 \subsection{Parametric Smoothing}
 - Felt Bezier did not look like natural head motions \\
+- Removed stop words as there is not a 1-1 mapping between words and head motions
 - Comparison with data looked too smooth even with noise \\
 - Moved towards First Order equations \\
 - commonly used in electronics \\
@@ -211,6 +262,7 @@ To evaluate the Text-Driven Head Motion System I performed both subjective analy
 \section{Future Work}
 	\subsection{Expansion of techniques}
 	\subsection{Second Order Smoothing}
+	\subsection{Alignment Problem}
 	
 \bibliographystyle{plain}
 \bibliography{diss}
