@@ -14,3 +14,12 @@ TSWLatexianTemp_000533.toc
 TSWLatexianTemp_diss.bbl
 TSWLatexianTemp_diss.blg
 diss.pdf
+word_count.py
+TSWLatexianTemp_[0-9]*.aux
+TSWLatexianTemp_[0-9]*.bbl
+TSWLatexianTemp_[0-9]*.blg
+TSWLatexianTemp_[0-9]*.log
+TSWLatexianTemp_[0-9]*.pdf
+TSWLatexianTemp_[0-9]*.synctex
+TSWLatexianTemp_[0-9]*.tex
+TSWLatexianTemp_[0-9]*.toc

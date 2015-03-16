@@ -44,6 +44,9 @@ Human Computer Interaction is a field of Computer Science in constant change. Co
 
 The intelligibility of speech produced in noise is also improve when a speaker's face is visible \cite{emotion_head_motion}
 
+These results suggest that nonverbal gestures such as head movements play a more direct role in the perception of speech than previously known. \cite{vis_prosody}
+
+
 \section{Uncanny Valley}
 
 \begin{figure}[h!]
@@ -68,6 +71,14 @@ The data used for the project was data recordings from the Centre of Speech and 
 	\includegraphics[width=.5\textwidth]{mocap.png}
 \end{figure}
 
+\subsection{Festival}
+Festival generates pronunciations by performing syllabification, breaking the sentences and words into syllables and looking up phonemes in a lexicon to determine their pronunciations. Using this information.
+
+\begin{figure}[h!]
+	\caption{ToBi Markers}
+	\centering
+	\includegraphics[width=1\textwidth]{tobi.png}
+\end{figure}
 
 \subsection{Euler Angles}
 
@@ -87,24 +98,46 @@ As the project focused on rigid head motions there was no translation taken into
 % This will be the theoretical implementation details 
 
 \section{Hypotheses}
- CITE the first article read in my room
-\subsection{Prosodic Features}
-- Falling intonation == lowering of head\\
-\cite{kendon}
 
-\subsection{Speech Content}
+To build a system that was capable of synthesising real-life head motions from text, hypotheses about the relation of head motion events and speech content were introduced. The system built on these hypotheses, linking them together in order to synthesis the final head motions. Head motions have a high correlation with what the speaker is trying to convey and paralanguage in the speech like prosody, pitch, volume and intonation.  
+
+
+
+
+ CITE the first article read in my room
+\cite{first_paper} \\
+\subsection{Prosodic Features}
+
+Head motions correlate strongly with prosody present in speech \cite{vis_prosody}.
+
+- Falling intonation == lowering of head\\
+
+
+\cite{kendon}
 \subsection{Phrasing}
 \subsection{Sentiment}
 - intensifiers
 \cite{emotion_head_motion}
 
-\cite{kendon}
+\subsection{Text Content}
+
+\cite{kendon} \\
+
 
 \section{Tools}
 
 \subsection{Festival}
 
 Festival applies various Natural Language Processing techniques to the text to generate information  so that it can synthesise speech.  There are many steps in this pipeline, each adding a little bit more information to the text before Festival can then apply signal processing to generate audio. 
+
+- Natural Language Processing Techniques \\
+- Tokenisation \\
+- Pos tags \\
+- Phrase Break Prediction \\
+- Phonetics \& Phonology \\
+- Generating pronunciations \\
+- Letter to sound rules
+- Syllabification
 
 \subsection{Poser Animation}
 
