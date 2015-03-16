@@ -52,7 +52,7 @@ These results suggest that nonverbal gestures such as head movements play a more
 \begin{figure}[h!]
 	\caption{Graph representing the uncanny valley}
 	\centering
-	\includegraphics[width=0.8\textwidth]{uncanny}
+	\includegraphics[width=0.6\textwidth]{uncanny}
 \end{figure}
 
 \section{Data and Task}
@@ -71,8 +71,20 @@ The data used for the project was data recordings from the Centre of Speech and 
 	\includegraphics[width=.5\textwidth]{mocap.png}
 \end{figure}
 
-\subsection{Festival}
-Festival generates pronunciations by performing syllabification, breaking the sentences and words into syllables and looking up phonemes in a lexicon to determine their pronunciations. Using this information.
+\section{Festival}
+
+Festival applies various Natural Language Processing techniques to the text to generate information  so that it can synthesise speech.  There are many steps in this pipeline, each adding a little bit more information to the text before Festival can then apply signal processing to generate audio. 
+
+- Natural Language Processing Techniques \\
+- Tokenisation \\
+- Pos tags \\
+- Phrase Break Prediction \\
+- Phonetics \& Phonology \\
+- Generating pronunciations \\
+- Letter to sound rules\\
+- Syllabification\\
+- Duration based on classification and regression trees \\
+Festival generates pronunciations by performing syllabification, breaking the sentences and words into syllables and looking up phonemes in a lexicon to determine their pronunciations. Using this information the system can generate ToBi markers, 
 
 \begin{figure}[h!]
 	\caption{ToBi Markers}
@@ -80,7 +92,7 @@ Festival generates pronunciations by performing syllabification, breaking the se
 	\includegraphics[width=1\textwidth]{tobi.png}
 \end{figure}
 
-\subsection{Euler Angles}
+\section{Euler angles}
 
 Euler angles are three angles that represent the orientation of a rigid body in 3-Dimensional space, typically referred to as 'yaw', 'pitch' and 'roll'. Euler angles allows us to reduce the number of parameters normally used to represent rigid body orientation down to 3 parameters. It is a very popular method because of the reduced complexity and is commonly used in robotics and 3D animation software because of this. 
 
@@ -92,6 +104,11 @@ Euler angles are three angles that represent the orientation of a rigid body in 
 
 As the project focused on rigid head motions there was no translation taken into account when designing the 3D avatar head motions. This allowed the project to use Euler angles as the sole units of movement in the project.
 
+\section{Poser Animation}
+
+- 3D Animation software \\
+- Has Python Extension to allow scripting \\
+- Euler Angle manipulation \\
 
 % ============================================================= %
 \chapter{Text-Driven Head Motion Synthesis}
@@ -99,52 +116,29 @@ As the project focused on rigid head motions there was no translation taken into
 
 \section{Hypotheses}
 
-To build a system that was capable of synthesising real-life head motions from text, hypotheses about the relation of head motion events and speech content were introduced. The system built on these hypotheses, linking them together in order to synthesis the final head motions. Head motions have a high correlation with what the speaker is trying to convey and paralanguage in the speech like prosody, pitch, volume and intonation.  
+To build a system that was capable of synthesising real-life head motions from text, hypotheses about the relation of head motion events and speech content were introduced. The system built on these hypotheses, linking them together in order to synthesis the final head motions. 
 
+\cite{first_paper} 
+- Primary head motion to be nodding \\
 
-
-
- CITE the first article read in my room
-\cite{first_paper} \\
 \subsection{Prosodic Features}
 
-Head motions correlate strongly with prosody present in speech \cite{vis_prosody}.
+Head motions correlate strongly with prosody present in speech \cite{vis_prosody}. My first hypothesis relates to the rate of change of the fundamental frequency present in the synthesised speech. This is indicated in the Festival output as values around 120 Hz for male voices and 210Hz for female voices \cite{f0_values}. Sudden changes in the frequency should be reflected in head motions. For example in the intonation falls the head should lower accordingly \cite{Kendon}.
 
-- Falling intonation == lowering of head\\
-
-
-\cite{kendon}
 \subsection{Phrasing}
+
+Phrasing plays a huge role in how something is said. It has been found that nodding head motions frequently occur at the end of phrases or at strong phrase boundaries. \cite{ishi20008} Especially if the speaker is confident in what they are saying. 
+
 \subsection{Sentiment}
-- intensifiers
-\cite{emotion_head_motion}
+
+Sentiment or emotion in speech has various effects on head motions. In a study It was found that the absence of head motion can be easily identified as 'neutral' emotion. \cite{emotion_head_motion} whereas participants in the study found it difficult to differentiate between head motions that were typical of 'happy' and 'sad' emotions. This study shows that emotive analysis on the text should be treated as an 'intensifier' of the underlying head motions derived form other areas of the text.
+
+Sentiment analysis is a popular area of natural language processing.
 
 \subsection{Text Content}
 
 \cite{kendon} \\
 
-
-\section{Tools}
-
-\subsection{Festival}
-
-Festival applies various Natural Language Processing techniques to the text to generate information  so that it can synthesise speech.  There are many steps in this pipeline, each adding a little bit more information to the text before Festival can then apply signal processing to generate audio. 
-
-- Natural Language Processing Techniques \\
-- Tokenisation \\
-- Pos tags \\
-- Phrase Break Prediction \\
-- Phonetics \& Phonology \\
-- Generating pronunciations \\
-- Letter to sound rules
-- Syllabification
-
-\subsection{Poser Animation}
-
-
-- 3D Animation software \\
-- Has Python Extension to allow scripting \\
-- Euler Angle manipulation \\
 
 
 % - To develop a system that is capable of synthesising a life-like talking head from text.
