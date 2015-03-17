@@ -70,6 +70,8 @@ The data used for the project was data recordings from the Centre of Speech and 
 
 Festival applies various Natural Language Processing techniques to the text to generate information  so that it can synthesise speech.  There are many steps in this pipeline, each adding a little bit more information to the text before Festival can then apply signal processing to generate audio. 
 
+- Understanding of the inner working of Festival \\
+
 - Natural Language Processing Techniques \\
 - Tokenisation \\
 - Pos tags \\
@@ -103,7 +105,6 @@ Euler angles are three angles that represent the orientation of a rigid body in 
 3D animation and rendering software was used to visualise the generated head motions. The software used for this purpose was PoserPro 2012 by Smith Micro Software, a 3D animation tool with the emphasis on character creation and animation. PoserPro allows users to animate body parts of 3D characters and change their characteristic like rotation, translation and scale, meaning that the head of a character could be moved independently with ease.
 
 With a scripting plug-in for Python called PoserPython, \cite{poser_python} allowing users to create scripts to manipulate objects and characters in the scene using Python was one of the main reasons for choosing PoserPro over other animation and rendering software like Blender. Poser also uses Euler angles as it's unit of rotation.
-
 
 \begin{figure}
 	\centering
@@ -163,13 +164,27 @@ There are two types of gestures that relate to speech. \cite{lexical_gestures} T
 % ============================================================= %
 \chapter{Implementation}
 
-- Had to tie in a lot of things together \\
+
+- Had to alter LISP Scripts to save audio files \\
+- Pre-existing scripts for data preparation \\
+- Downsampling \\
+- Python \\
+
+- Experience with text processing \\
+- NGram taggers \\
+- HMM's \\
+
+The system was implemented using Python, a widely used high-level programming language for many purposes including scripting and large scale software development. Python was the clear choice for many reasons including powerful libraries such as NLTK (Natural Language Toolkit) \cite{nltk} and SKlearn \cite{sklearn} and it's scripting compatibility with Poser.
+
+The initial difficulty of the project was that there were a lot of individual components to tie together, like Festival and Poser. 
+
+- Difficulties retrieving data from festival
 - Implemented the project using python \\
 - Sub process calls \\
 - LISP scripts for Festival \\
-- Had to alter LISP Scripts to save audio files \\
-- Pre-existing scripts for data preparation \\
-- Downsampling
+
+- Text Processing 
+
 
 \begin{figure}
 	\includegraphics[width=1.1\textwidth]{festival_output.png}
