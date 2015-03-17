@@ -50,9 +50,9 @@ These results suggest that nonverbal gestures such as head movements play a more
 \section{Uncanny Valley}
 
 \begin{figure}[h!]
-	\caption{Graph representing the uncanny valley}
 	\centering
 	\includegraphics[width=0.6\textwidth]{uncanny}
+	\caption{Graph representing the uncanny valley}
 \end{figure}
 
 \section{Data and Task}
@@ -66,9 +66,9 @@ The task for the project was as follows: Using only text transcriptions of speec
 The data used for the project was data recordings from the Centre of Speech and Technology Research at Edinburgh University. The recordings consisted of optical motion capture sessions in which participants wore 4 reflective markers on their torso and a hat with 3 reflective markers. There were 7 V100:R2 cameras that tracked the reflective markers at a sampling rate of 100Hz. Participants were asked to read out transcriptions of fairy tales.
 
 \begin{figure}[h!]
-	\caption{Setup of the mo-cap environment}
 	\centering
 	\includegraphics[width=.5\textwidth]{mocap.png}
+	\caption{Setup of the mo-cap environment}
 \end{figure}
 
 \section{Festival}
@@ -87,32 +87,45 @@ Festival applies various Natural Language Processing techniques to the text to g
 Festival generates pronunciations by performing syllabification, breaking the sentences and words into syllables and looking up phonemes in a lexicon to determine their pronunciations. Using this information the system can generate ToBi markers, 
 
 \begin{figure}[h!]
-	\caption{ToBi Markers}
 	\centering
 	\includegraphics[width=1\textwidth]{tobi.png}
+	\caption{ToBi Markers}
 \end{figure}
 
 \section{Euler angles}
 
-Euler angles are three angles that represent the orientation of a rigid body in 3-Dimensional space, typically referred to as 'yaw', 'pitch' and 'roll'. Euler angles allows us to reduce the number of parameters normally used to represent rigid body orientation down to 3 parameters. It is a very popular method because of the reduced complexity and is commonly used in robotics and 3D animation software because of this. 
+Euler angles are three angles that represent the orientation of a rigid body in 3-Dimensional space, typically referred to as 'yaw', 'pitch' and 'roll'. Euler angles allows us to reduce the number of parameters normally used to represent rigid body orientation down to 3 parameters. It is a very popular method because of the reduced complexity and is commonly used in robotics and 3D animation software because of this. As the project focused on rigid head motions there was no translation taken into account when designing the 3D avatar head motions. This allowed the project to use Euler angles as the sole units of movement in the project.
 
 \begin{figure}[h!]
-	\caption{Euler Angles in Robotics}
 	\centering
 	\includegraphics[width=.5\textwidth]{euler_angles.png}
+	\caption{Euler Angles in Robotics}
 \end{figure}
 
-As the project focused on rigid head motions there was no translation taken into account when designing the 3D avatar head motions. This allowed the project to use Euler angles as the sole units of movement in the project.
 
 \section{Poser Animation}
 
-- 3D Animation software \\
-- Has Python Extension to allow scripting \\
-- Euler Angle manipulation \\
+3D animation and rendering software was used to visualise the generated head motions. The software used for this purpose was PoserPro 2012 by Smith Micro Software, a 3D animation tool with the emphasis on character creation and animation. PoserPro allows users to animate body parts of 3D characters and change their characteristic like rotation, translation and scale, meaning that the head of a character could be moved independently with ease.
+
+With a scripting plug-in for Python called PoserPython, \cite{poser_python} allowing users to create scripts to manipulate objects and characters in the scene using Python was one of the main reasons for choosing PoserPro over other animation and rendering software like Blender. Poser also uses Euler angles as it's unit of rotation.
+
+
+\begin{figure}
+	\centering
+		\includegraphics[width=1.0\textwidth]{poser.png}
+		\caption{Overview of Poser Pro}
+\end{figure}
 
 % ============================================================= %
 \chapter{Text-Driven Head Motion Synthesis}
 % This will be the theoretical implementation details 
+
+% - To develop a system that is capable of synthesising a life-like talking head from text.
+% - use a text to speech system to symnthesize the audio and save data about the audio
+% - Build a mapping of words and sentences to discrete head motions
+% - Make the system similar to real life (i.e recorded speech)
+% - use Poser to animate the head motions
+%The goal of this project was to develop a system that was capable of synthesising life-like, realistic head motions from transcribed speech. The project aimed to 
 
 \section{Hypotheses}
 
@@ -125,28 +138,24 @@ To build a system that was capable of synthesising real-life head motions from t
 
 Head motions correlate strongly with prosody present in speech \cite{vis_prosody}. My first hypothesis relates to the rate of change of the fundamental frequency present in the synthesised speech. This is indicated in the Festival output as values around 120 Hz for male voices and 210Hz for female voices \cite{f0_values}. Sudden changes in the frequency should be reflected in head motions. For example in the intonation falls the head should lower accordingly \cite{Kendon}.
 
+- Motor Gesture \\
+
 \subsection{Phrasing}
 
-Phrasing plays a huge role in how something is said. It has been found that nodding head motions frequently occur at the end of phrases or at strong phrase boundaries. \cite{ishi20008} Especially if the speaker is confident in what they are saying. 
+Phrasing plays a huge role in how something is said. It has been found that nodding head motions frequently occur at the end of phrases or at strong phrase boundaries, especially if the speaker is confident in what they are saying. \cite{ishi2008}  
 
 \subsection{Sentiment}
 
-Sentiment or emotion in speech has various effects on head motions. In a study It was found that the absence of head motion can be easily identified as 'neutral' emotion. \cite{emotion_head_motion} whereas participants in the study found it difficult to differentiate between head motions that were typical of 'happy' and 'sad' emotions. This study shows that emotive analysis on the text should be treated as an 'intensifier' of the underlying head motions derived form other areas of the text.
+Sentiment or emotion in speech has various effects on head motions. In a study It was found that the absence of head motion can be easily identified as 'neutral' emotion. \cite{emotion_head_motion} whereas participants in the study found it difficult to differentiate between head motions that were typical of 'happy' and 'sad' emotions. This study shows that emotive analysis on the text should be treated as an 'intensifier' of the underlying head motions derived form other areas of the text rather than altering the head motions to fit an emotion.
 
 Sentiment analysis is a popular area of natural language processing.
 
 \subsection{Text Content}
 
+There are two types of gestures that relate to speech. \cite{lexical_gestures} The first are motor movements which are typically simple, brief, repetitive and have a high correlation with prosodic features in speech. The other type are lexical movements, gestures that help the speaker mentally perform Lexical lookups. These gestures are very different to motor movements and are much longer, more complex and relate more to the lexical information in the speech.
+
 \cite{kendon} \\
 
-
-
-% - To develop a system that is capable of synthesising a life-like talking head from text.
-% - use a text to speech system to symnthesize the audio and save data about the audio
-% - Build a mapping of words and sentences to discrete head motions
-% - Make the system similar to real life (i.e recorded speech)
-% - use Poser to animate the head motions
-The goal of this project was to develop a system that was capable of synthesising life-like, realistic head motions from transcribed speech. The project aimed to 
 \section{Text analysis}
 \subsection{Festival}
 
@@ -157,8 +166,18 @@ The goal of this project was to develop a system that was capable of synthesisin
 
 - Had to tie in a lot of things together \\
 - Implemented the project using python \\
+- Sub process calls \\
 - LISP scripts for Festival \\
-- Pre-existing scripts for data preparation
+- Had to alter LISP Scripts to save audio files \\
+- Pre-existing scripts for data preparation \\
+- Downsampling
+
+\begin{figure}
+	\includegraphics[width=1.1\textwidth]{festival_output.png}
+	\caption{Output from festival analysis}
+\end{figure}
+
+
 
 \section{Basic System}
 -The most basic head motion is nodding \\
@@ -168,7 +187,7 @@ The goal of this project was to develop a system that was capable of synthesisin
 
 \subsection{Trignomietric Functions}
 - Nodding motion similar to sine wave \\
-- So for the basic system used sine wave formula to change just one euler angle \\
+- So for the basic system used sine wave formula to change just one Euler angle \\
 
 \section{Random System}
 
@@ -189,9 +208,9 @@ The goal of this project was to develop a system that was capable of synthesisin
 - This was good for the head motions \\
 
 \begin{figure}
-	\caption{Applying Bezier Smoothing to the discrete points}
 	\includegraphics[width=.6\textwidth]{figure_1.png}
 	\includegraphics[width=.6\textwidth]{figure_2.png}
+	\caption{Applying Bezier Smoothing to the discrete points}
 \end{figure}
 
 \subsection{Introduction of noise}
@@ -200,13 +219,13 @@ The goal of this project was to develop a system that was capable of synthesisin
 - Introduced a probability based addition or subtraction\\
 
 \begin{figure}
-	\caption{Output from random system}
 	\centering
 	\includegraphics[width=.5\textwidth]{fightclub1.png}
 %	\includegraphics[width=.19\textwidth]{fightclub2.png}
 	\includegraphics[width=.5\textwidth]{fightclub3.png}
 	\includegraphics[width=.5\textwidth]{fightclub4.png}
 %	\includegraphics[width=.19\textwidth]{fightclub5.png}
+	\caption{Output from random system}
 \end{figure}
 
 \section{Rule-Based System}
