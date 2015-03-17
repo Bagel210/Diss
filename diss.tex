@@ -27,12 +27,12 @@
 The Introduction chapter should always provide a 'roadmap' to the report. Of course it should provide an introduction to the problem being considered, but it should also give some details of what you did - do not leave this to the conclusion. You should give forward references into the rest of the report - e.g., "In Chapter 2 how algorithms and heuristics are used to deal with approximate counting are discussed", "The design of the system is presented in Chapter 4", "In Chapter 3 the reasons for choosing to focus on the bounded-degree case of this problem are explained"
 
 
-- Head motion is very important when it comes to human communication\\
-- Dialogue is much harder to fully understand without the non-verbal information\\
+- Head motion is very important when it comes to human communication \\
+- Dialogue is much harder to fully understand without the non-verbal information \\
 - Generating Lifelike avatars in many applications, VR, video games, shopping assistant \\
 - Realistic head motions are vital otherwise humans may feel weird interacting with an avatar \\
 - Project aimed to create a system that synthesises natural head motions just from the text \\
-- Without knowledge present in speech\\
+- Without knowledge present in speech \\
 - Using Various Natural Language Processing Techniques \\
 
 % ============================================================= %
@@ -40,26 +40,21 @@ The Introduction chapter should always provide a 'roadmap' to the report. Of cou
 
 \section{Human Computer Interaction}
 
-Human Computer Interaction is a field of Computer Science in constant change. With the goal of enhancing Human Computer Interaction researchers have looked to the field of Embodied Conversational Agents, where an intelligent agent is mapped to a graphical animation or body to replicate the most natural of interactions: face to face dialogue. \cite{ecas}
+Human Computer Interaction is a field of Computer Science in constant change. With the goal of enhancing Human Computer Interaction researchers have looked to the field of Embodied Conversational Agents, where an intelligent agent is mapped to a graphical animation or body to replicate the most natural of interactions: face to face dialogue. \cite{ecas} 
 
 Embodied Conversational Agents have had been found to enhance the interactions with computers \cite{conv_agents} and researchers are perpetually improving systems in order to increase user satisfaction. One of the biggest benefits to using an ECA is that the interaction is of a social nature, being more familiar to humans and aids the systems perceived trust worthiness, allowing a richer interaction between the user and the computer. Also the intelligibility of speech produced in noise is also improved when a speaker's face is visible \cite{emotion_head_motion}, this means that because the user has a physical representation of the ECA they can more easily understand what the agent is saying rather than if it was just speech output. These results suggest that nonverbal gestures such as head movements play a more direct role in the perception of speech than previously known. \cite{vis_prosody}
 
-However, there are some limitation to consider when talking about ECA
-
--Uncanny Valley \\
-- Masahiro Mori\\
-- Revulsion / Disgust\\
-
+There are some limitations to consider when talking about ECA's, mainly to do with what Masahiro Mori called the Uncanny Valley effect. Mori states that the familiarity with a robot or graphic representation of an avatar increases in correlation with the rise of human likeliness, but there is a distinct fall in familiarity before achieving a life-like human representation referred to as the Uncanny Valley which causes revulsion in humans. \cite{uncanny}
 
 \begin{figure}[h!]
 	\centering
-	\includegraphics[width=0.8\textwidth]{uncanny}
+	\includegraphics[width=0.6\textwidth]{uncanny}
 	\caption{The Uncanny Valley effect}
 \end{figure}
 
 \section{Data and Task}
 
-The task for the project was as follows: Using only text transcriptions of speech can we synthesise life-like head motions that seem realistic and natural to humans. The project aimed to investigate the correlation between head motions and the information present in speech unique to the speaker. The difficulty of the task comes from the lack of unique information about the speech, as we are only using the transcribed text. To tackle this we will be using a Text-to-Speech system called Festival.
+The task for the project was as follows: Using only text transcriptions of speech can we synthesise life-like head motions that seem realistic and natural to humans. The project aimed to investigate the correlation between head motions and the information present in speech unique to the speaker. The difficulty of the task comes from the lack of unique information about the speech, as we are only using the transcribed text. To tackle this we will be using a Text-to-Speech system called Festival that analyses the text and 
 
 \subsection{Data Recordings}
 
@@ -136,25 +131,29 @@ To build a system that was capable of synthesising real-life head motions from t
 
 \subsection{Prosodic Features}
 
-Head motions correlate strongly with prosody present in speech \cite{vis_prosody}. My first hypothesis relates to the rate of change of the fundamental frequency present in the synthesised speech. This is indicated in the Festival output as values around 120 Hz for male voices and 210Hz for female voices \cite{f0_values}. Sudden changes in the frequency should be reflected in head motions. For example in the intonation falls the head should lower accordingly \cite{Kendon}.
+--about prosody-- 
 
-- Motor Gesture \\
+Head motions correlate strongly with prosody present in speech \cite{vis_prosody}. My first hypothesis relates to the rate of change of the fundamental frequency present in the synthesised speech. This is indicated in the Festival output as values around 120 Hz for male voices and 210Hz for female voices \cite{f0_values}. Sudden changes in the frequency should be reflected in head motions. For example in the intonation falls the head should lower accordingly \cite{Kendon}.
 
 \subsection{Phrasing}
 
+--about phrasing--
+
 Phrasing plays a huge role in how something is said. It has been found that nodding head motions frequently occur at the end of phrases or at strong phrase boundaries, especially if the speaker is confident in what they are saying. \cite{ishi2008}  
 
-\subsection{Sentiment}
+\subsection{Sentiment Analysis}
+
+Sentiment analysis is a popular area of natural language processing. It is often used to gauge reviews for products\cite{sentiment_online} and films\cite{sentiment_films} due to the availability of data and ease of tagging the reviews as either positive or negative.
 
 Sentiment or emotion in speech has various effects on head motions. In a study It was found that the absence of head motion can be easily identified as 'neutral' emotion. \cite{emotion_head_motion} whereas participants in the study found it difficult to differentiate between head motions that were typical of 'happy' and 'sad' emotions. This study shows that emotive analysis on the text should be treated as an 'intensifier' of the underlying head motions derived form other areas of the text rather than altering the head motions to fit an emotion.
 
-Sentiment analysis is a popular area of natural language processing.
+
 
 \subsection{Text Content}
 
-There are two types of gestures that relate to speech. \cite{lexical_gestures} The first are motor movements which are typically simple, brief, repetitive and have a high correlation with prosodic features in speech. The other type are lexical movements, gestures that help the speaker mentally perform Lexical lookups. These gestures are very different to motor movements and are much longer, more complex and relate more to the lexical information in the speech.
+There are two types of gestures that relate to speech. \cite{lexical_gestures} The first are motor movements which are typically simple, brief, repetitive and have a high correlation with prosodic features. The other type are lexical movements, gestures that help the speaker mentally perform lexical lookups subconsciously. These gestures are very different to motor movements and are much longer, more complex and relate more to the lexical information in the speech. To portray these ideas in this project 
 
-\cite{kendon} \\
+\cite{kendon} Gesture as Utterance\\
 
 \section{Text analysis}
 \subsection{Festival}
@@ -208,8 +207,18 @@ There are two types of gestures that relate to speech. \cite{lexical_gestures} T
 - This was good for the head motions \\
 
 \begin{figure}
-	\includegraphics[width=.6\textwidth]{figure_1.png}
-	\includegraphics[width=.6\textwidth]{figure_2.png}
+	$$ B(t) = \sum_{i=0}^n {n \choose i} (1-t) t^i P^i $$
+	\caption{Recursive Bezier Definition} 
+\end{figure}
+
+\begin{figure}
+	\includegraphics[width=1\textwidth]{bezier_example.png}
+	\caption{Example of Bezier}
+\end{figure}
+
+\begin{figure}
+	\includegraphics[width=.5\textwidth]{figure_1.png}
+	\includegraphics[width=.5\textwidth]{figure_2.png}
 	\caption{Applying Bezier Smoothing to the discrete points}
 \end{figure}
 
@@ -303,12 +312,16 @@ To evaluate the Text-Driven Head Motion System I performed both subjective analy
 \section{System Overview}
 
 \section{Discussion}
-	\subsection{Classification and Regression Trees}
-	\subsection{Data Driven System}
+
+\subsection{Classification and Regression Trees}
+
+\subsection{Data Driven System}
+
 \section{Future Work}
-	\subsection{Expansion of techniques}
-	\subsection{Second Order Smoothing}
-	\subsection{Alignment Problem}
+
+\subsection{Expansion of techniques}
+
+\subsection{Second Order Smoothing}
 	
 \bibliographystyle{plain}
 \bibliography{diss}

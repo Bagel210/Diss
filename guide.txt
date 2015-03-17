@@ -1,3 +1,62 @@
+Dissertation Outline
+
+Title page with abstract (i.e., a one or two paragraph summary of the contents).
+Introduction and synopsis, in which the project topic is described and set in the context of published literature, and the main results are briefly summarized (about five pages).
+
+This chapter should include a clear and concise summary of your contributions (examples: adapting a suite of existing code; interpreting a theoretical algorithm; coding; testing; conducting an experiment) preferably as a bulleted list.
+
+Discussion of the work undertaken, in which the various sub-problems, solutions and difficulties are examined. Discussion of any implementation should concentrate on overall principles and aspects of particular interest, rather than minute details. 
+You should always make it clear what was completed, and what was left as future work. If in doubt spell it out: tell us which bits of code you could find already written, which bits you had to do from scratch, which bits were routine, which bits were challenging (and why).
+
+If appropriate, a description of experiments undertaken, a presentation of the data gleaned from them, and an interpretation of that data.
+
+Conclusion, in which the main achievements are reviewed, and unsolved problems and directions for further work are presented.
+Bibliography.
+
+
+===Bibliograhy Guide===
+
+A book:
+W. Wang. Beginning Programming For Dummies, 4th edition. John Wiley & Sons, 2006.
+
+A journal article:
+S. Brin and L. Page. The anatomy of a large-scale hypertextual web search engine. Computer Networks 30(1-7):107-117, 1998.
+
+A conference paper:
+O. Kammar and G. Plotkin. Algebraic foundations for effect-dependent optimisations. In Proc. 39th ACM SIGPLAN-SIGACT Symp. on Principles of Programming Languages, POPL 2012, pages 349-360, 2012.
+
+A source on the web that you can't fit into any other category:
+Wikipedia. Hash table. http://en.wikipedia.org/wiki/Hash_table, accessed 10 Oct 2013.
+
+
+General Guides
+
+Here are a few comments by Mary Cryan, former UG4 project supervisor, with some additions by Helen Pain and Don Sannella.
+The project is marked on your report, backed up by your code. If you have done a superb job of system-building, and submit a bad report, you risk getting a low score. So please make sure you put sufficient effort into delivering a good report.
+
+If you absolutely cannot decide how to structure your report, then having the following five chapters will usually work out okay: Introduction, Background, Design, Implementation, Evaluation and Conclusions. Your report does not have to have this structure, not at all, but it is a reasonable place to start for most projects.
+
+The Introduction chapter should always provide a 'roadmap' to the report. Of course it should provide an introduction to the problem being considered, but it should also give some details of what you did - do not leave this to the conclusion. You should give forward references into the rest of the report - e.g., "In Chapter 2 how algorithms and heuristics are used to deal with approximate counting are discussed", "The design of the system is presented in Chapter 4", "In Chapter 3 the reasons for choosing to focus on the bounded-degree case of this problem are explained".
+Structure: Please use the environments available in LaTeX (or whatever word processing tool you are using) to structure your report. Use "subsection" and "subsubsection" to separate out the topics of each chapter. Important points should also be displayed so that they are more visible than ordinary text (e.g., using the "itemize" or the "quote" environment). The reader should not have to read deep into a page of text to pick out a key fact.
+Through the report, spell out what was done (past tense). Make clear what was your contribution to the task. If you are building on an existing system, or using libraries that already exist, make clear the division between your work and existing work.
+
+Your report will be read by markers throughout the School of Informatics. Do not assume that your marker is an expert in your subfield. Give some basics as well as the details. Also, make sure you point out what was involved in solving certain problems; this can help a non-expert judge the work involved. For instance: "The interpolation algorithm was implemented in C directly, rather than using the routines in Matlab". "In order to develop a user interface appropriate for the educational system, 4 prototypes were tested on 50 students".
+Tenses.
+
+I know that many of you use your interim report as part of your final report. If you do this, please change the tenses - from "will .. " to "did ...". It is important to be careful with this as not all tasks proposed before Christmas always get completed.
+Also, try not to use the "generic tense", e.g. "CoolApp Systems use hatterbash technologies for preprocessing of rino-data", if you are talking about your own project: be clear what was done in the particular case of your work. Instead write, "As is common in CoolApp systems, hatterbash technologies were used to preprocess the rino-data" (and continue giving details ...). Generic tense is fine for the background chapter.
+
+
+It is often recommended that reports (and research papers in general) are written in the passive voice, as opposed to active voice, e.g., the above, rather than: "As is common in CoolApp systems, I used hatterbash technologies to preprocess my rino-data". The reason for this is that less experienced writers can sometimes find it be harder to be objective when writing in the active voice. However, it is up to you (and the recommendations of your supervisor) whether you prefer to write in the active or passive voice. Personally I prefer the latter - but others may disagree....
+Your source code. 
+
+It is helpful for the marker to be able to look at your source, or other type of documentation, as a back-up to the report. You are required to maintain a subdirectory of your DICE account where you store source code, or processed data, or any supporting evidence which is appropriate to your project. You will be required to submit this entire directory along with your report.
+
+If there was some technical challenge that you could not resolve during the period of the project, it will still be useful to devote space in your report to discussing a design (for example) that did not get implemented, or an implementation that was not completed.
+
+It is okay to get your classmates to read over your work for grammar, punctuation, feedback on clarity, etc. But they should not contribute in any way to the technical content of the report.
+
+
 Marks
 
 
@@ -20,50 +79,3 @@ Marks
 %	-	Outstanding scholarship and/or publishable research
 
 
-
-Dissertation Outline
-
-Title page with abstract (i.e., a one or two paragraph summary of the contents).
-Introduction and synopsis, in which the project topic is described and set in the context of published literature, and the main results are briefly summarized (about five pages).
-This chapter should include a clear and concise summary of your contributions (examples: adapting a suite of existing code; interpreting a theoretical algorithm; coding; testing; conducting an experiment) preferably as a bulleted list.
-For MInf Project (Part 2) only: This chapter should include a section entitled Previous work carried out in which you give a brief account of what you did last year. This should consist of what the reader needs to know so that he/she can place the new work in context. It will also make the new achievements clear. Note, in particular, that you cannot assume that the reader of this report has read the report for Part 1 of your project. For that reason you may well want to repeat material from that report covering background, related work, etc., updating and adjusting as appropriate.
-Discussion of the work undertaken, in which the various sub-problems, solutions and difficulties are examined. Discussion of any implementation should concentrate on overall principles and aspects of particular interest, rather than minute details. 
-You should always make it clear what was completed, and what was left as future work. If in doubt spell it out: tell us which bits of code you could find already written, which bits you had to do from scratch, which bits were routine, which bits were challenging (and why).
-If appropriate, a description of experiments undertaken, a presentation of the data gleaned from them, and an interpretation of that data.
-For MInf Project (Part 1) only: A plan for Part 2 of the project, in which a detailed explanation is given of specific goals for building during the second year of the project on the work done during the first year.
-Conclusion, in which the main achievements are reviewed, and unsolved problems and directions for further work are presented.
-Bibliography.
-
-
-Bibliograhy Guide
-
-
-
-A book:
-W. Wang. Beginning Programming For Dummies, 4th edition. John Wiley & Sons, 2006.
-A journal article:
-S. Brin and L. Page. The anatomy of a large-scale hypertextual web search engine. Computer Networks 30(1-7):107-117, 1998.
-A conference paper:
-O. Kammar and G. Plotkin. Algebraic foundations for effect-dependent optimisations. In Proc. 39th ACM SIGPLAN-SIGACT Symp. on Principles of Programming Languages, POPL 2012, pages 349-360, 2012.
-A source on the web that you can't fit into any other category:
-Wikipedia. Hash table. http://en.wikipedia.org/wiki/Hash_table, accessed 10 Oct 2013.
-
-
-General Guides
-
-Here are a few comments by Mary Cryan, former UG4 project supervisor, with some additions by Helen Pain and Don Sannella.
-The project is marked on your report, backed up by your code. If you have done a superb job of system-building, and submit a bad report, you risk getting a low score. So please make sure you put sufficient effort into delivering a good report.
-
-If you absolutely cannot decide how to structure your report, then having the following five chapters will usually work out okay: Introduction, Background, Design, Implementation, Evaluation and Conclusions. Your report does not have to have this structure, not at all, but it is a reasonable place to start for most projects.
-
-The Introduction chapter should always provide a 'roadmap' to the report. Of course it should provide an introduction to the problem being considered, but it should also give some details of what you did - do not leave this to the conclusion. You should give forward references into the rest of the report - e.g., "In Chapter 2 how algorithms and heuristics are used to deal with approximate counting are discussed", "The design of the system is presented in Chapter 4", "In Chapter 3 the reasons for choosing to focus on the bounded-degree case of this problem are explained".
-Structure: Please use the environments available in LaTeX (or whatever word processing tool you are using) to structure your report. Use "subsection" and "subsubsection" to separate out the topics of each chapter. Important points should also be displayed so that they are more visible than ordinary text (e.g., using the "itemize" or the "quote" environment). The reader should not have to read deep into a page of text to pick out a key fact.
-Through the report, spell out what was done (past tense). Make clear what was your contribution to the task. If you are building on an existing system, or using libraries that already exist, make clear the division between your work and existing work.
-Your report will be read by markers throughout the School of Informatics. Do not assume that your marker is an expert in your subfield. Give some basics as well as the details. Also, make sure you point out what was involved in solving certain problems; this can help a non-expert judge the work involved. For instance: "The interpolation algorithm was implemented in C directly, rather than using the routines in Matlab". "In order to develop a user interface appropriate for the educational system, 4 prototypes were tested on 50 students".
-Tenses.
-I know that many of you use your interim report as part of your final report. If you do this, please change the tenses - from "will .. " to "did ...". It is important to be careful with this as not all tasks proposed before Christmas always get completed.
-Also, try not to use the "generic tense", e.g. "CoolApp Systems use hatterbash technologies for preprocessing of rino-data", if you are talking about your own project: be clear what was done in the particular case of your work. Instead write, "As is common in CoolApp systems, hatterbash technologies were used to preprocess the rino-data" (and continue giving details ...). Generic tense is fine for the background chapter.
-It is often recommended that reports (and research papers in general) are written in the passive voice, as opposed to active voice, e.g., the above, rather than: "As is common in CoolApp systems, I used hatterbash technologies to preprocess my rino-data". The reason for this is that less experienced writers can sometimes find it be harder to be objective when writing in the active voice. However, it is up to you (and the recommendations of your supervisor) whether you prefer to write in the active or passive voice. Personally I prefer the latter - but others may disagree....
-Your source code. It is helpful for the marker to be able to look at your source, or other type of documentation, as a back-up to the report. You are required to maintain a subdirectory of your DICE account where you store source code, or processed data, or any supporting evidence which is appropriate to your project. You will be required to submit this entire directory along with your report.
-If there was some technical challenge that you could not resolve during the period of the project, it will still be useful to devote space in your report to discussing a design (for example) that did not get implemented, or an implementation that was not completed.
-It is okay to get your classmates to read over your work for grammar, punctuation, feedback on clarity, etc. But they should not contribute in any way to the technical content of the report.
