@@ -1,5 +1,6 @@
 \documentclass[bsc,frontabs,twoside,singlespacing,parskip]{infthesis} 
 \usepackage{graphicx}
+\usepackage{listings}
 %\usepackage{natbib}
 \graphicspath{ {images/} }
 
@@ -157,49 +158,59 @@ There are two types of gestures that relate to speech. \cite{lexical_gestures} T
 \cite{kendon} Gesture as Utterance\\
 
 \section{Text analysis}
-\subsection{Festival}
 
 \section{Head Motion Synthesis}
 
 % ============================================================= %
 \chapter{Implementation}
 
+The system was implemented using Python, a widely used high-level programming language for many purposes including scripting and large scale software development. Python was the clear choice for many reasons including powerful libraries such as NLTK (Natural Language Toolkit) \cite{nltk} and SKlearn \cite{sklearn} and it's scripting compatibility with Poser. The initial difficulty of the project was that there were a lot of individual components to tie together, like Festival and Poser. The subprocess module in Python allows the script to spawn new processes, connect to their input and output and retrieve their return codes. This was invaluable in the project as it allowed the Python script to call Festival with parameters that could change with each run.
 
-- Had to alter LISP Scripts to save audio files \\
-- Pre-existing scripts for data preparation \\
-- Downsampling \\
-- Python \\
+\begin{lstlisting}
+fest_location = DIR+'preparation/text2utt.sh'
+festival = subprocess.Popen(
+		[fest_location,text_file], 
+		stdout=subprocess.PIPE
+		)
+utterance = festival.stdout.read()
+return utterance
+\end{lstlisting}
 
-- Experience with text processing \\
-- NGram taggers \\
-- HMM's \\
-
-The system was implemented using Python, a widely used high-level programming language for many purposes including scripting and large scale software development. Python was the clear choice for many reasons including powerful libraries such as NLTK (Natural Language Toolkit) \cite{nltk} and SKlearn \cite{sklearn} and it's scripting compatibility with Poser.
-
-The initial difficulty of the project was that there were a lot of individual components to tie together, like Festival and Poser. 
-
-- Difficulties retrieving data from festival
-- Implemented the project using python \\
-- Sub process calls \\
-- LISP scripts for Festival \\
-
-- Text Processing 
-
+The data received from the Festival output was a large block of text containing information about the utterance it had processed (See Figure 4.1). This data was fed into a text processing module implemented from scratch to extract the important information regarding the utterance and build a dictionary using these elements to link the individual words with their properties like Parts-of-speech tags and phrase break strength.
 
 \begin{figure}
-	\includegraphics[width=1.1\textwidth]{festival_output.png}
-	\caption{Output from festival analysis}
+	\includegraphics[width=1.0\textwidth]{festival_output.png}
+	\caption{An Excerpt from the festival analysis output}
 \end{figure}
 
+Normally Festival is run as an interactive interface. The system used a LISP script called "text2utt.sh" that came with the installation, allowing it to run batch commands in "Text to Speech mode" without entering an interactive state. This was perfect for the project but in order to extract duration information correctly and save the outputted speech to audio files the script had to be altered by adding in the following code. 
+
+\begin{lstlisting}
+1. (utt.save.words utt outfile 'est_ascii) 
+2. (save_waves_during_tts)
+\end{lstlisting}
+
+The line of code (save\_waves\_during\_tts) meant that Festival saved all synthesised speech to wave files. An issue that raised from this was that it generated an audio file for each sentence which was not suitable for the Text-Driven Talking Heads System. I solved this problem by implementing a function in the preparation stage called \"combine\_audio\_files\" which created a new file that was the concatenation of all the sentences. This was a suitable solution as the produced output sounded quite natural.
+
+The Poser Script setMotion.py was taken from another Project that used Euler Angles to rotate a character's limbs, the only alterations made were to set he active body part to the head, add the speech to the scene and to load in the output of the Head Motion Synthesis by hardcoding the name and location of the output file.
+
+=== 3 Different Systems ===
 
 
-\section{Basic System}
--The most basic head motion is nodding \\
-- Paper - first one about head motions \\
-- We want the avatar to seem familiar \\
-- So we want to apply nodding \\
+
+\section{Basic System} 
+%-The most basic head motion is nodding \\
+%- Paper - first one about head motions \\
+%- We want the avatar to seem familiar \\
+%- So we want to apply nodding \\
 
 \subsection{Trignomietric Functions}
+
+As outlined in chapter 3 the most common occurring head motion in dialogue is the nod which was reflected in the analysis of the recorded motion data. This implementation of this hypothesis is the baseline system. It aimed to synthesise a natural nodding motion distributed across the length of the utterance. The nodding motion is a smooth repetitive oscillation of the head along one axis so we represented this using the trigonometric sine function. 
+
+
+
+
 - Nodding motion similar to sine wave \\
 - So for the basic system used sine wave formula to change just one Euler angle \\
 
