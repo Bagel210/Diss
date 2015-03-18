@@ -1,7 +1,6 @@
 \documentclass[bsc,frontabs,twoside,singlespacing,parskip]{infthesis} 
 \usepackage{graphicx}
 \usepackage{listings}
-%\usepackage{natbib}
 \graphicspath{ {images/} }
 
 
@@ -100,6 +99,12 @@ Euler angles are three angles that represent the orientation of a rigid body in 
 	\caption{Euler Angles in Robotics}
 \end{figure}
 
+drawbacks
+-not natural for animator
+- different results depending on order of rotation
+- gimbal lock
+- interpolation is difficult
+\cite{quartionions}
 
 \section{Poser Animation}
 
@@ -159,7 +164,13 @@ There are two types of gestures that relate to speech. \cite{lexical_gestures} T
 
 \section{Text analysis}
 
-\section{Head Motion Synthesis}
+\section{Head Motion Synthesis Systems}
+
+\subsection{Basic}
+
+\subsection{Random}
+
+\subsection{Rule Based}
 
 % ============================================================= %
 \chapter{Implementation}
@@ -196,8 +207,6 @@ The Poser Script setMotion.py was taken from another Project that used Euler Ang
 
 === 3 Different Systems ===
 
-
-
 \section{Basic System} 
 %-The most basic head motion is nodding \\
 %- Paper - first one about head motions \\
@@ -208,23 +217,38 @@ The Poser Script setMotion.py was taken from another Project that used Euler Ang
 
 As outlined in chapter 3 the most common occurring head motion in dialogue is the nod which was reflected in the analysis of the recorded motion data. This implementation of this hypothesis is the baseline system. It aimed to synthesise a natural nodding motion distributed across the length of the utterance. The nodding motion is a smooth repetitive oscillation of the head along one axis so we represented this using the trigonometric sine function. 
 
+The file basic\_predict.py takes in the dictionary containing all the information retrieved from festival and calculates the number of frames needed for the output rotations and calculates the angle change per frame so that the motion from the first frame to the last frame represents one complete oscillation of the sine formula.
 
+ The prediction system adds the rotation information for each Euler angle to the dictionary of utterance data and returns said dictionary. That dictionary is then passed to output.py, which is a generic function that also accepts the utterance dictionary and a filename so that there was no need to re-implement and output function for each system and also allowed for comparison between the systems without necessarily saving them to file allowing rapid prototyping.
 
+\begin{figure}
+	\includegraphics[width=0.3\textwidth]{head.png}
+	\includegraphics[width=0.3\textwidth]{head.png}
+	\caption{Frames from basic system preview}
+\end{figure}
 
-- Nodding motion similar to sine wave \\
-- So for the basic system used sine wave formula to change just one Euler angle \\
+As mentioned, the basic system only took one axis into account and so only altered the "Roll" Euler angle. This system, although simple showed promising results and provided the workflow to have a working system that synthesised head motions, saved them into a .head file containing the Euler angle change for each frame which can be read in by the PoserPython script and assigned to character to be rendered out.
 
 \section{Random System}
 
+The basic system itself produced a natural nodding motion, but after having compared the output of the basic system with the motion recordings, especially comparing different individuals speaking the same sentence there didn't seem to be any kind of correlation between what the participants were saying and how their head movements changed. To represent this finding the second system moved away from trigonometric functions.
+
 \subsection{Discrete Head Motions}
+
 - Represent Head Motions as discrete N dimensional vectors \\
 - Apply smoothing methods to generate overall head shape \\
 - Looked into Spherical Linear interpolation \\
 \cite{rigid_head_motion}
 - Correlation with words
 
+The next system was designed to assign random discrete numbers to each word in the utterance for all Euler angles and apply a form of smoothing to make the random assignment seem smooth and natural even though it was completely random. 
 
-\subsection{Bezier Smoothing}
+%A system that procedurally generates random head motions would not normally have been considered but as there were some correlation to the words s
+
+\subsection{Smoothing}
+
+To synthesise smooth head motions between random points multiple interpolation algorithms were considered. Spherical Linear Interpolation (Slerp) was the first that was considered and was already used in similar research \cite{rigid_head_motion}. 
+
 
 - Went with Bezier smoothing, similar to SLERP\\
 - INTERPOLATION
