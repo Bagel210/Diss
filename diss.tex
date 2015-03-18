@@ -1,6 +1,7 @@
 \documentclass[bsc,frontabs,twoside,singlespacing,parskip]{infthesis} 
 \usepackage{graphicx}
 \usepackage{listings}
+\usepackage{url}
 \graphicspath{ {images/} }
 
 
@@ -71,7 +72,6 @@ The data used for the project was data recordings from the Centre of Speech and 
 Festival applies various Natural Language Processing techniques to the text to generate information  so that it can synthesise speech.  There are many steps in this pipeline, each adding a little bit more information to the text before Festival can then apply signal processing to generate audio. 
 
 - Understanding of the inner working of Festival \\
-
 - Natural Language Processing Techniques \\
 - Tokenisation \\
 - Pos tags \\
@@ -238,7 +238,7 @@ The next system was designed to assign random discrete numbers to each word in t
 
 To synthesise smooth head motions between random points multiple interpolation algorithms were considered. Spherical Linear Interpolation (Slerp) was the first that was considered and was already used in similar research \cite{rigid_head_motion}. There was difficulty when trying to implement Slerp due to the choosing Euler angles as the unit of rotation. Euler angles are difficult when applying interpolation algorithms \cite{quartionions} and Slerp commonly uses Quartinions which are more complex. Another method of interpolation which was derived from Slerp which was considered was the Bezier Interpolation algorithm, invented by Pierre Bezier a french mathematician was much simpler to implement than Slerp.
 
-A recursive Bezier function was implemented which, given a list of points return a formula representing the a smooth interpolation between said points. Unlike Slerp, Bezier's smoothing algorithm doesn't take the interpolated line to the given points (Figure 4.4) which works well given this scenario. It helped to smooth out the randomness and generate smooth motions. (Figure 4.5)
+A recursive Bezier function was implemented which, given a list of points return a formula representing the a smooth interpolation between said points. Unlike Slerp, Bezier's smoothing algorithm doesn't take the interpolated line to the given points (Figure 4.4) which works well given this scenario. It helped to smooth out the randomness and generate natural motions. (Figure 4.5)
 
 The random system calculated a Bezier function for each of the Euler angles and returned a dictionary containing the Euler angle change for each frame of the animation which was passed to output.py.
 
@@ -260,33 +260,38 @@ The random system calculated a Bezier function for each of the Euler angles and 
 
 \subsection{Introduction of noise}
 
+The output of the second system when mapped to a character in poser showed promise, the motions were smooth and looked like they could have been recorded from actual participants, however the motions were too smooth and approached the Uncanny valley looking unnatural.
 
-- Smoothing was too smooth\\
-- Didn't look too natural \\
-- Introduced a probability based addition or subtraction\\
+To counteract this issue a probability based assignment was introduced which adds or subtracts a very small percentage with the purpose of adding noise to the output. This reduced the feeling of the uncanny valley and lead to good initial results.
 
 \begin{figure}
 	\centering
-	\includegraphics[width=.5\textwidth]{fightclub1.png}
+	\includegraphics[width=.3\textwidth]{fightclub1.png}
 %	\includegraphics[width=.19\textwidth]{fightclub2.png}
-	\includegraphics[width=.5\textwidth]{fightclub3.png}
-	\includegraphics[width=.5\textwidth]{fightclub4.png}
+	\includegraphics[width=.3\textwidth]{fightclub3.png}
+	\includegraphics[width=.3\textwidth]{fightclub4.png}
 %	\includegraphics[width=.19\textwidth]{fightclub5.png}
-	\caption{Output from random system}
+	\caption{Frames from the random system visualisation}
 \end{figure}
 
 \section{Rule-Based System}
 
-\subsection{Using the information form festival}
+The Rule-Based system uses the output from Festival to apply manually written rules in order to synthesise head motions. Having considered the initial results of the previous two system the third built upon those ideas integrating with the rules derived from the multiple hypotheses outlined in chapter 3.
+
+\subsection{Using the information from festival}
+
+- Removed stop words as there is not a 1-1 mapping between words and head motions \\
 
 \subsection{Parametric Smoothing}
 - Felt Bezier did not look like natural head motions \\
-- Removed stop words as there is not a 1-1 mapping between words and head motions
 - Comparison with data looked too smooth even with noise \\
 - Moved towards First Order equations \\
 - commonly used in electronics \\
 - felt it aligned with recorded head motions more\\
-	
+
+One of the drawbacks from the initial reviews of the random system was that Bezier smoothing does not look like natural head motions. Having compared the output from the random system to the data recordings, the videos seemed to be more sharp and discontinuous, initially while smoothing out toward the end of the motion. The observed effect was similar to that of a first order differential equation, commonly used in electronics to represent the power in a circuit. Rising very quickly to begin with but slowing and smoothing off before reaching the desire level of output. 
+
+
 % ============================================================= %
 \chapter{Evaluation}
 
