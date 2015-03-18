@@ -99,12 +99,7 @@ Euler angles are three angles that represent the orientation of a rigid body in 
 	\caption{Euler Angles in Robotics}
 \end{figure}
 
-drawbacks
--not natural for animator
-- different results depending on order of rotation
-- gimbal lock
-- interpolation is difficult
-\cite{quartionions}
+Euler angles do have some drawbacks. One of the most common issues animators experience with Euler angles is that different results can occur depending on the order of rotation. For example the rotation Roll x Yaw x Pitch will most likely have a completely different effect to the rotation Pitch x Yaw x Roll. \cite{quartionions} Another potential issue is the Gimbal Lock \cite{gimbal}. Euler angles were chosen because of their ease of use and these drawbacks were not an issue.
 
 \section{Poser Animation}
 
@@ -235,26 +230,17 @@ The basic system itself produced a natural nodding motion, but after having comp
 
 \subsection{Discrete Head Motions}
 
-- Represent Head Motions as discrete N dimensional vectors \\
-- Apply smoothing methods to generate overall head shape \\
-- Looked into Spherical Linear interpolation \\
-\cite{rigid_head_motion}
-- Correlation with words
-
 The next system was designed to assign random discrete numbers to each word in the utterance for all Euler angles and apply a form of smoothing to make the random assignment seem smooth and natural even though it was completely random. 
 
 %A system that procedurally generates random head motions would not normally have been considered but as there were some correlation to the words s
 
 \subsection{Smoothing}
 
-To synthesise smooth head motions between random points multiple interpolation algorithms were considered. Spherical Linear Interpolation (Slerp) was the first that was considered and was already used in similar research \cite{rigid_head_motion}. 
+To synthesise smooth head motions between random points multiple interpolation algorithms were considered. Spherical Linear Interpolation (Slerp) was the first that was considered and was already used in similar research \cite{rigid_head_motion}. There was difficulty when trying to implement Slerp due to the choosing Euler angles as the unit of rotation. Euler angles are difficult when applying interpolation algorithms \cite{quartionions} and Slerp commonly uses Quartinions which are more complex. Another method of interpolation which was derived from Slerp which was considered was the Bezier Interpolation algorithm, invented by Pierre Bezier a french mathematician was much simpler to implement than Slerp.
 
+A recursive Bezier function was implemented which, given a list of points return a formula representing the a smooth interpolation between said points. Unlike Slerp, Bezier's smoothing algorithm doesn't take the interpolated line to the given points (Figure 4.4) which works well given this scenario. It helped to smooth out the randomness and generate smooth motions. (Figure 4.5)
 
-- Went with Bezier smoothing, similar to SLERP\\
-- INTERPOLATION
-- Bezier Formula
-- Bezier doesn't reach the discrete points\\
-- This was good for the head motions \\
+The random system calculated a Bezier function for each of the Euler angles and returned a dictionary containing the Euler angle change for each frame of the animation which was passed to output.py.
 
 \begin{figure}
 	$$ B(t) = \sum_{i=0}^n {n \choose i} (1-t) t^i P^i $$
@@ -273,6 +259,8 @@ To synthesise smooth head motions between random points multiple interpolation a
 \end{figure}
 
 \subsection{Introduction of noise}
+
+
 - Smoothing was too smooth\\
 - Didn't look too natural \\
 - Introduced a probability based addition or subtraction\\
