@@ -81,6 +81,7 @@ Festival applies various Natural Language Processing techniques to the text to g
 - Letter to sound rules\\
 - Syllabification\\
 - Duration based on classification and regression trees \\
+
 Festival generates pronunciations by performing syllabification, breaking the sentences and words into syllables and looking up phonemes in a lexicon to determine their pronunciations. Using this information the system can generate ToBi markers, 
 
 \begin{figure}[h!]
@@ -128,12 +129,12 @@ With a scripting plug-in for Python called PoserPython, \cite{poser_python} allo
 
 To build a system that was capable of synthesising real-life head motions from text, hypotheses about the relation of head motion events and speech content were introduced. The system built on these hypotheses, linking them together in order to synthesis the final head motions. 
 
-\cite{first_paper} 
-- Primary head motion to be nodding \\
+%The system aimed to synthesise head motions that seem natural for humans in the context
+It was  found that when two people have a conversation, head motions are more prevalent in the dialogue if the two people do not have a close relationship. \cite{first_paper} In dialogue the nod is commonly understood as a gesture of affirmation and agreement. A possible explanation for this effect could be that because there is no pre-existing relationship humans subconsciously overcompensate their head motions as a method of positive reenforcement to aid in building a foundation for this new relationship. In the context of Embodied Conversational Agents the system aimed to synthesise head motions that made the interaction between the user and the ECA as natural as possible in relation to head motions, to incorporate this hypotheses into the system the main head motion should primarily be a nodding motion and head motions should overcompensate similar to an interaction with a new person with the aim of making the interaction feel more like a face to face conversation and provide a  more comfortable experience.
 
 \subsection{Prosodic Features}
 
---about prosody-- 
+Prosody is the rhythm, stress and intonation of speech. As english is the language domain for the project and english is a stress timed language \cite{stress_timed}, prosodic features in speech are very important to the meaning of speech and can change the meaning of the underlying text.
 
 Head motions correlate strongly with prosody present in speech \cite{vis_prosody}. My first hypothesis relates to the rate of change of the fundamental frequency present in the synthesised speech. This is indicated in the Festival output as values around 120 Hz for male voices and 210Hz for female voices \cite{f0_values}. Sudden changes in the frequency should be reflected in head motions. For example in the intonation falls the head should lower accordingly \cite{Kendon}.
 
@@ -266,10 +267,8 @@ To counteract this issue a probability based assignment was introduced which add
 \begin{figure}
 	\centering
 	\includegraphics[width=.3\textwidth]{fightclub1.png}
-%	\includegraphics[width=.19\textwidth]{fightclub2.png}
 	\includegraphics[width=.3\textwidth]{fightclub3.png}
 	\includegraphics[width=.3\textwidth]{fightclub4.png}
-%	\includegraphics[width=.19\textwidth]{fightclub5.png}
 	\caption{Frames from the random system visualisation}
 \end{figure}
 
@@ -295,8 +294,8 @@ One of the drawbacks from the initial reviews of the random system was that Bezi
 	$$ Y = K.A * (1 - e^{\sfrac{-t}{T}})$$
 	\\
 	K.A = Steady State Gain\\
-	t = time\\
 	T = Time Constant\\
+	t = time\\
 	
 	\caption{First Order Equation Definition} 
 \end{figure}
@@ -324,31 +323,37 @@ As outlined in the design overview, only once participants were content with the
 
 \begin{figure}
 	\centering
-	\includegraphics[width=.5\textwidth]{poser.png}
+	\includegraphics[width=.7\textwidth]{poser.png}
 	\caption{Evaluation Platform}
 \end{figure}
 
 \subsection{Preliminary Results and feedback}
 
-Preliminary evaluations were carried out to
+Preliminary evaluations were carried out to to test the evaluation platform. A small number of volunteers were asked to perform the evaluation and were asked a series of questions about the environment.
 
-- Performed evaluation with small number of volunteers \\
-- Asked questions about the experience \\
-- Difficulty of task \\
-- Creepy / Uncanny Valley \\
-- Adjust quality of videos \\
-- Longer Videos \\ 
+\begin{enumerate}
+\item{How difficult was the task? What were the areas of difficulty?}
+\item{Did you find the 3D avatars creepy?}
+\item{Would the task be easier or more diffuclt with longer videos?}
+\end{enumerate}
+
+This was to try and improve the user experience before the final evaluation. The questions chosen were to address some key concerns regarding the environment. The participants were to feel comfortable during the evaluation process and if they videos they were evaluating were in the uncanny valley, many participants would feel discomfort which could negatively impact results. Gauging if participants felt the videos were too short or too long was important as well, the video needed to be of appropriate length so users had the right amount of information to effectively evaluate the videos.
+
+\begin{quotation}
+"Everything was fairly easy." - Participant 1
+
+"Another quote" - Participant 2
+\end{quotation}
 
 \subsection{Results}
 
-- Taken on  board suggestions from preliminary \\
+- Taken on  board suggestions from preliminary feedback \\
 - 15 volunteers \\
 - Good results for Random system \\
 - Good results for rule-based system \\
 - Bad results for ones taken from data \\
 
 \subsection{Conclusions}
-
 
 \section{Objective Analysis}
 
