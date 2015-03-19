@@ -2,8 +2,8 @@
 \usepackage{graphicx}
 \usepackage{listings}
 \usepackage{url}
+\usepackage{xfrac} 
 \graphicspath{ {images/} }
-
 
 \begin{document}
 
@@ -105,7 +105,7 @@ Euler angles do have some drawbacks. One of the most common issues animators exp
 
 3D animation and rendering software was used to visualise the generated head motions. The software used for this purpose was PoserPro 2012 by Smith Micro Software, a 3D animation tool with the emphasis on character creation and animation. PoserPro allows users to animate body parts of 3D characters and change their characteristic like rotation, translation and scale, meaning that the head of a character could be moved independently with ease.
 
-With a scripting plug-in for Python called PoserPython, \cite{poser_python} allowing users to create scripts to manipulate objects and characters in the scene using Python was one of the main reasons for choosing PoserPro over other animation and rendering software like Blender. Poser also uses Euler angles as it's unit of rotation.
+With a scripting plug-in for Python called PoserPython, \cite{poser_python} allowing users to create scripts to manipulate objects and characters in the scene using Python. This was one of the main reasons for choosing PoserPro over other animation and rendering software like Blender. Poser also uses Euler angles as it's unit of rotation.
 
 \begin{figure}
 	\centering
@@ -170,7 +170,9 @@ There are two types of gestures that relate to speech. \cite{lexical_gestures} T
 % ============================================================= %
 \chapter{Implementation}
 
-The system was implemented using Python, a widely used high-level programming language for many purposes including scripting and large scale software development. Python was the clear choice for many reasons including powerful libraries such as NLTK (Natural Language Toolkit) \cite{nltk} and SKlearn \cite{sklearn} and it's scripting compatibility with Poser. The initial difficulty of the project was that there were a lot of individual components to tie together, like Festival and Poser. The subprocess module in Python allows the script to spawn new processes, connect to their input and output and retrieve their return codes. This was invaluable in the project as it allowed the Python script to call Festival with parameters that could change with each run.
+The system was implemented using Python, a high-level programming language widely used for many purposes including scripting and large scale software development. Python was the clear choice for many reasons including powerful libraries such as NLTK (Natural Language Toolkit) \cite{nltk} and it's scripting compatibility with Poser. 
+
+The initial difficulty of the project was that there were a lot of individual components to tie together, like Festival and Poser. The subprocess module in Python allows the script to spawn new processes, connect to their input and output and retrieve their return codes. This was invaluable in the project as it allowed the Python script to call Festival with parameters that could change with each run.
 
 \begin{lstlisting}
 fest_location = DIR+'preparation/text2utt.sh'
@@ -182,7 +184,7 @@ utterance = festival.stdout.read()
 return utterance
 \end{lstlisting}
 
-The data received from the Festival output was a large block of text containing information about the utterance it had processed (See Figure 4.1). This data was fed into a text processing module implemented from scratch to extract the important information regarding the utterance and build a dictionary using these elements to link the individual words with their properties like Parts-of-speech tags and phrase break strength.
+The data received from the Festival output was a large block of text containing information about the utterance it had processed (See Figure 4.1). This data was fed into a text processing module implemented from scratch to extract the important information regarding the utterance and build a dictionary using these elements to link the individual words with their properties like parts-of-speech tags and phrase break strength.
 
 \begin{figure}
 	\includegraphics[width=1.0\textwidth]{festival_output.png}
@@ -196,17 +198,13 @@ Normally Festival is run as an interactive interface. The system used a LISP scr
 2. (save_waves_during_tts)
 \end{lstlisting}
 
-The line of code (save\_waves\_during\_tts) meant that Festival saved all synthesised speech to wave files. An issue that raised from this was that it generated an audio file for each sentence which was not suitable for the Text-Driven Talking Heads System. I solved this problem by implementing a function in the preparation stage called \"combine\_audio\_files\" which created a new file that was the concatenation of all the sentences. This was a suitable solution as the produced output sounded quite natural.
+The line of code (save\_waves\_during\_tts) meant that Festival saved all synthesised speech to wave files. An issue that raised from this was that it generated an audio file for each sentence, which was not suitable for the Text-Driven Talking Heads System. This problem was solved by implementing a function in the preparation stage called \"combine\_audio\_files\" which created a new file that was the concatenation of all the sentences. This was a suitable solution as the produced output sounded quite natural.
 
 The Poser Script setMotion.py was taken from another Project that used Euler Angles to rotate a character's limbs, the only alterations made were to set he active body part to the head, add the speech to the scene and to load in the output of the Head Motion Synthesis by hardcoding the name and location of the output file.
 
-=== 3 Different Systems ===
+The head motion synthesis was developed as three separate modules, increasing in complexity and building on what was successful from the previous head motion synthesis methods.
 
 \section{Basic System} 
-%-The most basic head motion is nodding \\
-%- Paper - first one about head motions \\
-%- We want the avatar to seem familiar \\
-%- So we want to apply nodding \\
 
 \subsection{Trignomietric Functions}
 
@@ -214,15 +212,16 @@ As outlined in chapter 3 the most common occurring head motion in dialogue is th
 
 The file basic\_predict.py takes in the dictionary containing all the information retrieved from festival and calculates the number of frames needed for the output rotations and calculates the angle change per frame so that the motion from the first frame to the last frame represents one complete oscillation of the sine formula.
 
- The prediction system adds the rotation information for each Euler angle to the dictionary of utterance data and returns said dictionary. That dictionary is then passed to output.py, which is a generic function that also accepts the utterance dictionary and a filename so that there was no need to re-implement and output function for each system and also allowed for comparison between the systems without necessarily saving them to file allowing rapid prototyping.
+The prediction system adds the rotation information for each Euler angle to the dictionary of utterance data and returns said dictionary. That dictionary is then passed to output.py, which is a generic function that also accepts the utterance dictionary and a filename so that there was no need to re-implement and output function for each system and also allowed for comparison between the systems without necessarily saving them to file allowing rapid prototyping.
 
 \begin{figure}
+	\includegraphics[width=0.3\textwidth]{head.png}
 	\includegraphics[width=0.3\textwidth]{head.png}
 	\includegraphics[width=0.3\textwidth]{head.png}
 	\caption{Frames from basic system preview}
 \end{figure}
 
-As mentioned, the basic system only took one axis into account and so only altered the "Roll" Euler angle. This system, although simple showed promising results and provided the workflow to have a working system that synthesised head motions, saved them into a .head file containing the Euler angle change for each frame which can be read in by the PoserPython script and assigned to character to be rendered out.
+As mentioned, the basic system only took one axis into account and so only altered the "Roll" Euler angle. This system although simple, showed promising results and provided the workflow to have a working system that synthesised head motions, saved them into a .head file containing the Euler angle change for each frame which can be read in by the PoserPython script and assigned to character to be rendered out.
 
 \section{Random System}
 
@@ -236,7 +235,7 @@ The next system was designed to assign random discrete numbers to each word in t
 
 \subsection{Smoothing}
 
-To synthesise smooth head motions between random points multiple interpolation algorithms were considered. Spherical Linear Interpolation (Slerp) was the first that was considered and was already used in similar research \cite{rigid_head_motion}. There was difficulty when trying to implement Slerp due to the choosing Euler angles as the unit of rotation. Euler angles are difficult when applying interpolation algorithms \cite{quartionions} and Slerp commonly uses Quartinions which are more complex. Another method of interpolation which was derived from Slerp which was considered was the Bezier Interpolation algorithm, invented by Pierre Bezier a french mathematician was much simpler to implement than Slerp.
+To synthesise smooth head motions between random points multiple interpolation algorithms were considered. Spherical Linear Interpolation (Slerp) was the first that was considered and was already used in similar research \cite{rigid_head_motion}. There was difficulty when trying to implement Slerp due to the choosing Euler angles as the unit of rotation. Euler angles are difficult to apply interpolation \cite{quartionions}, Slerp commonly uses Quartinions which are more complex. Another method of interpolation which was derived from Slerp which was considered was the Bezier Interpolation algorithm, invented by Pierre Bezier a french mathematician was much simpler to implement than Slerp.
 
 A recursive Bezier function was implemented which, given a list of points return a formula representing the a smooth interpolation between said points. Unlike Slerp, Bezier's smoothing algorithm doesn't take the interpolated line to the given points (Figure 4.4) which works well given this scenario. It helped to smooth out the randomness and generate natural motions. (Figure 4.5)
 
@@ -260,7 +259,7 @@ The random system calculated a Bezier function for each of the Euler angles and 
 
 \subsection{Introduction of noise}
 
-The output of the second system when mapped to a character in poser showed promise, the motions were smooth and looked like they could have been recorded from actual participants, however the motions were too smooth and approached the Uncanny valley looking unnatural.
+The output of the second system when mapped to a character in poser showed promise, the motions were smooth and looked like they could have been recorded from actual participants, however the motions produced were deemed too smooth and approached the Uncanny valley looking unnatural.
 
 To counteract this issue a probability based assignment was introduced which adds or subtracts a very small percentage with the purpose of adding noise to the output. This reduced the feeling of the uncanny valley and lead to good initial results.
 
@@ -291,6 +290,16 @@ The Rule-Based system uses the output from Festival to apply manually written ru
 
 One of the drawbacks from the initial reviews of the random system was that Bezier smoothing does not look like natural head motions. Having compared the output from the random system to the data recordings, the videos seemed to be more sharp and discontinuous, initially while smoothing out toward the end of the motion. The observed effect was similar to that of a first order differential equation, commonly used in electronics to represent the power in a circuit. Rising very quickly to begin with but slowing and smoothing off before reaching the desire level of output. 
 
+\begin{figure}
+	\centering
+	$$ Y = K.A * (1 - e^{\sfrac{-t}{T}})$$
+	\\
+	K.A = Steady State Gain\\
+	t = time\\
+	T = Time Constant\\
+	
+	\caption{First Order Equation Definition} 
+\end{figure}
 
 % ============================================================= %
 \chapter{Evaluation}
@@ -299,33 +308,31 @@ To evaluate the Text-Driven Head Motion System I performed both subjective analy
 
 \section{Subjective Analysis}
 
-\subsection{Outline}
-- Volunteers\\
-- 5 Video Clips of animated talking heads \\
-- 3 from the TDTH system\\
-- 2 taken from actual recordings \\
-- All mapped to the same face \\
-- Volunteers will be asked to rate on a scale of 1-100 how natural the head motions seem \\
-- Focus only on the head motions \\
-- Evaluating Only One Criteria
-- Not told which are synthesised\\
-- Not told about real recordings \\
-- So volunteer does not know which were which\\
+\subsection{Design Overview}
 
-- Developed Web-based platform for subjective evaluation\\
-- Using Python, Flask and HTML5\\
-- Used Sliders going from 0-100 \\
-- allowed higher precision \\
+The evaluation system was designed with many factors taken into account. To effectively isolate the head motions for evaluations and make sure that participants were not affected or influenced by other factors, care was taken to ensure that as much as possible would remain constant, only changing the head motions.
 
+Volunteers were shown 5 different video clips and were asked to evaluate how natural they felt the head motions were. Of the 5 videos, 3 were synthesised from the Text Driven Talking Heads system and 2 videos were taken from real recordings. Participants were not told anything about the videos and so did not know if the videos were synthesised or real. This was to eliminate any potential bias that could be introduced by telling the participants some of the videos were real and some were not and made sure that the participants focused on the task.
 
-- Important to keep as much the same as possible\\
-- Only change head motions\\
-- Apply Dynamic Time Warping\\ 
+It was important for participants to be able to review their evaluation and update their choices as their subjective idea of what natural head motions are could easily change after watching the videos. Participants were encouraged to watch the videos more than once and update their evaluation are necessary until they were content with their evaluation.
+
+\subsection{Implementation}
+
+The evaluation platform was implemented in a web-based format using HTML5, Python and Flask \cite{flask}, a Python framework used for web development. The website (shown in figure 5.1), showed the 5 videos side by side with sliders allowing the users to click and drag the slider to a level they felt reflected how natural the video above that slider was. This approach accomplished two things: having sliders ranging from 0 to 100 allowed for much greater precision than asking participants to rate the video from 1-5 or 1-10 and also helped users generate numeric feedback without the need to arbitrarily assign a numerical value.
+
+As outlined in the design overview, only once participants were content with their evaluation would the results be recorded. The 'submit' button commits the users evaluation to a text file. This was suitable for the purpose of the evaluation system as it very simple to implement and had little development overhead.
+
+\begin{figure}
+	\centering
+	\includegraphics[width=.5\textwidth]{poser.png}
+	\caption{Evaluation Platform}
+\end{figure}
 
 \subsection{Preliminary Results and feedback}
 
-- Performed evaluation with small number of volunteers \\
+Preliminary evaluations were carried out to
 
+- Performed evaluation with small number of volunteers \\
 - Asked questions about the experience \\
 - Difficulty of task \\
 - Creepy / Uncanny Valley \\
