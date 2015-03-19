@@ -25,8 +25,8 @@
 % ============================================================= %
 \chapter{Introduction}
 
-The Introduction chapter should always provide a 'roadmap' to the report. Of course it should provide an introduction to the problem being considered, but it should also give some details of what you did - do not leave this to the conclusion. You should give forward references into the rest of the report - e.g., "In Chapter 2 how algorithms and heuristics are used to deal with approximate counting are discussed", "The design of the system is presented in Chapter 4", "In Chapter 3 the reasons for choosing to focus on the bounded-degree case of this problem are explained"
-
+%The Introduction chapter should always provide a 'roadmap' to the report. Of course it should provide an introduction to the problem being considered, but it should also give some details of what you did - do not leave this to the conclusion. You should give forward references into the rest of the report - e.g., "In Chapter 2 how algorithms and heuristics are used to deal with approximate counting are discussed", "The design of the system is presented in Chapter 4", "In Chapter 3 the reasons for choosing to focus on the bounded-degree case of this problem are explained"
+%
 
 - Head motion is very important when it comes to human communication \\
 - Dialogue is much harder to fully understand without the non-verbal information \\
@@ -61,11 +61,11 @@ The task for the project was as follows: Using only text transcriptions of speec
 
 The data used for the project was data recordings from the Centre of Speech and Technology Research at Edinburgh University. The recordings consisted of optical motion capture sessions in which participants wore 4 reflective markers on their torso and a hat with 3 reflective markers. There were 7 V100:R2 cameras that tracked the reflective markers at a sampling rate of 100Hz. Participants were asked to read out transcriptions of fairy tales.
 
-\begin{figure}[h!]
-	\centering
-	\includegraphics[width=.5\textwidth]{mocap.png}
-	\caption{Setup of the mo-cap environment}
-\end{figure}
+%\begin{figure}[h!]
+%	\centering
+%	\includegraphics[width=.5\textwidth]{mocap.png}
+%	\caption{Setup of the mo-cap environment}
+%\end{figure}
 
 \section{Euler angles}
 
@@ -125,17 +125,17 @@ There are two types of gestures that relate to speech. \cite{lexical_gestures} T
 
 Festival applies various Natural Language Processing techniques to the text to generate information  so that it can synthesise speech.  There are many steps in this pipeline, each adding a little bit more information to the text before Festival can then apply signal processing to generate audio. 
 
-\subsubsection{Tokenisation \&Parts of speech tagging}
+The first stage in the Text to Speech pipeline is the text processing. Festival breaks the text up into more suitable units for processing, for example expanding abbreviations. Then Parts-of-Speech tags are assigned to the units, these POS tags indicate what type of word it is and how it relates to the overall structure of the sentence allowing for phrase break prediction.
 
-\subsubsection{Phrase Break Predicition}
+Phrase break prediction assigns a break strength to each unit, which highlights where the phrases are in the sentences. Phrase break predictors are usually taggers trained on annotated data and are accurate.
 
-\subsubsection{Pohnetics \& Phonology}
-- generating pronunciations\\
-- letter to sound rules\\
-- syllabification\\
-- durations based on CART trees\\
+
 
 Festival generates pronunciations by performing syllabification, breaking the sentences and words into syllables and looking up phonemes in a lexicon to determine their pronunciations. Using this information the system can generate ToBi markers \cite{tobi}, a way of symbolically representing intonation. These symbols are useful as it they are conceptually easy to understand and reduce the number of parameters needed to understand intonation.
+
+Similarly to phrase break predictors, Festival uses duration predictors that have been trained on annotated data using classification and regression trees to produce duration information for each phoneme.
+
+Now that the system has a linguistic specification of the sentence like the phone sequence, phone duration and pitch contour signal processing can be performed to generate the final speech output.
 
 \begin{figure}[h!]
 	\centering
