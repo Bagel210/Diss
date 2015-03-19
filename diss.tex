@@ -55,7 +55,7 @@ There are some limitations to consider when talking about ECA's, mainly to do wi
 
 \section{Data and Task}
 
-The task for the project was as follows: Using only text transcriptions of speech can we synthesise life-like head motions that seem realistic and natural to humans. The project aimed to investigate the correlation between head motions and the information present in speech unique to the speaker. The difficulty of the task comes from the lack of unique information about the speech, as we are only using the transcribed text. To tackle this we will be using a Text-to-Speech system called Festival that analyses the text and 
+The task for the project was as follows: Using only text transcriptions of speech can we synthesise life-like head motions that seem realistic and natural to humans. The project aimed to investigate the correlation between head motions and the information present in speech unique to the speaker. The difficulty of the task comes from the lack of unique information about the speech, as we are only using the transcribed text. To tackle this we will be using a Text-to-Speech system called Festival.
 
 \subsection{Data Recordings}
 
@@ -65,29 +65,6 @@ The data used for the project was data recordings from the Centre of Speech and 
 	\centering
 	\includegraphics[width=.5\textwidth]{mocap.png}
 	\caption{Setup of the mo-cap environment}
-\end{figure}
-
-\section{Festival}
-
-Festival applies various Natural Language Processing techniques to the text to generate information  so that it can synthesise speech.  There are many steps in this pipeline, each adding a little bit more information to the text before Festival can then apply signal processing to generate audio. 
-
-- Understanding of the inner working of Festival \\
-- Natural Language Processing Techniques \\
-- Tokenisation \\
-- Pos tags \\
-- Phrase Break Prediction \\
-- Phonetics \& Phonology \\
-- Generating pronunciations \\
-- Letter to sound rules\\
-- Syllabification\\
-- Duration based on classification and regression trees \\
-
-Festival generates pronunciations by performing syllabification, breaking the sentences and words into syllables and looking up phonemes in a lexicon to determine their pronunciations. Using this information the system can generate ToBi markers, 
-
-\begin{figure}[h!]
-	\centering
-	\includegraphics[width=1\textwidth]{tobi.png}
-	\caption{ToBi Markers}
 \end{figure}
 
 \section{Euler angles}
@@ -118,18 +95,10 @@ With a scripting plug-in for Python called PoserPython, \cite{poser_python} allo
 \chapter{Text-Driven Head Motion Synthesis}
 % This will be the theoretical implementation details 
 
-% - To develop a system that is capable of synthesising a life-like talking head from text.
-% - use a text to speech system to symnthesize the audio and save data about the audio
-% - Build a mapping of words and sentences to discrete head motions
-% - Make the system similar to real life (i.e recorded speech)
-% - use Poser to animate the head motions
-%The goal of this project was to develop a system that was capable of synthesising life-like, realistic head motions from transcribed speech. The project aimed to 
+The goal of this project was to develop a system that was capable of synthesising life-like, realistic head motions from transcribed speech. This project aimed to developed a system that was capable of synthesising head motions given just the text. In order to to this hypotheses about the relation of head motion events and speech content were introduced. The system built on these hypotheses, linking them together in order to synthesis the final head motions. Text itself is very limited in information, so in order to have richer input data the transcribed text would be passed through a Text to Speech system which would apply natural language processing techniques in order to synthesise speech. 
 
 \section{Hypotheses}
 
-To build a system that was capable of synthesising real-life head motions from text, hypotheses about the relation of head motion events and speech content were introduced. The system built on these hypotheses, linking them together in order to synthesis the final head motions. 
-
-%The system aimed to synthesise head motions that seem natural for humans in the context
 It was  found that when two people have a conversation, head motions are more prevalent in the dialogue if the two people do not have a close relationship. \cite{first_paper} In dialogue the nod is commonly understood as a gesture of affirmation and agreement. A possible explanation for this effect could be that because there is no pre-existing relationship humans subconsciously overcompensate their head motions as a method of positive reenforcement to aid in building a foundation for this new relationship. In the context of Embodied Conversational Agents the system aimed to synthesise head motions that made the interaction between the user and the ECA as natural as possible in relation to head motions, to incorporate this hypotheses into the system the main head motion should primarily be a nodding motion and head motions should overcompensate similar to an interaction with a new person with the aim of making the interaction feel more like a face to face conversation and provide a  more comfortable experience.
 
 \subsection{Prosodic Features}
@@ -140,9 +109,7 @@ Head motions correlate strongly with prosody present in speech \cite{vis_prosody
 
 \subsection{Phrasing}
 
---about phrasing--
-
-Phrasing plays a huge role in how something is said. It has been found that nodding head motions frequently occur at the end of phrases or at strong phrase boundaries, especially if the speaker is confident in what they are saying. \cite{ishi2008}  
+Phrasing plays a huge role in how something is said. It has been found that nodding head motions frequently occur at the end of phrases or at strong phrase boundaries, especially if the speaker is confident in what they are saying. \cite{ishi2008}. 
 
 \subsection{Sentiment Analysis}
 
@@ -150,15 +117,32 @@ Sentiment analysis is a popular area of natural language processing. It is often
 
 Sentiment or emotion in speech has various effects on head motions. In a study It was found that the absence of head motion can be easily identified as 'neutral' emotion. \cite{emotion_head_motion} whereas participants in the study found it difficult to differentiate between head motions that were typical of 'happy' and 'sad' emotions. This study shows that emotive analysis on the text should be treated as an 'intensifier' of the underlying head motions derived form other areas of the text rather than altering the head motions to fit an emotion.
 
-
-
 \subsection{Text Content}
 
-There are two types of gestures that relate to speech. \cite{lexical_gestures} The first are motor movements which are typically simple, brief, repetitive and have a high correlation with prosodic features. The other type are lexical movements, gestures that help the speaker mentally perform lexical lookups subconsciously. These gestures are very different to motor movements and are much longer, more complex and relate more to the lexical information in the speech. To portray these ideas in this project 
+There are two types of gestures that relate to speech. \cite{lexical_gestures} The first are motor movements which are typically simple, brief, repetitive and have a high correlation with prosodic features. The other type are lexical movements, gestures that help the speaker mentally perform lexical lookups subconsciously. These gestures are very different to motor movements and are much longer, more complex and relate more to the lexical information in the speech. To portray these ideas in this project, unique words that are not common should cause the avatar to tilt their head. This is similar to the theory that eye movements can aid with memory recall. \cite{eye_movements}
 
-\cite{kendon} Gesture as Utterance\\
+\section{Text analysis with Festival}
 
-\section{Text analysis}
+Festival applies various Natural Language Processing techniques to the text to generate information  so that it can synthesise speech.  There are many steps in this pipeline, each adding a little bit more information to the text before Festival can then apply signal processing to generate audio. 
+
+\subsubsection{Tokenisation \&Parts of speech tagging}
+
+\subsubsection{Phrase Break Predicition}
+
+\subsubsection{Pohnetics \& Phonology}
+- generating pronunciations\\
+- letter to sound rules\\
+- syllabification\\
+- durations based on CART trees\\
+
+Festival generates pronunciations by performing syllabification, breaking the sentences and words into syllables and looking up phonemes in a lexicon to determine their pronunciations. Using this information the system can generate ToBi markers \cite{tobi}, a way of symbolically representing intonation. These symbols are useful as it they are conceptually easy to understand and reduce the number of parameters needed to understand intonation.
+
+\begin{figure}[h!]
+	\centering
+	\includegraphics[width=0.8\textwidth]{tobi.png}
+	\caption{ToBi Markers}
+\end{figure}
+
 
 \section{Head Motion Synthesis Systems}
 
@@ -215,12 +199,12 @@ The file basic\_predict.py takes in the dictionary containing all the informatio
 
 The prediction system adds the rotation information for each Euler angle to the dictionary of utterance data and returns said dictionary. That dictionary is then passed to output.py, which is a generic function that also accepts the utterance dictionary and a filename so that there was no need to re-implement and output function for each system and also allowed for comparison between the systems without necessarily saving them to file allowing rapid prototyping.
 
-\begin{figure}
-	\includegraphics[width=0.3\textwidth]{head.png}
-	\includegraphics[width=0.3\textwidth]{head.png}
-	\includegraphics[width=0.3\textwidth]{head.png}
-	\caption{Frames from basic system preview}
-\end{figure}
+%\begin{figure}
+%	\includegraphics[width=0.3\textwidth]{head.png}
+%	\includegraphics[width=0.3\textwidth]{head.png}
+%	\includegraphics[width=0.3\textwidth]{head.png}
+%	\caption{Frames from basic system preview}
+%\end{figure}
 
 As mentioned, the basic system only took one axis into account and so only altered the "Roll" Euler angle. This system although simple, showed promising results and provided the workflow to have a working system that synthesised head motions, saved them into a .head file containing the Euler angle change for each frame which can be read in by the PoserPython script and assigned to character to be rendered out.
 
@@ -232,25 +216,23 @@ The basic system itself produced a natural nodding motion, but after having comp
 
 The next system was designed to assign random discrete numbers to each word in the utterance for all Euler angles and apply a form of smoothing to make the random assignment seem smooth and natural even though it was completely random. 
 
-%A system that procedurally generates random head motions would not normally have been considered but as there were some correlation to the words s
-
 \subsection{Smoothing}
 
 To synthesise smooth head motions between random points multiple interpolation algorithms were considered. Spherical Linear Interpolation (Slerp) was the first that was considered and was already used in similar research \cite{rigid_head_motion}. There was difficulty when trying to implement Slerp due to the choosing Euler angles as the unit of rotation. Euler angles are difficult to apply interpolation \cite{quartionions}, Slerp commonly uses Quartinions which are more complex. Another method of interpolation which was derived from Slerp which was considered was the Bezier Interpolation algorithm, invented by Pierre Bezier a french mathematician was much simpler to implement than Slerp.
 
-A recursive Bezier function was implemented which, given a list of points return a formula representing the a smooth interpolation between said points. Unlike Slerp, Bezier's smoothing algorithm doesn't take the interpolated line to the given points (Figure 4.4) which works well given this scenario. It helped to smooth out the randomness and generate natural motions. (Figure 4.5)
-
-The random system calculated a Bezier function for each of the Euler angles and returned a dictionary containing the Euler angle change for each frame of the animation which was passed to output.py.
+A recursive Bezier function was implemented which, given a list of points return a formula representing the a smooth interpolation between said points. Unlike Slerp, Bezier's smoothing algorithm doesn't take the interpolated line to the given points which works well given this scenario. It helped to smooth out the randomness and generate natural motions. (Figure 4.5)
 
 \begin{figure}
 	$$ B(t) = \sum_{i=0}^n {n \choose i} (1-t) t^i P^i $$
 	\caption{Recursive Bezier Definition} 
 \end{figure}
 
-\begin{figure}
-	\includegraphics[width=1\textwidth]{bezier_example.png}
-	\caption{Example of Bezier}
-\end{figure}
+The random system calculated a Bezier function for each of the Euler angles and returned a dictionary containing the Euler angle change for each frame of the animation which was passed to output.py.
+
+%\begin{figure}
+%	\includegraphics[width=0.7\textwidth]{bezier_example.png}
+%	\caption{Example of Bezier}
+%\end{figure}
 
 \begin{figure}
 	\includegraphics[width=.5\textwidth]{figure_1.png}
@@ -260,32 +242,32 @@ The random system calculated a Bezier function for each of the Euler angles and 
 
 \subsection{Introduction of noise}
 
-The output of the second system when mapped to a character in poser showed promise, the motions were smooth and looked like they could have been recorded from actual participants, however the motions produced were deemed too smooth and approached the Uncanny valley looking unnatural.
+The output of the second system when mapped to a character in poser showed promise, the motions were smooth and looked like they could have been recorded from actual participants, however the motions produced were deemed too smooth and approached the uncanny valley, looking unnatural.
 
 To counteract this issue a probability based assignment was introduced which adds or subtracts a very small percentage with the purpose of adding noise to the output. This reduced the feeling of the uncanny valley and lead to good initial results.
 
-\begin{figure}
-	\centering
-	\includegraphics[width=.3\textwidth]{fightclub1.png}
-	\includegraphics[width=.3\textwidth]{fightclub3.png}
-	\includegraphics[width=.3\textwidth]{fightclub4.png}
-	\caption{Frames from the random system visualisation}
-\end{figure}
+%\begin{figure}
+%	\centering
+%	\includegraphics[width=.3\textwidth]{fightclub1.png}
+%	\includegraphics[width=.3\textwidth]{fightclub3.png}
+%	\includegraphics[width=.3\textwidth]{fightclub4.png}
+%	\caption{Frames from the random system visualisation}
+%\end{figure}
 
 \section{Rule-Based System}
 
 The Rule-Based system uses the output from Festival to apply manually written rules in order to synthesise head motions. Having considered the initial results of the previous two system the third built upon those ideas integrating with the rules derived from the multiple hypotheses outlined in chapter 3.
 
+As there if not a 1 to 1 mappings between head motions and the words found in speech, the rule-based system removes stop words : words that are very common or are short function words like 'the', 'and' and 'which'. The system used the list of stop words from the NLTK library.
+
 \subsection{Using the information from festival}
 
-- Removed stop words as there is not a 1-1 mapping between words and head motions \\
-
 \subsection{Parametric Smoothing}
-- Felt Bezier did not look like natural head motions \\
-- Comparison with data looked too smooth even with noise \\
-- Moved towards First Order equations \\
-- commonly used in electronics \\
-- felt it aligned with recorded head motions more\\
+%- Felt Bezier did not look like natural head motions \\
+%- Comparison with data looked too smooth even with noise \\
+%- Moved towards First Order equations \\
+%- commonly used in electronics \\
+%- felt it aligned with recorded head motions more\\
 
 One of the drawbacks from the initial reviews of the random system was that Bezier smoothing does not look like natural head motions. Having compared the output from the random system to the data recordings, the videos seemed to be more sharp and discontinuous, initially while smoothing out toward the end of the motion. The observed effect was similar to that of a first order differential equation, commonly used in electronics to represent the power in a circuit. Rising very quickly to begin with but slowing and smoothing off before reaching the desire level of output. 
 
@@ -293,9 +275,9 @@ One of the drawbacks from the initial reviews of the random system was that Bezi
 	\centering
 	$$ Y = K.A * (1 - e^{\sfrac{-t}{T}})$$
 	\\
-	K.A = Steady State Gain\\
-	T = Time Constant\\
-	t = time\\
+	%K.A = Steady State Gain\\
+	%T = Time Constant\\
+	%t = time\\
 	
 	\caption{First Order Equation Definition} 
 \end{figure}
