@@ -61,11 +61,11 @@ The task for the project was as follows: Using only text transcriptions of speec
 
 The data used for the project was data recordings from the Centre of Speech and Technology Research at Edinburgh University. The recordings consisted of optical motion capture sessions in which participants wore 4 reflective markers on their torso and a hat with 3 reflective markers. There were 7 V100:R2 cameras that tracked the reflective markers at a sampling rate of 100Hz. Participants were asked to read out transcriptions of fairy tales.
 
-%\begin{figure}[h!]
-%	\centering
-%	\includegraphics[width=.5\textwidth]{mocap.png}
-%	\caption{Setup of the mo-cap environment}
-%\end{figure}
+\begin{figure}[h!]
+	\centering
+	\includegraphics[width=.7\textwidth]{mocap.png}
+	\caption{Setup of the mo-cap environment}
+\end{figure}
 
 \section{Euler angles}
 
@@ -91,9 +91,31 @@ With a scripting plug-in for Python called PoserPython, \cite{poser_python} allo
 		\caption{Overview of Poser Pro}
 \end{figure}
 
-% ============================================================= %
+\section{Facial Animation Approaches}
+
+- Speech Driven Head Motion Synthesis \cite{speech_driven_head_motion}\\
+- Facial Animation and Head Motions driven by speech acoustics \cite{facial_animation_acoustics}\\
+- Expressive Speech - driven facial animation \cite{expressive_speech_animation}\\
+- Rigid Head Motion \cite{rigid_head_motion} \\
+- Lip motion from text \cite{lip_motion}
+
+\section{Subjective Evaluation Approaches}
+
+\subsection{Mean Opinion Score - MOS}
+\cite{mos}
+\subsection{Preference Test}
+\subsubsection{AB Test}
+\subsubsection{ABX Text}
+
+\subsection{Multiple Stimuli with Hidden Reference and Anchor - MUSHRA}
+
+\cite{mushra}
+
+% ============================================================ %
+
 \chapter{Text-Driven Head Motion Synthesis}
 % This will be the theoretical implementation details 
+% There needs to be a system architechture map somewhere here.
 
 The goal of this project was to develop a system that was capable of synthesising life-like, realistic head motions from transcribed speech. This project aimed to developed a system that was capable of synthesising head motions given just the text. In order to to this hypotheses about the relation of head motion events and speech content were introduced. The system built on these hypotheses, linking them together in order to synthesis the final head motions. Text itself is very limited in information, so in order to have richer input data the transcribed text would be passed through a Text to Speech system which would apply natural language processing techniques in order to synthesise speech. 
 
@@ -122,13 +144,15 @@ Sentiment or emotion in speech has various effects on head motions. In a study I
 There are two types of gestures that relate to speech. \cite{lexical_gestures} The first are motor movements which are typically simple, brief, repetitive and have a high correlation with prosodic features. The other type are lexical movements, gestures that help the speaker mentally perform lexical lookups subconsciously. These gestures are very different to motor movements and are much longer, more complex and relate more to the lexical information in the speech. To portray these ideas in this project, unique words that are not common should cause the avatar to tilt their head. This is similar to the theory that eye movements can aid with memory recall. \cite{eye_movements}
 
 \section{Text analysis with Festival}
+TALK ABOUT THE INFORMATION USEFUL TO THE PROJECT \\
+WHAT DATA TO USE AND WHY\\
+
 
 Festival applies various Natural Language Processing techniques to the text to generate information  so that it can synthesise speech.  There are many steps in this pipeline, each adding a little bit more information to the text before Festival can then apply signal processing to generate audio. 
 
 The first stage in the Text to Speech pipeline is the text processing. Festival breaks the text up into more suitable units for processing, for example expanding abbreviations. Then Parts-of-Speech tags are assigned to the units, these POS tags indicate what type of word it is and how it relates to the overall structure of the sentence allowing for phrase break prediction.
 
 Phrase break prediction assigns a break strength to each unit, which highlights where the phrases are in the sentences. Phrase break predictors are usually taggers trained on annotated data and are accurate.
-
 
 
 Festival generates pronunciations by performing syllabification, breaking the sentences and words into syllables and looking up phonemes in a lexicon to determine their pronunciations. Using this information the system can generate ToBi markers \cite{tobi}, a way of symbolically representing intonation. These symbols are useful as it they are conceptually easy to understand and reduce the number of parameters needed to understand intonation.
@@ -191,6 +215,10 @@ The head motion synthesis was developed as three separate modules, increasing in
 
 \section{Basic System} 
 
+NEED TO RESULTS FROM RECORDINGS \\
+EXPLAIN THIS WAS SIMILAR TO SINE WAVE \\
+EXPALIN WHY CHOICE WAS REASONABLE \\
+
 \subsection{Trignomietric Functions}
 
 As outlined in chapter 3 the most common occurring head motion in dialogue is the nod which was reflected in the analysis of the recorded motion data. This implementation of this hypothesis is the baseline system. It aimed to synthesise a natural nodding motion distributed across the length of the utterance. The nodding motion is a smooth repetitive oscillation of the head along one axis so we represented this using the trigonometric sine function. 
@@ -210,6 +238,10 @@ As mentioned, the basic system only took one axis into account and so only alter
 
 \section{Random System}
 
+Low correlation NOT no correlation.\\
+Describe what value used. \\ between (0 \&100)\\
+For each axis (half scaling for non nods)\\
+
 The basic system itself produced a natural nodding motion, but after having compared the output of the basic system with the motion recordings, especially comparing different individuals speaking the same sentence there didn't seem to be any kind of correlation between what the participants were saying and how their head movements changed. To represent this finding the second system moved away from trigonometric functions.
 
 \subsection{Discrete Head Motions}
@@ -222,8 +254,10 @@ To synthesise smooth head motions between random points multiple interpolation a
 
 A recursive Bezier function was implemented which, given a list of points return a formula representing the a smooth interpolation between said points. Unlike Slerp, Bezier's smoothing algorithm doesn't take the interpolated line to the given points which works well given this scenario. It helped to smooth out the randomness and generate natural motions. (Figure 4.5)
 
+EXPLAIN BEZIER PARAMETERS \\
+
 \begin{figure}
-	$$ B(t) = \sum_{i=0}^n {n \choose i} (1-t) t^i P^i $$
+	$$ B(t) = \sum_{i=0}^n {n \choose i} (1-t) t^i P^i $$ THIS IS BAD FIX IT\\
 	\caption{Recursive Bezier Definition} 
 \end{figure}
 
@@ -245,6 +279,9 @@ The random system calculated a Bezier function for each of the Euler angles and 
 The output of the second system when mapped to a character in poser showed promise, the motions were smooth and looked like they could have been recorded from actual participants, however the motions produced were deemed too smooth and approached the uncanny valley, looking unnatural.
 
 To counteract this issue a probability based assignment was introduced which adds or subtracts a very small percentage with the purpose of adding noise to the output. This reduced the feeling of the uncanny valley and lead to good initial results.
+
+UNIFORM OR GAUSSIAN \\
+WHAT VALUES USED \\
 
 %\begin{figure}
 %	\centering
