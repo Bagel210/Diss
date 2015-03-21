@@ -93,21 +93,38 @@ With a scripting plug-in for Python called PoserPython, \cite{poser_python} allo
 
 \section{Facial Animation Approaches}
 
-- Speech Driven Head Motion Synthesis \cite{speech_driven_head_motion}\\
-- Facial Animation and Head Motions driven by speech acoustics \cite{facial_animation_acoustics}\\
-- Expressive Speech - driven facial animation \cite{expressive_speech_animation}\\
+- Speech Driven Head Motion Synthesis \cite{speech_driven_head_motion} \\
+- Facial Animation and Head Motions driven by speech acoustics \cite{facial_animation_acoustics} \\
+- Expressive Speech - driven facial animation \cite{expressive_speech_animation} \\
 - Rigid Head Motion \cite{rigid_head_motion} \\
-- Lip motion from text \cite{lip_motion}
+- Lip motion from text \cite{lip_motion} \\
 
 \section{Subjective Evaluation Approaches}
+- Talk about what you will be evaluating in the project \\
+
+Subjective analysis is problematic due to evaluation being based on feelings and not measurable facts. This is a problem because 'feelings' and the evaluation itself can vary widely, even in the same person due to external factors like the time of day. Care must be taken when designing subjective evaluation environments and tests to mitigate variability and many tests need to be conducted in order to account for the variability. 
+
+There are many different approaches to performing subjective analysis, each with their pros and cons. 
+
+\subsection{Preference Tests}
+
+Preference tests are very simple to conduct. A participant is presented with two video samples and asked "Which do you prefer?". This is an example of an AB test using only two samples. AB testing is very simple to conduct and visualise the results and so is very common when evaluating samples of video or audio. However, if there were more than two samples then the time needed to evaluate all samples would be significantly higher as each pair combination of samples would need to be conducted.
+
+Another type of preference testing is ABX testing, \citE{abx_testing} where the participant is shown three videos (A, B and X) as is asked "Is X more like A or B". Again, as mentioned with AB testing, if there is a large number of samples to evaluate this process can take a lot of time.
+
+Preference testing is suitable for evaluating a small number of samples, simple to conduct and produces easy to understand results. It's main drawback is the time needed to perform the evaluations which increase quickly as the number of samples increase.
 
 \subsection{Mean Opinion Score - MOS}
-\cite{mos}
-\subsection{Preference Test}
-\subsubsection{AB Test}
-\subsubsection{ABX Text}
 
-\subsection{Multiple Stimuli with Hidden Reference and Anchor - MUSHRA}
+The Mean Opinions Score (MOS) is a test to obtain the user's subjective measurement of quality in relation to a particular feature or concept. Generally, users will be asked to rate something on a numerical scale like 1 to 5, 1 being the worst or 'bad' and 5 being the best or 'very good'. This method is fairly trivial and is a very common form of subjective evaluation due to is ease and results from MOS testing are easier to analyse than preference tests due to their values being numerical.
+
+When evaluating 'Naturalness' where the concept is not so clearly defined, the MOS test is commonly used as the method of subjective analysis. \cite{mos}
+
+\subsection{MUSHRA : Multiple Stimuli with Hidden Reference and Anchor}
+
+- The main advantage over the Mean Opinion Score (MOS) methodology (which serves a similar purpose) is that it requires fewer participants to obtain statistically significant results.
+
+- Also, the 0-100 scale makes it possible to rate very small differences. 
 
 \cite{mushra}
 
