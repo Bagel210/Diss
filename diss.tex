@@ -100,33 +100,30 @@ With a scripting plug-in for Python called PoserPython, \cite{poser_python} allo
 - Lip motion from text \cite{lip_motion} \\
 
 \section{Subjective Evaluation Approaches}
-- Talk about what you will be evaluating in the project \\
 
-Subjective analysis is problematic due to evaluation being based on feelings and not measurable facts. This is a problem because 'feelings' and the evaluation itself can vary widely, even in the same person due to external factors like the time of day. Care must be taken when designing subjective evaluation environments and tests to mitigate variability and many tests need to be conducted in order to account for the variability. 
+This project used subjective evaluation to determine how natural the synthesised head motions were, according to humans. This was important because the project aimed to synthesise head motions that were natural for humans in order to be used in Embodied Conversational Agents, so humans had to deem the head motions as natural.
+
+Subjective analysis is problematic due to evaluation being based on feelings and not measurable facts. This is a problem because 'feelings' and the evaluation itself can vary widely, even in the same person due to external factors like the time of day. Care must be taken when designing subjective evaluation environments and tests to mitigate variability and many tests need to be conducted in order to account for the this. 
 
 There are many different approaches to performing subjective analysis, each with their pros and cons. 
 
 \subsection{Preference Tests}
 
-Preference tests are very simple to conduct. A participant is presented with two video samples and asked "Which do you prefer?". This is an example of an AB test using only two samples. AB testing is very simple to conduct and visualise the results and so is very common when evaluating samples of video or audio. However, if there were more than two samples then the time needed to evaluate all samples would be significantly higher as each pair combination of samples would need to be conducted.
-
-Another type of preference testing is ABX testing, \citE{abx_testing} where the participant is shown three videos (A, B and X) as is asked "Is X more like A or B". Again, as mentioned with AB testing, if there is a large number of samples to evaluate this process can take a lot of time.
+Preference tests are very simple to conduct. A participant is presented with two video samples and asked "Which do you prefer?". This is an example of an AB test using two samples. AB testing is very simple to conduct and so is very common when evaluating samples of video or audio. However, if there were more than two samples then the time needed to evaluate all samples would be significantly higher as each pair combination of samples would need to be conducted. ABX testing, \cite{abx_testing} is where the participant is shown three videos (A, B and X) and is asked \"Is X more like A or B\". This approach is an alternative to AB but runs into the same issues with time constraints.
 
 Preference testing is suitable for evaluating a small number of samples, simple to conduct and produces easy to understand results. It's main drawback is the time needed to perform the evaluations which increase quickly as the number of samples increase.
 
 \subsection{Mean Opinion Score - MOS}
 
-The Mean Opinions Score (MOS) is a test to obtain the user's subjective measurement of quality in relation to a particular feature or concept. Generally, users will be asked to rate something on a numerical scale like 1 to 5, 1 being the worst or 'bad' and 5 being the best or 'very good'. This method is fairly trivial and is a very common form of subjective evaluation due to is ease and results from MOS testing are easier to analyse than preference tests due to their values being numerical.
-
 When evaluating 'Naturalness' where the concept is not so clearly defined, the MOS test is commonly used as the method of subjective analysis. \cite{mos}
+
+The Mean Opinions Score (MOS) is a test to obtain the user's subjective measurement of quality in relation to a particular feature or concept. Generally, users will be asked to rate something on a numerical scale like 1 to 5, 1 being the worst or 'bad' and 5 being the best or 'very good'. This method is fairly trivial and is a very common form of subjective evaluation due to is ease. Results from MOS testing are easier to analyse than preference tests due to their values being numerical.
 
 \subsection{MUSHRA : Multiple Stimuli with Hidden Reference and Anchor}
 
-- The main advantage over the Mean Opinion Score (MOS) methodology (which serves a similar purpose) is that it requires fewer participants to obtain statistically significant results.
+Multiple Stimuli with hidden Reference and Anchor is another methodology for subjective evaluation more commonly referred to as MUSHRA \cite{mushra}. In a MUSHRA test, the subject is shown multiple stimuli are available at the same time which the subject can switch between and go back to and then gives a rating from 1-100 depending on how the subject was asked to rate the stimuli. Typically a MUSHRA test is used for evaluating audio quality \cite{mushra_bbc} where the subject is given 5 audio clips to listen to and rate the quality on a scale of 1 to 100.
 
-- Also, the 0-100 scale makes it possible to rate very small differences. 
-
-\cite{mushra}
+The main advantage of MUSHRA over the other two method of subjective evaluation is that many different stimuli can be evaluated at once meaning MUSHRA can scale up the number of samples easily with little change in the time taken. This also means that MUSHRA requires less participants in order to obtain significant results in comparison to MOS even though they are similar in their design.
 
 % ============================================================ %
 
@@ -345,7 +342,7 @@ To evaluate the Text-Driven Head Motion System I performed both subjective analy
 
 \subsection{Design Overview}
 
-The evaluation system was designed with many factors taken into account. To effectively isolate the head motions for evaluations and make sure that participants were not affected or influenced by other factors, care was taken to ensure that as much as possible would remain constant, only changing the head motions.
+The subjective evaluation was derived from the MUSHRA methodology outlined in chapter 2. It was designed with many factors taken into account. To effectively isolate the head motions for evaluations and make sure that participants were not affected or influenced by other factors, care was taken to ensure that as much as possible would remain constant, only changing the head motions.
 
 Volunteers were shown 5 different video clips and were asked to evaluate how natural they felt the head motions were. Of the 5 videos, 3 were synthesised from the Text Driven Talking Heads system and 2 videos were taken from real recordings. Participants were not told anything about the videos and so did not know if the videos were synthesised or real. This was to eliminate any potential bias that could be introduced by telling the participants some of the videos were real and some were not and made sure that the participants focused on the task.
 
