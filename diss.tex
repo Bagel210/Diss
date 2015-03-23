@@ -91,13 +91,27 @@ With a scripting plug-in for Python called PoserPython, \cite{poser_python} allo
 		\caption{Overview of Poser Pro}
 \end{figure}
 
-\section{Facial Animation Approaches}
+\section{Related Works}
+
+Creating systems that are capable of synthesising life-life human motions as facial animations is a large area of computer graphics research due to it's rapid increase in demand in computer games, feature films and communications.
+
+\subsection{Head Motion Synthesis Based on Speech}
 
 - Speech Driven Head Motion Synthesis \cite{speech_driven_head_motion} \\
 - Facial Animation and Head Motions driven by speech acoustics \cite{facial_animation_acoustics} \\
 - Expressive Speech - driven facial animation \cite{expressive_speech_animation} \\
 - Rigid Head Motion \cite{rigid_head_motion} \\
+
+- TTS \cite{may_i_talk_to_you}
+
+
+\subsection{Text Analysis for Facial Animation}
+
 - Lip motion from text \cite{lip_motion} \\
+
+\subsection{Other}
+
+
 
 \section{Subjective Evaluation Approaches}
 
@@ -122,6 +136,8 @@ The Mean Opinions Score (MOS) is a test to obtain the user's subjective measurem
 \subsection{MUSHRA : Multiple Stimuli with Hidden Reference and Anchor}
 
 Multiple Stimuli with hidden Reference and Anchor is another methodology for subjective evaluation more commonly referred to as MUSHRA \cite{mushra}. In a MUSHRA test, the subject is shown multiple stimuli are available at the same time which the subject can switch between and go back to and then gives a rating from 1-100 depending on how the subject was asked to rate the stimuli. Typically a MUSHRA test is used for evaluating audio quality \cite{mushra_bbc} where the subject is given 5 audio clips to listen to and rate the quality on a scale of 1 to 100.
+
+- TALK ABOUT ANCHORS
 
 The main advantage of MUSHRA over the other two method of subjective evaluation is that many different stimuli can be evaluated at once meaning MUSHRA can scale up the number of samples easily with little change in the time taken. This also means that MUSHRA requires less participants in order to obtain significant results in comparison to MOS even though they are similar in their design.
 
@@ -164,10 +180,9 @@ WHAT DATA TO USE AND WHY\\
 
 Festival applies various Natural Language Processing techniques to the text to generate information  so that it can synthesise speech.  There are many steps in this pipeline, each adding a little bit more information to the text before Festival can then apply signal processing to generate audio. 
 
-The first stage in the Text to Speech pipeline is the text processing. Festival breaks the text up into more suitable units for processing, for example expanding abbreviations. Then Parts-of-Speech tags are assigned to the units, these POS tags indicate what type of word it is and how it relates to the overall structure of the sentence allowing for phrase break prediction.
+The first stage in the Text to Speech pipeline is the text processing. Festival breaks the text up into more suitable units for processing, for example expanding abbreviations. Then Parts-of-Speech tags are assigned to the units, these POS tags indicate what type of word it is and how it relates to the overall structure of the sentence allowing for phrase break prediction and are represented as a series of capital letters. For example "NNP" is a pos tag indicating that the word is a singular proper noun.
 
-Phrase break prediction assigns a break strength to each unit, which highlights where the phrases are in the sentences. Phrase break predictors are usually taggers trained on annotated data and are accurate.
-
+Phrase break prediction assigns a break strength to each unit, which highlights where the phrases are in the sentences. Phrase break predictors are usually taggers trained on annotated data and are accurate. This is shown in Festival as a series of 
 
 Festival generates pronunciations by performing syllabification, breaking the sentences and words into syllables and looking up phonemes in a lexicon to determine their pronunciations. Using this information the system can generate ToBi markers \cite{tobi}, a way of symbolically representing intonation. These symbols are useful as it they are conceptually easy to understand and reduce the number of parameters needed to understand intonation.
 
@@ -210,9 +225,22 @@ return utterance
 The data received from the Festival output was a large block of text containing information about the utterance it had processed (See Figure 4.1). This data was fed into a text processing module implemented from scratch to extract the important information regarding the utterance and build a dictionary using these elements to link the individual words with their properties like parts-of-speech tags and phrase break strength.
 
 \begin{figure}
-	\includegraphics[width=1.0\textwidth]{festival_output.png}
+%	\includegraphics[width=1.0\textwidth]{festival_output.png}
+	\begin{lstlisting}
+		id _23 ; name grandmother ;
+			pos_index 8 ;
+			pos_index_score 0 ;
+			pos nn ; 
+			phr_pos n ; 
+			phrase_score -13.43 ; 
+			pbreak_index 0 ; 
+			pbreak_index_score 0 ; 
+			pbreak B ; 
+			blevel 3 ; 
+	\end{lstlisting}
 	\caption{An Excerpt from the festival analysis output}
 \end{figure}
+
 
 Normally Festival is run as an interactive interface. The system used a LISP script called "text2utt.sh" that came with the installation, allowing it to run batch commands in "Text to Speech mode" without entering an interactive state. This was perfect for the project but in order to extract duration information correctly and save the outputted speech to audio files the script had to be altered by adding in the following code. 
 
@@ -231,7 +259,7 @@ The head motion synthesis was developed as three separate modules, increasing in
 
 NEED TO RESULTS FROM RECORDINGS \\
 EXPLAIN THIS WAS SIMILAR TO SINE WAVE \\
-EXPALIN WHY CHOICE WAS REASONABLE \\
+EXPLAIN WHY CHOICE WAS REASONABLE \\
 
 \subsection{Trignomietric Functions}
 
@@ -252,15 +280,13 @@ As mentioned, the basic system only took one axis into account and so only alter
 
 \section{Random System}
 
-Low correlation NOT no correlation.\\
-Describe what value used. \\ between (0 \&100)\\
-For each axis (half scaling for non nods)\\
-
-The basic system itself produced a natural nodding motion, but after having compared the output of the basic system with the motion recordings, especially comparing different individuals speaking the same sentence there didn't seem to be any kind of correlation between what the participants were saying and how their head movements changed. To represent this finding the second system moved away from trigonometric functions.
+The basic system itself produced a natural nodding motion, but after having compared the output of the basic system with the motion recordings, especially comparing different individuals speaking the same sentence there were a low correlation between what the participants were saying and how their head movements changed. To represent this finding the second system moved away from trigonometric functions.
 
 \subsection{Discrete Head Motions}
 
 The next system was designed to assign random discrete numbers to each word in the utterance for all Euler angles and apply a form of smoothing to make the random assignment seem smooth and natural even though it was completely random. 
+
+Each word in the utterance was assigned Euler values, ranging from -10 to +10 for "Roll" and -5 to +5 for the "Pitch" and "Yaw" as the "Roll" relates to nodding motions which are found more frequently head motions. The random function was implemented using Python's random library.
 
 \subsection{Smoothing}
 
@@ -268,19 +294,21 @@ To synthesise smooth head motions between random points multiple interpolation a
 
 A recursive Bezier function was implemented which, given a list of points return a formula representing the a smooth interpolation between said points. Unlike Slerp, Bezier's smoothing algorithm doesn't take the interpolated line to the given points which works well given this scenario. It helped to smooth out the randomness and generate natural motions. (Figure 4.5)
 
-EXPLAIN BEZIER PARAMETERS \\
-
 \begin{figure}
-	$$ B(t) = \sum_{i=0}^n {n \choose i} (1-t) t^i P^i $$ THIS IS BAD FIX IT\\
+	$$ B_{P_0}(t) = P_0 $$
+	$$ B(t) = B_{P_0P_1..P_n}(t) = (1-t) B_{P_0P_1..P_n-1}(t) + tB_{P_1P_2..P_n} (t)$$
 	\caption{Recursive Bezier Definition} 
+	\centering
+	\includegraphics[width=0.8\textwidth]{bezier_general.png}
+	\caption{General Form}
 \end{figure}
 
 The random system calculated a Bezier function for each of the Euler angles and returned a dictionary containing the Euler angle change for each frame of the animation which was passed to output.py.
 
-%\begin{figure}
-%	\includegraphics[width=0.7\textwidth]{bezier_example.png}
-%	\caption{Example of Bezier}
-%\end{figure}
+\begin{figure}
+	\includegraphics[width=1.0\textwidth]{bezier_example.png}
+	\caption{Example of Bezier}
+\end{figure}
 
 \begin{figure}
 	\includegraphics[width=.5\textwidth]{figure_1.png}
@@ -293,9 +321,6 @@ The random system calculated a Bezier function for each of the Euler angles and 
 The output of the second system when mapped to a character in poser showed promise, the motions were smooth and looked like they could have been recorded from actual participants, however the motions produced were deemed too smooth and approached the uncanny valley, looking unnatural.
 
 To counteract this issue a probability based assignment was introduced which adds or subtracts a very small percentage with the purpose of adding noise to the output. This reduced the feeling of the uncanny valley and lead to good initial results.
-
-UNIFORM OR GAUSSIAN \\
-WHAT VALUES USED \\
 
 %\begin{figure}
 %	\centering
@@ -312,6 +337,8 @@ The Rule-Based system uses the output from Festival to apply manually written ru
 As there if not a 1 to 1 mappings between head motions and the words found in speech, the rule-based system removes stop words : words that are very common or are short function words like 'the', 'and' and 'which'. The system used the list of stop words from the NLTK library.
 
 \subsection{Using the information from festival}
+
+WHAT VALUES WERE USED
 
 \subsection{Parametric Smoothing}
 %- Felt Bezier did not look like natural head motions \\
