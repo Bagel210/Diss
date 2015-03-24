@@ -95,22 +95,24 @@ With a scripting plug-in for Python called PoserPython, \cite{poser_python} allo
 
 Creating systems that are capable of synthesising life-life human motions as facial animations is a large area of computer graphics research due to it's rapid increase in demand in computer games, feature films and communications.
 
-\subsection{Head Motion Synthesis Based on Speech}
+\subsection{Animation Synthesis Based on Speech}
 
-- Speech Driven Head Motion Synthesis \cite{speech_driven_head_motion} \\
-- Facial Animation and Head Motions driven by speech acoustics \cite{facial_animation_acoustics} \\
-- Expressive Speech - driven facial animation \cite{expressive_speech_animation} \\
-- Rigid Head Motion \cite{rigid_head_motion} \\
+There are a number of system that use the paralinguistic information in speech to synthesise head motions and other facial animations. Many of these approaches use the prosodic information from speech such as the intonation in order to derive natural head motions. These approaches are data-driven approaches, applying machine learning techniques in order to model a system to synthesise head motions and facial animation.
 
-- TTS \cite{may_i_talk_to_you}
+Hidden Markov Models are finite state machines with probabilistic state transitions that can be trained on data which are used in many machine learning based classification tasks \cite{hmms}. They are generative model of data and so can be used to synthesise similar data to what they have been trained on, because of this HMM's have been used in many of the systems as method of training data-driven systems \cite{puppetry}.  HMM's are very popular for data driven approaches as they eliminate the need to keep a large database of data as they can be trained fairly quickly \cite{expressive_speech_animation}. 
 
+G. Hofer designed the Speech Driven Head Motion Synthesis system \cite{speech_driven_head_motion} in which a HMM based system was modelled to synthesise natural head motions by extracting important information from the speech such as the F0 values and the Mel-Frequency Cepstral Coefficients which provide a unique fingerprint of the speech derived from the Fourier transform and is commonly used in signal processing. This approach produced head motions that were within a 70\% accuracy to test data. Similarly C. Busso designed a system to synthesise head motions using HMM's to synthesise head motions using speech. \cite{busso_rigid} The system generated discrete vectors for the head notions and applied interpolation as a form of smoothing to create realistic head motions. The system showed that HMM's were capable of capturing the relationship between head motions and speech data.
+
+System have also been developed that aim to synthesise facial movements to express emotions, rather than just synthesising natural head motions. Y. Cao designed the Expressive Speech-Driven Facial animation system  \cite{expressive_speech_animation} in which they used similar machine learning techniques to discover the mapping between F0 and head motions. The system takes in recorded speech, extracts key features such as the phoneme sequence and spectral envelope, performs emotion analysis and executes a graph search through their Anime data structure, designed to combine utterances with their recorded head motion. As outlined in the paper the system needs a lot of training data which is expensive to record. 
 
 \subsection{Text Analysis for Facial Animation}
 
+All of the approaches to facial animation have used speech data as their primary source of information, but there are also system in place that perform facial animation synthesis with just text as their primary source of information, without the need for speech.
+
+
+- TTS \cite{may_i_talk_to_you}
+- Face FX
 - Lip motion from text \cite{lip_motion} \\
-
-\subsection{Other}
-
 
 
 \section{Subjective Evaluation Approaches}
@@ -305,10 +307,10 @@ A recursive Bezier function was implemented which, given a list of points return
 
 The random system calculated a Bezier function for each of the Euler angles and returned a dictionary containing the Euler angle change for each frame of the animation which was passed to output.py.
 
-\begin{figure}
-	\includegraphics[width=1.0\textwidth]{bezier_example.png}
-	\caption{Example of Bezier}
-\end{figure}
+%\begin{figure}
+%	\includegraphics[width=1.0\textwidth]{bezier_example.png}
+%	\caption{Example of Bezier}
+%\end{figure}
 
 \begin{figure}
 	\includegraphics[width=.5\textwidth]{figure_1.png}
