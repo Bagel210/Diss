@@ -204,6 +204,13 @@ Now that the system has a linguistic specification of the sentence like the phon
 
 \section{Head Motion Synthesis System}
 
+\begin{figure}
+	\centering
+	\includegraphics[width=0.6\textwidth]{head_with_euler.png}
+	\caption{How Euler Angles affect head rotation.}
+\end{figure}
+
+
 \subsection{Outline}
 
 \begin{figure}
@@ -330,8 +337,9 @@ The random system calculated a Bezier function for each of the Euler angles and 
 
 The output of the second system when mapped to a character in poser showed promise, the motions were smooth and looked like they could have been recorded from actual participants, however the motions produced were deemed too smooth and approached the uncanny valley, looking unnatural.
 
-To counteract this issue a probability based assignment was introduced which adds or subtracts a very small percentage with the purpose of adding noise to the output. This reduced the feeling of the uncanny valley and lead to good initial results.
+To counteract this issue a probability based assignment was introduced which adds or subtracts a very small percentage with the purpose of adding noise to the output. This was done with the use of python's in built random library, functions in the library are based on the random() function which generates a random float uniformly in the range of 0.0 to 1.0. The values used for noise ranged from -0.01 to +0.01.
 
+The introduction of noise reduced the feeling of the uncanny valley in the initial results.
 %\begin{figure}
 %	\centering
 %	\includegraphics[width=.3\textwidth]{fightclub1.png}
