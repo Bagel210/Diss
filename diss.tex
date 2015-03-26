@@ -177,7 +177,7 @@ Sentiment or emotion in speech has various effects on head motions. In a study I
 
 There are two types of gestures that relate to speech. \cite{lexical_gestures} The first are motor movements which are typically simple, brief, repetitive and have a high correlation with prosodic features. The other type are lexical movements, gestures that help the speaker mentally perform lexical lookups subconsciously. These gestures are very different to motor movements and are much longer, more complex and relate more to the lexical information in the speech. To portray these ideas in this project, unique words that are not common should cause the avatar to tilt their head. This is similar to the theory that eye movements can aid with memory recall. \cite{eye_movements}
 
-- NEGATION
+- NEGATION \cite{negative_sentiment}
 
 Shakes of the head are very commonly associated with negation in speech.
 
@@ -397,15 +397,13 @@ The system uses the NLTK \cite{nltk} to build a Frequency Distribution of all th
 %\end{lstlisting}
 %	
 
-\subsubsection{Negation}
-- Negation words - \cite{neg_corpus} \cite{negation_corpus_1} \cite{negation_corpus_2}
-
 \subsubsection{Sentiment Scaling}
 
-- Sentiment \\
 The rule based system performs sentiment analysis on the utterance. As NLTK does not come with an in built sentiment classifier other options were considered. 
 
 Sentiment Classifier \cite{senti_class} is a sentiment analysis tool based on NLTK and the SentiWordNet that assigns a positive and negative score to words in order to classify sentences.
+
+- Talk about it more.
 
 \begin{lstlisting}
 >>> from senti_classifier import senti_classifier
@@ -415,7 +413,8 @@ Sentiment Classifier \cite{senti_class} is a sentiment analysis tool based on NL
 0 0
 >>> 
 \end{lstlisting}
-The example shown above was a recreation of the example on the package's website. The sentences received scores that did not match the example on their website. This error was due to package constraints not being satisfied. Sentiment Classifier requires NLTK, Numpy and the SentiWordNet corpus. TextBlob \cite{textblob} was an alternative that did not rely on such package constrains and was far more lightweight than Sentiment Classifer, an example is presented below:
+The example shown above was a recreation of the example on the package's website. The sentences received scores that did not match the example on their website. This error was due to package constraints not being satisfied. Sentiment Classifier requires NLTK, Numpy and the SentiWordNet corpus. TextBlob \cite{textblob} was an alternative that did not rely on such package constrains and was far more lightweight than Sentiment Classifier. It assigns a sentiment score to a string of text between 1 and -1, 1 being an extremely positive sentiment and -1 being an extremely negative sentiment. An example of TextBlob is presented below.
+
 \begin{lstlisting}
 >>> from textblob import TextBlob
 >>> tb = TextBlob("I am very happy because of the nice weather")
@@ -423,23 +422,22 @@ The example shown above was a recreation of the example on the package's website
 Sentiment(polarity=0.8, subjectivity=1.0)
 \end{lstlisting}
 
+TextBlob was chosen to analyse the sentiment in the rule based system. The information, both the actual sentiment and the polarity was added to the information dictionary for reference.
 
+Negation is also a 
+- Negation words - \cite{neg_corpus} \cite{negation_corpus_1} \cite{negation_corpus_2}
 
+The system used a 
 
 \subsection{Parametric Smoothing}
-%- Felt Bezier did not look like natural head motions \\
-%- Comparison with data looked too smooth even with noise \\
-%- Moved towards First Order equations \\
-%- commonly used in electronics \\
-%- felt it aligned with recorded head motions more\\
 
 One of the drawbacks from the initial reviews of the random system was that Bezier smoothing does not look like natural head motions. Having compared the output from the random system to the data recordings, the videos seemed to be more sharp and discontinuous, initially while smoothing out toward the end of the motion. The observed effect was similar to that of a first order differential equation, commonly used in electronics to represent the power in a circuit. Rising very quickly to begin with but slowing and smoothing off before reaching the desire level of output. 
 
 \begin{figure}
 	\centering
-	$$ Y = K.A * (1 - e^{\sfrac{-t}{T}})$$
+	$$ Y =  K * (1 - e^{\sfrac{-t}{T}})$$
 	\\
-	K.A = Steady State Gain\\
+	K = Steady State Gain\\
 	T = Time Constant\\
 	t = time\\
 	
