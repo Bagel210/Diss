@@ -91,6 +91,10 @@ With a scripting plug-in for Python called PoserPython, \cite{poser_python} allo
 		\caption{Overview of Poser Pro}
 \end{figure}
 
+\section{Speech Features}
+
+F0
+
 \section{Related Works}
 
 Creating systems that are capable of synthesising life-life human motions as facial animations is a large area of computer graphics research due to it's rapid increase in demand in computer games, feature films and communications.
@@ -355,14 +359,42 @@ The Rule-Based system uses the output from Festival to apply manually written ru
 As there if not a 1 to 1 mappings between head motions and the words found in speech, the rule-based system removes stop words : words that are very common or are short function words like 'the', 'and' and 'which'. The system used the list of stop words from the NLTK library.
 
 \subsection{Using the information from festival}
+\subsubsection{Intionation}
 
-WHAT VALUES WERE USED\\
-- Intonation \\
-- Pos Tags \\
-- Break Strength \\
+Initially, the system was designed to store all of the information regarding the fundamental frequency (F0) from the Festival output. This was so that the system contained complete information about the intonation but this proved to be fairly complicated.
+\begin{lstlisting}
+151 id _113 ; f0 102.921 ; pos 0.22 ; 
+\end{lstlisting}
+F0 values were only available to the individual phonemes of each word, with only timing value to relate it back to where it belonged. In order to store all of the F0 values a lot of pre-processing was done to carefully assign each value to it's correct word in the proper order. During this pre-processing the system computing the minimum, maximum and average values for comparison.
+
+However, the information was difficult to work with due to the need for excessive pre-processing and so the system used the ToBi intonation tags from the Festival output in order to alter head motions based on the intonation. The ToBi tags proved to be very useful as they represented an overview for the intonation so the pre processing was reduced significantly.
+
+The ToBi tags were reduced down to solely their letter indicators "L" and "H" as their combination provided sufficient information regarding the intonation changes. For example, \"L*-L\%\" was reduced to \"LL\". Depending of the values of the ToBi tags a 'shift' value was added to the Euler angle change. If the tags were all \"L\" a shift value was subtracted, similarly if the tags were all \"H\", the shift value was added. 
+
+However, if the two ToBi tags were different for that word, the previous value would be 'shifted' to match the pattern and the current value would be shifted with an extra value. The default shift value was 5.0 change in the Euler angle, with an Extra 2.0 in the case of "L-H" tags or "H-L". The intonation changes affected only the "Roll" Euler angle which influenced nodding motions.
+
+\subsubsection{Break Strength}
+
+\begin{lstlisting}
+pbreak BB; pbreak B; pbreak NB;
+\end{lstlisting}
+
+As nodding motions were found at the end of phrases and phrase boundaries, the system was design to reset the "Roll" angle back to it's origin on strong phrase boundaries. That being phrase break values of "BB" as they were the strongest. This simple rule produced good results as the synthesised nodding motions returned to first position upon finishing the video, showing that the avatar is done speaking.
+
+\subsubsection{Uniqueness}
+
+As outlined in the hypotheses the system should reflect lexical lookups of unique words by \"tilting\" the head. Head tilts are reflected by the \"Pitch\" Euler angle.
+
+- Uniqueness look-up \\
+
+\subsubsection{Negation Lookup}
+
+- Negation words - \cite{neg_corpus} \cite{negation_corpus_1} \cite{negation_corpus_2}
+
+\subsubsection{Sentiment Scaling}
 
 - Sentiment \\
-- Uniqueness look-up \\
+
 
 \subsection{Parametric Smoothing}
 %- Felt Bezier did not look like natural head motions \\
@@ -377,9 +409,9 @@ One of the drawbacks from the initial reviews of the random system was that Bezi
 	\centering
 	$$ Y = K.A * (1 - e^{\sfrac{-t}{T}})$$
 	\\
-	%K.A = Steady State Gain\\
-	%T = Time Constant\\
-	%t = time\\
+	K.A = Steady State Gain\\
+	T = Time Constant\\
+	t = time\\
 	
 	\caption{First Order Equation Definition} 
 \end{figure}
