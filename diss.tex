@@ -177,6 +177,10 @@ Sentiment or emotion in speech has various effects on head motions. In a study I
 
 There are two types of gestures that relate to speech. \cite{lexical_gestures} The first are motor movements which are typically simple, brief, repetitive and have a high correlation with prosodic features. The other type are lexical movements, gestures that help the speaker mentally perform lexical lookups subconsciously. These gestures are very different to motor movements and are much longer, more complex and relate more to the lexical information in the speech. To portray these ideas in this project, unique words that are not common should cause the avatar to tilt their head. This is similar to the theory that eye movements can aid with memory recall. \cite{eye_movements}
 
+- NEGATION
+
+Shakes of the head are very commonly associated with negation in speech.
+
 \section{Text analysis with Festival}
 
 Festival applies various Natural Language Processing techniques to the text to generate information  so that it can synthesise speech.  There are many steps in this pipeline, each adding a little bit more information to the text before Festival can then apply signal processing to generate audio. 
@@ -341,16 +345,15 @@ The random system calculated a Bezier function for each of the Euler angles and 
 
 The output of the second system when mapped to a character in poser showed promise, the motions were smooth and looked like they could have been recorded from actual participants, however the motions produced were deemed too smooth and approached the uncanny valley, looking unnatural.
 
-To counteract this issue a probability based assignment was introduced which adds or subtracts a very small percentage with the purpose of adding noise to the output. This was done with the use of python's in built random library, functions in the library are based on the random() function which generates a random float uniformly in the range of 0.0 to 1.0. The values used for noise ranged from -0.01 to +0.01.
+To counteract this issue a probability based assignment was introduced which adds or subtracts a very small percentage with the purpose of adding noise to the output. This was done with the use of python's in built random library, functions in the library are based on the random() function which generates a random float uniformly in the range of 0.0 to 1.0. The values used for noise ranged from -0.01 to +0.01. The introduction of noise reduced the feeling of the uncanny valley in the initial results.
 
-The introduction of noise reduced the feeling of the uncanny valley in the initial results.
-%\begin{figure}
-%	\centering
-%	\includegraphics[width=.3\textwidth]{fightclub1.png}
-%	\includegraphics[width=.3\textwidth]{fightclub3.png}
-%	\includegraphics[width=.3\textwidth]{fightclub4.png}
-%	\caption{Frames from the random system visualisation}
-%\end{figure}
+\begin{figure}
+	\centering
+	\includegraphics[width=.3\textwidth]{fightclub1.png}
+	\includegraphics[width=.3\textwidth]{fightclub3.png}
+	\includegraphics[width=.3\textwidth]{fightclub4.png}
+	\caption{Frames from the random system visualisation}
+\end{figure}
 
 \section{Rule-Based System}
 
@@ -379,21 +382,48 @@ However, if the two ToBi tags were different for that word, the previous value w
 pbreak BB; pbreak B; pbreak NB;
 \end{lstlisting}
 
-As nodding motions were found at the end of phrases and phrase boundaries, the system was design to reset the "Roll" angle back to it's origin on strong phrase boundaries. That being phrase break values of "BB" as they were the strongest. This simple rule produced good results as the synthesised nodding motions returned to first position upon finishing the video, showing that the avatar is done speaking.
+As nodding motions were found at the end of phrases and phrase boundaries, the system was design to reset the Roll angle back to it's origin on strong phrase boundaries. That being phrase break values of BB as they were the strongest. This simple rule produced good results as the synthesised nodding motions returned to first position upon finishing the video, showing that the avatar is done speaking.
 
 \subsubsection{Uniqueness}
 
-As outlined in the hypotheses the system should reflect lexical lookups of unique words by \"tilting\" the head. Head tilts are reflected by the \"Pitch\" Euler angle.
+As outlined in the hypotheses the system should reflect lexical lookups of unique words by tilting the head. Head tilts are reflected by the Pitch Euler angle.
 
-- Uniqueness look-up \\
+The system uses the NLTK \cite{nltk} to build a Frequency Distribution of all the words in the Brown corpus \cite{brown}. This is so that each word in the utterance can be compared against this Frequency Distribution to assign a uniqueness value to that word. The system assigns a positive or negative value of 3 if the word has a uniqueness score of less than 5. The uniqueness score is assigned by the 'query\_corpus' method that divides the number occurrences of the word in the Brown corpus by the number of the most common word.
 
-\subsubsection{Negation Lookup}
+%\begin{lstlisting}
+%def query_corpus(word):
+%	occur = float(brown_freq[word])
+%	return ( occur / float(top_occurence) ) * 1000
+%\end{lstlisting}
+%	
 
+\subsubsection{Negation}
 - Negation words - \cite{neg_corpus} \cite{negation_corpus_1} \cite{negation_corpus_2}
 
 \subsubsection{Sentiment Scaling}
 
 - Sentiment \\
+The rule based system performs sentiment analysis on the utterance. As NLTK does not come with an in built sentiment classifier other options were considered. 
+
+Sentiment Classifier \cite{senti_class} is a sentiment analysis tool based on NLTK and the SentiWordNet that assigns a positive and negative score to words in order to classify sentences.
+
+\begin{lstlisting}
+>>> from senti_classifier import senti_classifier
+>>> sentences = ['The movie was the worst movie', 'It was the worst acting by the actors']
+>>> pos_score, neg_score = senti_classifier.polarity_scores(sentences)
+>>> print pos_score, neg_score
+0 0
+>>> 
+\end{lstlisting}
+The example shown above was a recreation of the example on the package's website. The sentences received scores that did not match the example on their website. This error was due to package constraints not being satisfied. Sentiment Classifier requires NLTK, Numpy and the SentiWordNet corpus. TextBlob \cite{textblob} was an alternative that did not rely on such package constrains and was far more lightweight than Sentiment Classifer, an example is presented below:
+\begin{lstlisting}
+>>> from textblob import TextBlob
+>>> tb = TextBlob("I am very happy because of the nice weather")
+>>> tb.sentiment
+Sentiment(polarity=0.8, subjectivity=1.0)
+\end{lstlisting}
+
+
 
 
 \subsection{Parametric Smoothing}
@@ -414,6 +444,12 @@ One of the drawbacks from the initial reviews of the random system was that Bezi
 	t = time\\
 	
 	\caption{First Order Equation Definition} 
+\end{figure}
+
+
+\begin{figure}
+	\includegraphics[width=1.0\textwidth]{parametric.png}
+	\caption{Graph showing Parametric smoothing between points for "Pitch"}
 \end{figure}
 
 % ============================================================= %
