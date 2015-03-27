@@ -69,7 +69,7 @@ The data used for the project was data recordings from the Centre of Speech and 
 
 \section{Euler angles}
 
-Euler angles are three angles that represent the orientation of a rigid body in 3-Dimensional space, typically referred to as 'yaw', 'pitch' and 'roll'. Euler angles allows us to reduce the number of parameters normally used to represent rigid body orientation down to 3 parameters. It is a very popular method because of the reduced complexity and is commonly used in robotics and 3D animation software because of this. As the project focused on rigid head motions there was no translation taken into account when designing the 3D avatar head motions. This allowed the project to use Euler angles as the sole units of movement in the project.
+Euler angles are three angles that represent the orientation of a rigid body in 3-Dimensional space, typically referred to as 'yaw', 'pitch' and 'roll'. Euler angles allows us to reduce the number of parameters normally used to represent rigid body orientation down to 3 parameters. It is a very popular method because of the reduced complexity and is commonly used in robotics and 3D animation. As the project focused on rigid head motions there was no translation taken into account when designing the 3D avatar head motions. This allowed the project to use Euler angles as the sole units of movement in the project.
 
 \begin{figure}[h!]
 	\centering
@@ -173,7 +173,7 @@ Sentiment analysis is a popular area of natural language processing. It is often
 
 Sentiment or emotion in speech has various effects on head motions. In a study It was found that the absence of head motion can be easily identified as 'neutral' emotion. \cite{emotion_head_motion} whereas participants in the study found it difficult to differentiate between head motions that were typical of 'happy' and 'sad' emotions. This study shows that emotive analysis on the text should be treated as an 'intensifier' of the underlying head motions derived form other areas of the text rather than altering the head motions to fit an emotion.
 
-Negation is very commonly associated with head shakes \cite{head_shaking}. For example, it is very common for people to respond to a question by shaking their head and saying "No". The head shake is strongly associated with negation. Sentiment analysis can be used to determine wether a sentence is positive or negative. However there are many other factors that relate to head shakes. Kendon states that head shakes can be used as an affirmation \cite{kendon} in certain sentences. 
+Negation is very commonly associated with head shakes \cite{head_shaking}. For example, it is very common for people to respond to a question by shaking their head and saying "No". The head shake is strongly associated with negation. Sentiment analysis can be used to determine wether a sentence is positive or negative, however there are many other factors that relate to head shakes. Kendon states that head shakes can be used as an affirmation \cite{kendon} in many positive sentiment sentences. 
 
 For example in the sentence "I have never saw anything more beautiful in my life" has a positive sentiment as the subject is talking about something beautiful but the subject will shake their head on the word 'never' to enforce the positive affirmation. As pointed out in another paper \cite{negative_sentiment} negation statements are very ambiguous and sentiment alone cannot capture the overall meaning and that the lexical structure may play a large role.
 
@@ -223,8 +223,8 @@ Now that the system has a linguistic specification of the sentence like the phon
 
 \begin{figure}
 	\centering
-	\includegraphics[width=0.6\textwidth]{test.png}
-	\caption{Outline of the architechutre of the system}
+	\includegraphics[width=0.8\textwidth]{system.png}
+	\caption{Outline of System Architechture}
 \end{figure}
 
 \subsection{Basic}
