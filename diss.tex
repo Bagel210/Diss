@@ -129,7 +129,7 @@ There are many different approaches to performing subjective analysis, each with
 
 \subsection{Preference Tests}
 
-Preference tests are very simple to conduct. A participant is presented with two video samples and asked "Which do you prefer?". This is an example of an AB test using two samples. AB testing is very simple to conduct and so is very common when evaluating samples of video or audio. However, if there were more than two samples then the time needed to evaluate all samples would be significantly higher as each pair combination of samples would need to be conducted. ABX testing, \cite{abx_testing} is where the participant is shown three videos (A, B and X) and is asked \"Is X more like A or B\". This approach is an alternative to AB but runs into the same issues with time constraints.
+Preference tests are very simple to conduct. A participant is presented with two video samples and asked "Which do you prefer?". This is an example of an AB test using two samples. AB testing is very simple to conduct and so is very common when evaluating samples of video or audio. However, if there were more than two samples then the time needed to evaluate all samples would be significantly higher as each pair combination of samples would need to be conducted. ABX testing, \cite{abx_testing} is where the participant is shown three videos (A, B and X) and is asked 'Is X more like A or B'. This approach is an alternative to AB but runs into the same issues with time constraints.
 
 Preference testing is suitable for evaluating a small number of samples, simple to conduct and produces easy to understand results. It's main drawback is the time needed to perform the evaluations which increase quickly as the number of samples increase.
 
@@ -173,13 +173,13 @@ Sentiment analysis is a popular area of natural language processing. It is often
 
 Sentiment or emotion in speech has various effects on head motions. In a study It was found that the absence of head motion can be easily identified as 'neutral' emotion. \cite{emotion_head_motion} whereas participants in the study found it difficult to differentiate between head motions that were typical of 'happy' and 'sad' emotions. This study shows that emotive analysis on the text should be treated as an 'intensifier' of the underlying head motions derived form other areas of the text rather than altering the head motions to fit an emotion.
 
+Negation is very commonly associated with head shakes \cite{head_shaking}. For example, it is very common for people to respond to a question by shaking their head and saying "No". The head shake is strongly associated with negation. Sentiment analysis can be used to determine wether a sentence is positive or negative. However there are many other factors that relate to head shakes. Kendon states that head shakes can be used as an affirmation \cite{kendon} in certain sentences. 
+
+For example in the sentence "I have never saw anything more beautiful in my life" has a positive sentiment as the subject is talking about something beautiful but the subject will shake their head on the word 'never' to enforce the positive affirmation. As pointed out in another paper \cite{negative_sentiment} negation statements are very ambiguous and sentiment alone cannot capture the overall meaning and that the lexical structure may play a large role.
+
 \subsection{Text Content}
 
 There are two types of gestures that relate to speech. \cite{lexical_gestures} The first are motor movements which are typically simple, brief, repetitive and have a high correlation with prosodic features. The other type are lexical movements, gestures that help the speaker mentally perform lexical lookups subconsciously. These gestures are very different to motor movements and are much longer, more complex and relate more to the lexical information in the speech. To portray these ideas in this project, unique words that are not common should cause the avatar to tilt their head. This is similar to the theory that eye movements can aid with memory recall. \cite{eye_movements}
-
-- NEGATION \cite{negative_sentiment}
-
-Shakes of the head are very commonly associated with negation in speech.
 
 \section{Text analysis with Festival}
 
@@ -198,7 +198,7 @@ Phrase break prediction assigns a break strength to each unit, which highlights 
 
 As outlined in the hypothesis section, head motions frequently occur at the end of phrases, where there will be a strong break strength like a big break or normal break. The phrase break value will be very useful to determine these breaks to synthesise head motions.
 
-Festival generates pronunciations by performing syllabification, breaking the sentences and words into syllables and looking up phonemes in a lexicon to determine their pronunciations. Using this information the system can generate ToBi markers \cite{tobi}, a way of symbolically representing intonation. These symbols are useful as they are conceptually easy to understand and reduce the number of parameters needed to represent intonation. A typical marker will indicate the tone in terms of two letters : "L"for a low intonation and "H" for a high intonation, these can be combined to represent a rise from low to high intonation such as "L-H\%" or vice versa.  This means that sudden rises or falls in intonation can be identified easily when synthesising head motions. 
+Festival generates pronunciations by performing syllabification, breaking the sentences and words into syllables and looking up phonemes in a lexicon to determine their pronunciations. Using this information the system can generate ToBi markers \cite{tobi}, a way of symbolically representing intonation. These symbols are useful as they are conceptually easy to understand and reduce the number of parameters needed to represent intonation. A typical marker will indicate the tone in terms of two letters : 'L' for a low intonation and 'H' for a high intonation, these can be combined to represent a rise from low to high intonation such as 'L-H\%' or vice versa.  This means that sudden rises or falls in intonation can be identified easily when synthesising head motions. 
 
 Similarly to phrase break predictors, Festival uses duration predictors that have been trained on annotated data using classification and regression trees to produce duration information for each phoneme.
 
@@ -323,9 +323,9 @@ A recursive Bezier function was implemented which, given a list of points return
 	$$ B_{P_0}(t) = P_0 $$
 	$$ B(t) = B_{P_0P_1..P_n}(t) = (1-t) B_{P_0P_1..P_n-1}(t) + tB_{P_1P_2..P_n} (t)$$
 	\caption{Recursive Bezier Definition} 
-	\centering
-	\includegraphics[width=0.8\textwidth]{bezier_general.png}
-	\caption{General Form}
+%	\centering
+%	\includegraphics[width=0.8\textwidth]{bezier_general.png}
+%	\caption{General Form}
 \end{figure}
 
 The random system calculated a Bezier function for each of the Euler angles and returned a dictionary containing the Euler angle change for each frame of the animation which was passed to output.py.
@@ -372,9 +372,9 @@ F0 values were only available to the individual phonemes of each word, with only
 
 However, the information was difficult to work with due to the need for excessive pre-processing and so the system used the ToBi intonation tags from the Festival output in order to alter head motions based on the intonation. The ToBi tags proved to be very useful as they represented an overview for the intonation so the pre processing was reduced significantly.
 
-The ToBi tags were reduced down to solely their letter indicators "L" and "H" as their combination provided sufficient information regarding the intonation changes. For example, \"L*-L\%\" was reduced to \"LL\". Depending of the values of the ToBi tags a 'shift' value was added to the Euler angle change. If the tags were all \"L\" a shift value was subtracted, similarly if the tags were all \"H\", the shift value was added. 
+The ToBi tags were reduced down to solely their letter indicators 'L' and 'H' as their combination provided sufficient information regarding the intonation changes. For example, 'L\*-L' was reduced to 'LL'. Depending of the values of the ToBi tags a 'shift' value was added to the Euler angle change. If the tags were all 'L' a shift value was subtracted, similarly if the tags were all 'H', the shift value was added. 
 
-However, if the two ToBi tags were different for that word, the previous value would be 'shifted' to match the pattern and the current value would be shifted with an extra value. The default shift value was 5.0 change in the Euler angle, with an Extra 2.0 in the case of "L-H" tags or "H-L". The intonation changes affected only the "Roll" Euler angle which influenced nodding motions.
+However, if the two ToBi tags were different for that word, the previous value would be 'shifted' to match the pattern and the current value would be shifted with an extra value. The default shift value was 5.0 change in the Euler angle, with an Extra 2.0 in the case of 'L-H' tags or 'H-L'. The intonation changes affected only the Roll Euler angle which influenced nodding motions.
 
 \subsubsection{Break Strength}
 
@@ -388,7 +388,7 @@ As nodding motions were found at the end of phrases and phrase boundaries, the s
 
 As outlined in the hypotheses the system should reflect lexical lookups of unique words by tilting the head. Head tilts are reflected by the Pitch Euler angle.
 
-The system uses the NLTK \cite{nltk} to build a Frequency Distribution of all the words in the Brown corpus \cite{brown}. This is so that each word in the utterance can be compared against this Frequency Distribution to assign a uniqueness value to that word. The system assigns a positive or negative value of 3 if the word has a uniqueness score of less than 5. The uniqueness score is assigned by the 'query\_corpus' method that divides the number occurrences of the word in the Brown corpus by the number of the most common word.
+The system uses the NLTK to build a Frequency Distribution of all the words in the Brown corpus \cite{brown}. This is so that each word in the utterance can be compared against this Frequency Distribution to assign a uniqueness value to that word. The system assigns a positive or negative value of 3 if the word has a uniqueness score of less than 5. The uniqueness score is assigned by the 'query\_corpus' method that divides the number occurrences of the word in the Brown corpus by the number of the most common word.
 
 %\begin{lstlisting}
 %def query_corpus(word):
@@ -413,7 +413,7 @@ Sentiment Classifier \cite{senti_class} is a sentiment analysis tool based on NL
 0 0
 >>> 
 \end{lstlisting}
-The example shown above was a recreation of the example on the package's website. The sentences received scores that did not match the example on their website. This error was due to package constraints not being satisfied. Sentiment Classifier requires NLTK, Numpy and the SentiWordNet corpus. TextBlob \cite{textblob} was an alternative that did not rely on such package constrains and was far more lightweight than Sentiment Classifier. It assigns a sentiment score to a string of text between 1 and -1, 1 being an extremely positive sentiment and -1 being an extremely negative sentiment. An example of TextBlob is presented below.
+The example shown above was a recreation of the example on the package's website. The sentences received scores that did not match the example on their website. This error was due to package constraints not being satisfied. Sentiment Classifier requires NLTK, Numpy and the SentiWordNet corpus. TextBlob \cite{text_blob} was an alternative that did not rely on such package constrains and was far more lightweight than Sentiment Classifier. It assigns a sentiment score to a string of text between 1 and -1, 1 being an extremely positive sentiment and -1 being an extremely negative sentiment. An example of TextBlob is presented below.
 
 \begin{lstlisting}
 >>> from textblob import TextBlob
@@ -424,10 +424,9 @@ Sentiment(polarity=0.8, subjectivity=1.0)
 
 TextBlob was chosen to analyse the sentiment in the rule based system. The information, both the actual sentiment and the polarity was added to the information dictionary for reference.
 
-Negation is also a 
-- Negation words - \cite{neg_corpus} \cite{negation_corpus_1} \cite{negation_corpus_2}
+As outlined in the hypotheses, negation cannot be captured effectively using purely sentiment analysis, and can often be used in positive sentences. To account for these findings the system used the twitter negation corpus \cite{neg_corpus} which builds upon \cite{negation_corpus_1}\cite{negation_corpus_2} and contains a list of around 5000 negative words captured from social media platform Twitter.
 
-The system used a 
+To use this corpus NLTK's Plaintext Corpus reader was used to read in the text file and store in into a query-able format. When the system iterates over each word, the negation corpus is queried to determine if the word in the utterance is present in the negation corpus. If present, the Yaw angle that controls head shakes will be assigned to the value of 3.0 and the previous word's Yaw value is reduced by 3.0 to produce a shake motion. If not present the system assign a uniform random number from -1 to 1.
 
 \subsection{Parametric Smoothing}
 
@@ -444,11 +443,14 @@ One of the drawbacks from the initial reviews of the random system was that Bezi
 	\caption{First Order Equation Definition} 
 \end{figure}
 
+The parametric smoothing system used the first order differential equation shown above the determine the curve between two points. The equation requires several parameters to generate the correct, which was calculated for each pair of points as shown in Figure 4.7. The Time Constant was set to a value of 4.0. The system builds the formula and calculates the y values for each point in between the two points passed into the method 'curve\_between\_points()'. This y values represents value of the Euler angle change.
 
 \begin{figure}
-	\includegraphics[width=1.0\textwidth]{parametric.png}
-	\caption{Graph showing Parametric smoothing between points for "Pitch"}
+	\includegraphics[width=1.0\textwidth]{parametric_ex.png}
+	\caption{Graph showing Parametric smoothing between points.}
 \end{figure}
+
+The parametric smoothing provided good results and reflected the discontinuous nature of the recorded head motions.
 
 % ============================================================= %
 \chapter{Evaluation}
