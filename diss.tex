@@ -3,6 +3,13 @@
 \usepackage{listings}
 \usepackage{url}
 \usepackage{xfrac} 
+\usepackage{booktabs}
+
+\usepackage{courier}
+
+\lstset{basicstyle=\footnotesize\ttfamily,breaklines=true}
+\lstset{framextopmargin=50pt}
+
 \graphicspath{ {images/} }
 
 \begin{document}
@@ -91,9 +98,9 @@ With a scripting plug-in for Python called PoserPython, \cite{poser_python} allo
 		\caption{Overview of Poser Pro}
 \end{figure}
 
-\section{Speech Features}
-
-F0
+%\section{Speech Features}
+%
+%F0
 
 \section{Related Works}
 
@@ -407,7 +414,8 @@ Sentiment Classifier \cite{senti_class} is a sentiment analysis tool based on NL
 
 \begin{lstlisting}
 >>> from senti_classifier import senti_classifier
->>> sentences = ['The movie was the worst movie', 'It was the worst acting by the actors']
+>>> sentences = ['The movie was the worst movie', 
+'It was the worst acting by the actors']
 >>> pos_score, neg_score = senti_classifier.polarity_scores(sentences)
 >>> print pos_score, neg_score
 0 0
@@ -446,7 +454,7 @@ One of the drawbacks from the initial reviews of the random system was that Bezi
 The parametric smoothing system used the first order differential equation shown above the determine the curve between two points. The equation requires several parameters to generate the correct, which was calculated for each pair of points as shown in Figure 4.7. The Time Constant was set to a value of 4.0. The system builds the formula and calculates the y values for each point in between the two points passed into the method 'curve\_between\_points()'. This y values represents value of the Euler angle change.
 
 \begin{figure}
-	\includegraphics[width=1.0\textwidth]{parametric_ex.png}
+	\includegraphics[width=0.9\textwidth]{parametric_ex.png}
 	\caption{Graph showing Parametric smoothing between points.}
 \end{figure}
 
@@ -467,6 +475,19 @@ Volunteers were shown 5 different video clips and were asked to evaluate how nat
 
 It was important for participants to be able to review their evaluation and update their choices as their subjective idea of what natural head motions are could easily change after watching the videos. Participants were encouraged to watch the videos more than once and update their evaluation are necessary until they were content with their evaluation.
 
+The preliminary evaluation mapped the head motions to a character called 'Dom Casual' from the the Poser Standard Library as shown in figure 5.1.
+
+As there had no be no indication which video was which, the video were simply labelled as number 1 through 5. The key is shown below.
+
+\begin{description}
+  	\item[Video 1]	Basic system
+  	\item[Video 2] Desmond recordings
+	\item[Video 3] Rule-based system
+	\item[Video 4] Jane recordings
+	\item[Video 5] Random system
+\end{description}
+
+
 \subsection{Implementation}
 
 The evaluation platform was implemented in a web-based format using HTML5, Python and Flask \cite{flask}, a Python framework used for web development. The website (shown in figure 5.1), showed the 5 videos side by side with sliders allowing the users to click and drag the slider to a level they felt reflected how natural the video above that slider was. This approach accomplished two things: having sliders ranging from 0 to 100 allowed for much greater precision than asking participants to rate the video from 1-5 or 1-10 and also helped users generate numeric feedback without the need to arbitrarily assign a numerical value.
@@ -475,11 +496,11 @@ As outlined in the design overview, only once participants were content with the
 
 \begin{figure}
 	\centering
-	\includegraphics[width=.7\textwidth]{poser.png}
-	\caption{Evaluation Platform}
+	\includegraphics[width=1.0\textwidth]{eval_2.png}
+	\caption{Preliminary Evaluation platform}
 \end{figure}
 
-\subsection{Preliminary Results and feedback}
+\subsection{Preliminary feedback}
 
 Preliminary evaluations were carried out to to test the evaluation platform. A small number of volunteers were asked to perform the evaluation and were asked a series of questions about the environment.
 
@@ -491,30 +512,60 @@ Preliminary evaluations were carried out to to test the evaluation platform. A s
 
 This was to try and improve the user experience before the final evaluation. The questions chosen were to address some key concerns regarding the environment. The participants were to feel comfortable during the evaluation process and if they videos they were evaluating were in the uncanny valley, many participants would feel discomfort which could negatively impact results. Gauging if participants felt the videos were too short or too long was important as well, the video needed to be of appropriate length so users had the right amount of information to effectively evaluate the videos.
 
-\begin{quotation}
-"Everything was fairly easy." - Participant 1
+The preliminary sessions provided good feedback on the system. Many participants stated that the avatar used for the videos was very distracting, particularly with the eyes of the avatar. Two of the six participants reported that they feel the avatar definitely influenced their evaluation. Participants reported that the length of the videos was suitable as they could re-watch the videos and re-evaluate the video.
 
-"Another quote" - Participant 2
-\end{quotation}
+\subsection{Final Evaluation}
+
+Having taken on board the feedback from the preliminary results, the evaluation platform was tweaked. The head motion videos were re-exported from Poser with a different avatar. Rather than using a particular character from Poser Pro's library, the basic model called 'Andy' was used that lacks facial details like hair and appears as an emotionless manikin. This helped the participants focus solely on the head motions and not be distracted by the previous character's expression or facial features. The final subjective evaluation was performed on 15 participants.
+
+\begin{figure}
+	\centering
+	\includegraphics[width=0.6\textwidth]{eval_3.png}
+	\caption{Avatar used for final Evaluation}
+\end{figure}
 
 \subsection{Results}
 
-- Taken on  board suggestions from preliminary feedback \\
-- 15 volunteers \\
-- Good results for Random system \\
-- Good results for rule-based system \\
-- Bad results for ones taken from data \\
+The subjective evaluation led to interesting results and results showed a  definite trend of which videos they felt were most natural. Interestingly, the head motions that were taken from recorded data were deemed to be fairly natural usually scoring around 60-70. These videos were added into the subjective evaluation as anchors for the evaluation and were intended to score highly but they scored less than expected. A possible reason for this could be that the recorded data does not necessarily align with what most people deem to be natural head motions.
+
+The basic system that used a sine wave to generate a smooth nodding motion scored relatively well against the anchors, usually on par with one or both of the anchors. 
+
+The rule based system was deemed un-natural by almost all of the participants. Many participants reported that the head motions were very 'jerky' and looked un-natural because of this. This does not necessarily mean that the hypotheses made regarding introducing more discontinuous head motions is incorrect and could be because parameters used for smoothing were not optimal.
+
+The random system scored highest overall, including the videos taken from the data recordings. With no relation to the content of the text this is a very surprising result. 
+
+\begin{figure}
+	\centering
+	\includegraphics[width=1.0\textwidth]{chart.png}
+	\caption{Mean 'naturalness' of each video}
+\end{figure}
 
 \subsection{Conclusions}
 
+The main factor which seemed to influence how natural participants deemed the head motions was how smooth the head motions were. The rule based system performed poorly in the evaluation because of it's jerky, discontinuous nature and the random system scored very highly due to it's smooth motions. These results highlight a potential issue with the evaluation method: participants are given any information about the text the head motions were synthesised or taken from (in the case of the data recordings) and how the head motions relate to what is being said is not a factor. 
+
 \section{Objective Analysis}
 
-- Calculate difference in Euler angles\\
-- Compare each system to two recordings due to lack of transcriptions\\
+To evaluate the system objectively the output of a system was compared with both data recordings used for evaluation previously. The Euler angles were periodically sampled every 10 frames and the distance between the two head positions was calculated using the Euclidian distance measure.
+
+$$ Euclidian(x,y) = \sqrt{(x1 - y1)^2 + (x2 - y2)^2 + ... + (x_n - y_n)^2}$$
 
 \subsection{Results}
+
+\begin{table}[h]
+\begin{tabular}{@{}lllll@{}}
+\toprule
+Euler Distance & Origin & Sine   & Random & Rule   \\ \midrule
+Desmond        & 197.2  & 218.86 & 201.45 & 216.56 \\
+Jane           & 568.4  & 581.4  & 610.01 & 602.85 \\
+               &        &        &        &        \\ \bottomrule
+\end{tabular}
+\end{table}
 % ============================================================= %
+
 \chapter{Conclusions}
+
+
 
 \section{System Overview}
 
