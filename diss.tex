@@ -408,7 +408,7 @@ The rule based system performs sentiment analysis on the utterance. As NLTK does
 
 Sentiment Classifier \cite{senti_class} is a sentiment analysis tool based on NLTK and the SentiWordNet that assigns a positive and negative score to words in order to classify sentences.
 
-- Talk about it more.
+%- Talk about it more.
 
 \begin{lstlisting}
 >>> from senti_classifier import senti_classifier
@@ -449,7 +449,7 @@ One of the drawbacks from the initial reviews of the random system was that Bezi
 	\caption{First Order Equation Definition} 
 \end{figure}
 
-The parametric smoothing system used the first order differential equation shown above the determine the curve between two points. The equation requires several parameters to generate the correct, which was calculated for each pair of points as shown in Figure 4.7. The Time Constant was set to a value of 4.0. The system builds the formula and calculates the y values for each point in between the two points passed into the method 'curve\_between\_points()'. This y values represents value of the Euler angle change.
+The parametric smoothing system used the first order differential equation shown above the determine three curve between two points. The equation requires several parameters to generate the correct, which was calculated for each pair of points as shown in Figure 4.7. The Time Constant was set to a value of 4.0. The system builds the formula and calculates the y values for each point in between the two points passed into the method 'curve\_between\_points()'. This y values represents value of the Euler angle change.
 
 \begin{figure}
 	\includegraphics[width=0.9\textwidth]{parametric_ex.png}
@@ -526,11 +526,11 @@ Having taken on board the feedback from the preliminary results, the evaluation 
 
 The subjective evaluation led to interesting results and results showed a  definite trend of which videos they felt were most natural. Interestingly, the head motions that were taken from recorded data were deemed to be fairly natural usually scoring around 60-70. These videos were added into the subjective evaluation as anchors for the evaluation and were intended to score highly but they scored less than expected. A possible reason for this could be that the recorded data does not necessarily align with what most people deem to be natural head motions.
 
-The basic system that used a sine wave to generate a smooth nodding motion scored relatively well against the anchors, usually on par with one or both of the anchors. 
+The basic system that used a sine wave to generate a smooth nodding motion scored relatively well against the anchors, usually on par with one or both of the anchors. The basic system scored a mean of 59, which was between the mean score of the two anchors.
 
-The rule based system was deemed un-natural by almost all of the participants. Many participants reported that the head motions were very 'jerky' and looked un-natural because of this. This does not necessarily mean that the hypotheses made regarding introducing more discontinuous head motions is incorrect and could be because parameters used for smoothing were not optimal.
+The rule based system scored 29.93 in the evaluation and was deemed un-natural by almost all of the participants. Many participants reported that the head motions were very 'jerky' and looked un-natural because of this. This does not necessarily mean that the hypotheses made regarding introducing more discontinuous head motions is incorrect and could be because parameters used for smoothing were not optimal in this scenario.
 
-The random system scored highest overall, including the videos taken from the data recordings. With no relation to the content of the text this is a very surprising result. 
+The random system scored highest overall with mean value of 71.6, including the videos taken from the data recordings. With no relation to the content of the text this is a very surprising result. 
 
 \begin{figure}
 	\centering
@@ -540,9 +540,9 @@ The random system scored highest overall, including the videos taken from the da
 
 \subsection{Conclusions}
 
-The main factor which seemed to influence how natural participants deemed the head motions was how smooth the head motions were. The rule based system performed poorly in the evaluation because of it's jerky, discontinuous nature and the random system scored very highly due to it's smooth motions. These results highlight a potential issue with the evaluation method: participants are given any information about the text the head motions were synthesised or taken from (in the case of the data recordings) and how the head motions relate to what is being said is not a factor. 
+The main factor which seemed to influence how natural participants deemed the head motions was how smooth the head motions were. The rule based system performed poorly in the evaluation because of it's jerky, discontinuous nature and the random system scored very highly due to it's smooth motions. These results also highlight a potential issue with the evaluation method: participants are given any information about the text the head motions were synthesised or taken from (in the case of the data recordings) and how the head motions relate to what is being said is not a factor. 
 
-- low score because of environment
+%- low score because of environment
 
 \section{Objective Analysis}
 
@@ -555,7 +555,7 @@ $$ Euclidian(x,y) = \sqrt{(x1 - y1)^2 + (x2 - y2)^2 + ... + (x_n - y_n)^2}$$
 \begin{table}[h]
 \begin{tabular}{lllll}
 \hline
-Euler Distance & Origin & Sine  & Random & Rule   \\ \hline
+Euler Distance & No movement & Sine  & Random & Rule   \\ \hline
 Desmond        & 6.3    & 7.02  & 6.4    & 6.94   \\
 Jane           & 17.68  & 18.08 & 18.8   & 18.6 \\ \hline
 \end{tabular}
@@ -566,27 +566,31 @@ The results from the objective evaluation show that the two head motions that ar
 The approach taken to measure the head motion similarity is naive, and does not take into account the possibility of head motions being very similar in gesture like a nod but having a low score because of a large distance in the other Euler angles due to tilts and shakes present in the head motions.
 
 
-
 % ============================================================= %
 
-\chapter{Conclusions}
-
-
+\chapter{Discussion}
 
 \section{System Overview}
 
-\section{Discussion}
+The goal of this project was to build a system that is capable of synthesising life-like, natural head motions from text and that is what this project has achieved. The results from the evaluation showed that the random system was deemed the most natural of head motions, even over the real life recordings. This may be due to the fact that the environment in which the data recordings took place was a not a typical environment where head motions would be observed like in a real life conversation. Due to this the real life recordings scored worse than expected. 
 
-\subsection{Classification and Regression Trees}
+\section{Conclusions}
 
-\subsection{Data Driven System}
+With no context of
 
 \section{Future Work}
 
-\subsection{Expansion of techniques}
+\subsection{Better Smoothing}
 
-\subsection{Second Order Smoothing}
-	
+Although the rule-based system showed promising initial results in prototypes it scored very poorly in the evaluation due to discontinuous, sharp nature of it's head motions. This c
+
+
+\subsection{Data Driven System}
+
+Due to time constraints the project never reached a data driven system. As outlined previously in the related works section many existing system's are using Hidden Markov Models as a tool to develop a data-driven approach to synthesising realistic head motions. 
+
+
+
 \bibliographystyle{plain}
 \bibliography{diss}
 
