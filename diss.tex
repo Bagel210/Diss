@@ -155,8 +155,6 @@ The main advantage of MUSHRA over the other two method of subjective evaluation 
 % ============================================================ %
 
 \chapter{Text-Driven Head Motion Synthesis}
-% This will be the theoretical implementation details 
-% There needs to be a system architechture map somewhere here.
 
 The goal of this project was to develop a system that was capable of synthesising life-like, realistic head motions from transcribed speech. This project aimed to developed a system that was capable of synthesising head motions given just the text. In order to to this hypotheses about the relation of head motion events and speech content were introduced. The system built on these hypotheses, linking them together in order to synthesis the final head motions. Text itself is very limited in information, so in order to have richer input data the transcribed text would be passed through a Text to Speech system which would apply natural language processing techniques in order to synthesise speech. 
 
@@ -490,7 +488,7 @@ As there had no be no indication which video was which, the video were simply la
 
 \subsection{Implementation}
 
-The evaluation platform was implemented in a web-based format using HTML5, Python and Flask \cite{flask}, a Python framework used for web development. The website (shown in figure 5.1), showed the 5 videos side by side with sliders allowing the users to click and drag the slider to a level they felt reflected how natural the video above that slider was. This approach accomplished two things: having sliders ranging from 0 to 100 allowed for much greater precision than asking participants to rate the video from 1-5 or 1-10 and also helped users generate numeric feedback without the need to arbitrarily assign a numerical value.
+The evaluation platform was implemented in a web-based format using HTML5, Python and Flask, a Python framework used for web development. The website (shown in figure 5.1), showed the 5 videos side by side with sliders allowing the users to click and drag the slider to a level they felt reflected how natural the video above that slider was. This approach accomplished two things: having sliders ranging from 0 to 100 allowed for much greater precision than asking participants to rate the video from 1-5 or 1-10 and also helped users generate numeric feedback without the need to arbitrarily assign a numerical value.
 
 As outlined in the design overview, only once participants were content with their evaluation would the results be recorded. The 'submit' button commits the users evaluation to a text file. This was suitable for the purpose of the evaluation system as it very simple to implement and had little development overhead.
 
@@ -544,23 +542,31 @@ The random system scored highest overall, including the videos taken from the da
 
 The main factor which seemed to influence how natural participants deemed the head motions was how smooth the head motions were. The rule based system performed poorly in the evaluation because of it's jerky, discontinuous nature and the random system scored very highly due to it's smooth motions. These results highlight a potential issue with the evaluation method: participants are given any information about the text the head motions were synthesised or taken from (in the case of the data recordings) and how the head motions relate to what is being said is not a factor. 
 
+- low score because of environment
+
 \section{Objective Analysis}
 
-To evaluate the system objectively the output of a system was compared with both data recordings used for evaluation previously. The Euler angles were periodically sampled every 10 frames and the distance between the two head positions was calculated using the Euclidian distance measure.
+To evaluate the system objectively the output of a system was compared with both data recordings used for evaluation previously. The Euler angles were periodically sampled every 10 frames and the distance between the two head positions was calculated using the Euclidian distance measure. The values were then normalised using their sampling rate so that different sampling rates could be used and compared. The neutral position was also used for the objective evaluation, that being the point (0,0,0). The sampling rate used for the objective evaluation was every 10th frame. 
 
 $$ Euclidian(x,y) = \sqrt{(x1 - y1)^2 + (x2 - y2)^2 + ... + (x_n - y_n)^2}$$
 
 \subsection{Results}
 
 \begin{table}[h]
-\begin{tabular}{@{}lllll@{}}
-\toprule
-Euler Distance & Origin & Sine   & Random & Rule   \\ \midrule
-Desmond        & 197.2  & 218.86 & 201.45 & 216.56 \\
-Jane           & 568.4  & 581.4  & 610.01 & 602.85 \\
-               &        &        &        &        \\ \bottomrule
+\begin{tabular}{lllll}
+\hline
+Euler Distance & Origin & Sine  & Random & Rule   \\ \hline
+Desmond        & 6.3    & 7.02  & 6.4    & 6.94   \\
+Jane           & 17.68  & 18.08 & 18.8   & 18.6 \\ \hline
 \end{tabular}
 \end{table}
+
+The results from the objective evaluation show that the two head motions that are most similar in terms of raw distance measure are that of the origin (no Euler change) and the Desmond Euler angles. The distance between the head position and the origin was seemed to be a large factor when comparing the distance. The distance between Desmond and the origin is very close to the distance between Desmond and all the synthesised motions and the same is true for Jane. 
+
+The approach taken to measure the head motion similarity is naive, and does not take into account the possibility of head motions being very similar in gesture like a nod but having a low score because of a large distance in the other Euler angles due to tilts and shakes present in the head motions.
+
+
+
 % ============================================================= %
 
 \chapter{Conclusions}
