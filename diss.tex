@@ -23,9 +23,9 @@
 %\project{4th Year Project Report}
 
 \date{\today}
-%\abstract{The aim of this project is to build a head motion synthesizer for a lifelike animated avatar. The head motions will be predicted entirely from the text of transcribed speech with the aim of finding a mapping between the text and natural head motions. Unlike previous areas of research where the head motions are generated from recorded speech.}
+\abstract{Head motion is very important when it comes to human communication, a lot of information is given to us as head motions and dialogue is much harder to fully understand in the absence of these head motions. Generating avatars with realistic facial features has been an area of wide research in the past decade. Especially with the rise of applications like virtual reality, video games and online shopping assistants realistic head motions are vital to these interactions otherwise these application will fail. This project aimed to build a system which was capable of synthesising life-like natural head motions from text.}
 \maketitle
-%\section*{Acknowledgements}
+\section*{Acknowledgements}
 %Acknowledgements go here. 
 \tableofcontents
 
@@ -42,6 +42,22 @@
 - Project aimed to create a system that synthesises natural head motions just from the text \\
 - Without knowledge present in speech \\
 - Using Various Natural Language Processing Techniques \\
+
+- Introduction to the problem being considered\\
+- What you did\\
+- Chapter 2 - Background information\\
+- Chapter 3 - Hypotheses and system design\\
+- Chapter 4 - Implementation details\\
+- Chapter 5 - Evaluation\\
+- Chapter 6 - Discussion\\
+
+%Head motion is very important when it comes to human communication, a lot of information is given to us as head motions and dialogue is much harder to fully understand in the absence of these head motions. Generating avatars with realistic facial features has been an area of wide research in the past decade
+%
+%This project aimed to build a system which was capable of synthesising life-like natural head motions from text. 
+
+
+
+
 
 % ============================================================= %
 \chapter{Background Information}
@@ -570,26 +586,41 @@ The approach taken to measure the head motion similarity is naive, and does not 
 
 \chapter{Discussion}
 
-\section{System Overview}
-
-The goal of this project was to build a system that is capable of synthesising life-like, natural head motions from text and that is what this project has achieved. The results from the evaluation showed that the random system was deemed the most natural of head motions, even over the real life recordings. This may be due to the fact that the environment in which the data recordings took place was a not a typical environment where head motions would be observed like in a real life conversation. Due to this the real life recordings scored worse than expected. 
-
 \section{Conclusions}
 
-With no context of
+The goal of this project was to build a system that is capable of synthesising life-like, natural head motions from text and that is what this project has achieved. Results from the evaluation showed that the random system with bezier smoothing was deemed the most natural of head motions, even over the real life recordings with the basic sine wave system coming scoring very similar results to the data recordings. This may be due to the fact that the environment in which the data recordings took place was a not a typical environment where head motions would be observed like in a real life conversation resulting in the real life recordings being scored worse than expected. This suggests that without adding in some kind of context to the evaluation, head motions that are smooth will be deemed more natural by humans. 
+
+The Rule based system performed poorly in the evaluation achieving a naturalness score of 29 due to it's jerky head motions even though this system implemented the hypotheses outlined in chapter 3 the system fell short because of it's smoothing. This supports the findings regarding natural head motions being perceived as smooth. With some tweaks to parameters and the type of smoothing used this system could perform much better, especially if the participants were given more content in the evaluation for example being played the synthesised speech with the head motions or simply shown the text and asked which video do they feel best represents the head motions.
 
 \section{Future Work}
 
 \subsection{Better Smoothing}
 
-Although the rule-based system showed promising initial results in prototypes it scored very poorly in the evaluation due to discontinuous, sharp nature of it's head motions. This c
+As previously mentioned the rule based system's smoothing was deemed very unnatural by all the participants in the subjective evaluation. To counteract this the smoothing should be improved upon. The parameters used for the parametric smoothing may have been sub-optimal for the conditions. The utterances used were very short and there were many points that needed to be smoothed between over a short distance, which explains why the movements were so jerky. To tackle this in the future the smoothing should no necessarily smooth directly between neighbouring points but smooth over a group, similar to the bezier smoothing. 
 
+A suitable distribution for this could be the Gaussian distribution, as shown in figure 6.1 it produces a smooth curve rising to a point and then falling back down to where it began. The gaussian could be very useful as the rise begins slowly and increases as we get closer to the mean value, which could reduce the jerky nature of the head motions produced from the rule based system whilst maintaining it's individual motions that would be reduced using the bezier smoothing algorithm.
+
+\begin{figure}
+	\centering
+	\includegraphics[width=0.8\textwidth]{gaussian.png}
+	\caption{The bell curve of the gaussian distribution}
+\end{figure}
+
+\subsection{Evaluation Redesign}
+
+The subjective evaluation platform that was implemented was very useful when obtaining results, t did however have some flaws. The evaluation of the head motions were not merited in terms of their relation to the text they were synthesised from as participants were only shown the head motions, not the text they were generated from or the synthesised speech from the text. If the experiments were to be performed again, context should be given to the participants. The videos could have the synthesised speech play as well as the head motions so that the participants will be able to evaluate if the head motions match what the avatar is saying.
+
+%\subsection{New Data set}
+%
+%As the random system was deemed to be more natural than the actual recorded head motions it shows that the recorded head motions are not what the typical person would deem natural.
 
 \subsection{Data Driven System}
 
-Due to time constraints the project never reached a data driven system. As outlined previously in the related works section many existing system's are using Hidden Markov Models as a tool to develop a data-driven approach to synthesising realistic head motions. 
+Due to time constraints the project never reached a data driven system. Many existing system's are using Hidden Markov Models as a tool to develop a data-driven approach to synthesising realistic head motions as outlined previously in the related works section. The next system which was planned to be implemented was a data driven approach to synthesising head motions.
 
+Using Hidden Markov Models, the relation between the head motions and text information generated from festival would be mapped. A direct mapping between the head motions and the individual words would be a naive approach but it could capture some of the hypotheses outlined especially in regards to negation and using head shakes to represent words like "no and never".  \cite{head_shaking}
 
+Rather than using the individual words another approach would be to use the structural information present in the text information from festival like the Parts-of-speech tags and phrase break information. As we know head motions occurs more frequently at phrase boundaries \cite{ishi2008} training HMM's using the structural information and the head motions could build a good model of the data. This approach could provide good results as it is far more general than the naive individual words approach and there would be more data to use as the occurrence of pos tags would be far higher than individual words providing a larger training set.
 
 \bibliographystyle{plain}
 \bibliography{diss}
