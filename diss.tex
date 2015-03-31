@@ -220,14 +220,17 @@ Now that the system has a linguistic specification of the sentence like the phon
 
 \section{Head Motion Synthesis System}
 
+The Text Driven Head Motion system was designed to read in text, generate information about the text using Festival a Text-To-Speech synthesis system and use this information to synthesise head motions. The information from Festival is very important when synthesising head motions. The system processing the information, extracting the important information and assigning the data to the respective words. This information is then used to generate Euler angles representing the rotation of the head. The output of the system contains the Euler angle change at each frame in the animation. Figure 3.2 shows how Euler angles relate to head motions.
+
 \begin{figure}
 	\centering
 	\includegraphics[width=0.6\textwidth]{head_with_euler.png}
 	\caption{How Euler Angles affect head rotation.}
 \end{figure}
 
+The system is designed in a modular fashion so that sections of the system can be switched out for improvements. This also allows the system to use a different type of head motion synthesis with ease. figure 3.3 shows an overview of the system architecture and how the modules communicate to form the full Text Driven Talking Heads system.
 
-\subsection{Outline}
+%\subsection{Outline}
 
 \begin{figure}
 	\centering
@@ -235,11 +238,11 @@ Now that the system has a linguistic specification of the sentence like the phon
 	\caption{Outline of System Architechture}
 \end{figure}
 
-\subsection{Basic}
+%\subsection{Basic}
 
-\subsection{Random}
+%\subsection{Random}
 
-\subsection{Rule Based}
+%\subsection{Rule Based}
 
 % ============================================================= %
 \chapter{Implementation}
