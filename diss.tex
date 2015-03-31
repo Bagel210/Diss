@@ -4,18 +4,14 @@
 \usepackage{url}
 \usepackage{xfrac} 
 \usepackage{booktabs}
-
 \usepackage{courier}
-
+\graphicspath{ {images/} }
 \lstset{basicstyle=\footnotesize\ttfamily,breaklines=true}
 \lstset{framextopmargin=50pt}
-
-\graphicspath{ {images/} }
 
 \begin{document}
 
 \title{Text Driven Talking Heads}
-
 \author{Iain Brown}
 \course{Computer Science}
 \project{Undergraduate Dissertation} 
@@ -23,7 +19,9 @@
 %\project{4th Year Project Report}
 
 \date{\today}
-\abstract{Head motion is very important when it comes to human communication, a lot of information is given to us as head motions and dialogue is much harder to fully understand in the absence of these head motions. Generating avatars with realistic facial features has been an area of wide research in the past decade. Especially with the rise of applications like virtual reality, video games and online shopping assistants realistic head motions are vital to these interactions otherwise these application will fail. This project aimed to build a system which was capable of synthesising life-like natural head motions from text.}
+\abstract{
+Head motion is very important when it comes to human communication, a lot of information is given to us as head motions and dialogue is much harder to fully understand in the absence of these head motions. Generating avatars with realistic facial features has been an area of wide research in the past decade. Especially with the rise of applications like virtual reality, video games and online shopping assistants realistic head motions are vital to these interactions otherwise these application will fail. This project aimed to build a system which was capable of synthesising life-like natural head motions from text.}
+
 \maketitle
 \section*{Acknowledgements}
 %Acknowledgements go here. 
@@ -123,15 +121,15 @@ Systems have also been developed that aim to synthesise facial movements to expr
 
 \subsection{Text Analysis for Facial Animation}
 
-All of the approaches to facial animation have used speech data as their primary source of information, but there are also systems in place that perform facial animation synthesis with just text as their primary source of information, without the need for speech. As speech is not always available these system use natural language processing techniques to analyse the text in order to synthesise facial animations like head motions of lip motions.
+All of the approaches to facial animation so far have used speech data as their primary source of information but there are also systems in place that perform facial animation synthesis with just text as their primary source of information without the need for speech. As speech is not always available, these systems use natural language processing techniques to analyse the text in order to synthesise facial animations like head motions of lip motions.
 
-"May I talk to you? :)"  \cite{may_i_talk_to_you} is a system that was designed to synthesise facial animation from just the text. The system uses a Text to Speech system which analyses the text and generates information about the text such as accents and pauses in order to synthesise non-verbal speech related facial expressions like lip motions and head movements. The system also allows the input of emoticons to indicate emotions (text representations of facial expressions) to dramatically alter the synthesised facial animation. 
+"May I talk to you? :)"  \cite{may_i_talk_to_you} is a system that was designed to synthesise facial animation from just the text. The system uses a Text to Speech system which analyses the text and generates information about it such as accents and pauses in order to synthesise non-verbal speech related facial expressions like lip motions and head movements. The system also allows the input of emoticons to indicate emotions (text representations of facial expressions such as ':)' ) to dramatically alter the synthesised facial animation. 
 
 Similar to the previous system, much research has gone into synthesising lip motions solely using the text. In T. Masuko's paper  \cite{lip_motion}, their team designed a data driven system using Hidden Markov Models to accurately generate lip motions from text for Japanese. The approach is similar to those outlined in the previous section that also use HMM's.
 
 \section{Subjective Evaluation Approaches}
 
-This project used subjective evaluation to determine how natural the synthesised head motions were, according to humans. This was important because the project aimed to synthesise head motions that were natural for humans in order to be used in Embodied Conversational Agents, so humans had to deem the head motions as natural.
+This project used subjective evaluation to determine how natural the synthesised head motions were. This was important because the project aimed to synthesise head motions that were natural in order to be used in Embodied Conversational Agents, so humans had to deem the head motions as natural.
 
 Subjective analysis is problematic due to evaluation being based on feelings and not measurable facts. This is a problem because 'feelings' and the evaluation itself can vary widely, even in the same person due to external factors like the time of day. Care must be taken when designing subjective evaluation environments and tests to mitigate variability and many tests need to be conducted in order to account for the this. 
 
@@ -151,7 +149,7 @@ The Mean Opinions Score (MOS) is a test to obtain the user's subjective measurem
 
 \subsection{MUSHRA : Multiple Stimuli with Hidden Reference and Anchor}
 
-Multiple Stimuli with hidden Reference and Anchor is another methodology for subjective evaluation more commonly referred to as MUSHRA \cite{mushra}. In a MUSHRA test, the subject is shown multiple stimuli are available at the same time which the subject can switch between and go back to and then gives a rating from 1-100 depending on how the subject was asked to rate the stimuli. Anchors are used in the evaluation, hidden in the test as one of the stimuli to serve as a reference point for each candidate. These anchors are supposed to score highly on the test. Subjects that score these particular stimuli are usually deemed as unreliable. Typically a MUSHRA test is used for evaluating audio quality \cite{mushra_bbc} where the subject is given 5 audio clips to listen to and rate the quality on a scale of 1 to 100.
+Multiple Stimuli with hidden Reference and Anchor is another methodology for subjective evaluation more commonly referred to as MUSHRA \cite{mushra}. In a MUSHRA test, multiple stimuli are available at the same time which the subject can switch between and go back to and then gives a rating from 1-100 depending on how the subject was asked to rate the stimuli. Anchors are used in the evaluation, hidden in the test as one of the stimuli to serve as a reference point for each candidate. These anchors are supposed to score highly on the test. Typically subjects that score these particular stimuli are usually deemed as unreliable. A MUSHRA test is commonly used for evaluating audio quality \cite{mushra_bbc} where the subject is given 5 audio clips to listen to and rate the quality on a scale of 1 to 100.
 
 The main advantage of MUSHRA over the other two method of subjective evaluation is that many different stimuli can be evaluated at once meaning MUSHRA can scale up the number of samples easily with little change in the time taken. This also means that MUSHRA requires less participants in order to obtain significant results in comparison to MOS even though they are similar in their design.
 
@@ -159,7 +157,7 @@ The main advantage of MUSHRA over the other two method of subjective evaluation 
 
 \chapter{Text-Driven Head Motion Synthesis}
 
-The goal of this project was to develop a system that was capable of synthesising life-like, realistic head motions from transcribed speech. This project aimed to developed a system that was capable of synthesising head motions given just the text. In order to to this hypotheses about the relation of head motion events and speech content were introduced. The system built on these hypotheses, linking them together in order to synthesis the final head motions. Text itself is very limited in information, so in order to have richer input data the transcribed text would be passed through a Text to Speech system which would apply natural language processing techniques in order to synthesise speech. 
+The goal of this project was to develop a system that was capable of synthesising life-like, realistic head motions from transcribed speech. In order to to this hypotheses about the relation of head motion events and speech content were introduced. The system built on these hypotheses, linking them together in order to synthesis the final head motions. Text itself is very limited in information, so in order to have richer input data the transcribed text would be passed through a Text to Speech system which would apply natural language processing techniques in order to synthesise speech. 
 
 \section{Hypotheses}
 
@@ -181,9 +179,7 @@ Sentiment analysis is a popular area of natural language processing. It is often
 
 Sentiment or emotion in speech has various effects on head motions. In a study It was found that the absence of head motion can be easily identified as 'neutral' emotion. \cite{emotion_head_motion} whereas participants in the study found it difficult to differentiate between head motions that were typical of 'happy' and 'sad' emotions. This study shows that emotive analysis on the text should be treated as an 'intensifier' of the underlying head motions derived form other areas of the text rather than altering the head motions to fit an emotion.
 
-Negation is very commonly associated with head shakes \cite{head_shaking}. For example, it is very common for people to respond to a question by shaking their head and saying "No". The head shake is strongly associated with negation. Sentiment analysis can be used to determine wether a sentence is positive or negative, however there are many other factors that relate to head shakes. Kendon states that head shakes can be used as an affirmation \cite{kendon} in many positive sentiment sentences. 
-
-For example in the sentence "I have never saw anything more beautiful in my life" has a positive sentiment as the subject is talking about something beautiful but the subject will shake their head on the word 'never' to enforce the positive affirmation. As pointed out in another paper \cite{negative_sentiment} negation statements are very ambiguous and sentiment alone cannot capture the overall meaning and that the lexical structure may play a large role.
+Negation is very commonly associated with head shakes \cite{head_shaking}. For example, it is very common for people to respond to a question by shaking their head and saying "No". The head shake is strongly associated with negation. Sentiment analysis can be used to determine wether a sentence is positive or negative, however there are many other factors that relate to head shakes. Kendon states that head shakes can be used as an affirmation \cite{kendon} in many positive sentiment sentences. For example in the sentence "I have never saw anything more beautiful in my life" has a positive sentiment as the subject is talking about something beautiful but the subject will shake their head on the word 'never' to enforce the positive affirmation. As pointed out in another paper \cite{negative_sentiment} negation statements are very ambiguous and sentiment alone cannot capture the overall meaning and that the lexical structure may play a larger role.
 
 \subsection{Text Content}
 
@@ -195,7 +191,7 @@ Festival applies various Natural Language Processing techniques to the text to g
 
 The first stage in the Text to Speech pipeline is the text processing. Festival breaks the text up into more suitable units for processing, for example expanding abbreviations. Then Parts-of-Speech tags are assigned to the units, these POS tags indicate what type of word it is and how it relates to the overall structure of the sentence allowing for phrase break prediction and are represented as a series of capital letters. For example "NNP" is a pos tag indicating that the word is a singular proper noun. POS tags are useful for the project to determine which words are the subject of the utterance and show where the emphasis should lie in the synthesised speech, which will be reflected in the synthesised head motions.
 
-Phrase break prediction assigns a break strength to each unit, which highlights where the phrases are in the sentences. Phrase break predictors are usually taggers trained on annotated data and are accurate. This is shown in Festival as a series of tags with their assigned values. The 'pbreak' indicates what level of break has been assigned to this word, for example BB for a big break, B for a normal break or NB for no break.
+Phrase break prediction assigns a break strength to each unit, which highlights where the phrases are in the sentences. Phrase break predictors are usually taggers trained on annotated data and are very accurate. This is shown in Festival as a series of tags with their assigned values. The 'pbreak' indicates what level of break has been assigned to this word, for example BB for a big break, B for a normal break or NB for no break.
 
 \begin{lstlisting}
 	pbreak_index 0 ;
@@ -220,7 +216,7 @@ Now that the system has a linguistic specification of the sentence like the phon
 
 \section{Head Motion Synthesis System}
 
-The Text Driven Head Motion system was designed to read in text, generate information about the text using Festival a Text-To-Speech synthesis system and use this information to synthesise head motions. The information from Festival is very important when synthesising head motions. The system processing the information, extracting the important information and assigning the data to the respective words. This information is then used to generate Euler angles representing the rotation of the head. The output of the system contains the Euler angle change at each frame in the animation. Figure 3.2 shows how Euler angles relate to head motions.
+The Text Driven Head Motion system was designed to read in text, generate information about the text using Festival and use this information to synthesise head motions. The information from Festival is very important when synthesising head motions. The system processes text, extracting the important information and assigning the data to the respective words. This information is then used to generate Euler angles representing the rotation of the head. The output of the system contains the Euler angle change at each frame in the animation. Figure 3.2 shows how Euler angles relate to head motions.
 
 \begin{figure}
 	\centering
@@ -228,21 +224,19 @@ The Text Driven Head Motion system was designed to read in text, generate inform
 	\caption{How Euler Angles affect head rotation.}
 \end{figure}
 
-The system is designed in a modular fashion so that sections of the system can be switched out for improvements. This also allows the system to use a different type of head motion synthesis with ease. figure 3.3 shows an overview of the system architecture and how the modules communicate to form the full Text Driven Talking Heads system.
+The system is designed in a modular fashion so that sections of the system can be switched out for improvements. This also allows the system to use a different type of head motion synthesis with ease. figure 3.3 shows an overview of the system architecture and how the modules communicate to form the full Text Driven Talking Heads system. 
 
-%\subsection{Outline}
+Three different system were used to synthesise head motions each increasing in complexity. The basic head synthesis system is designed to synthesise natural nodding head motions across and utterance using sine waves. The basic system was designed on the theory that nodding head motions are the most common of head motions. \cite{first_paper}
+
+The next head motion synthesis system was the random system. It was designed to generate smooth head motions across randomly assigned points for the head motions, various smoothing algorithms were investigated for this system. This system looked to implement the interpolation methods used in Busso's Rigid Head Motion synthesis system. \cite{busso_rigid}
+
+The final system was the rule based system in which all of the hypotheses laid out previously were implemented in order to synthesise head motions. 
 
 \begin{figure}
 	\centering
 	\includegraphics[width=0.8\textwidth]{system.png}
 	\caption{Outline of System Architechture}
 \end{figure}
-
-%\subsection{Basic}
-
-%\subsection{Random}
-
-%\subsection{Rule Based}
 
 % ============================================================= %
 \chapter{Implementation}
@@ -264,7 +258,6 @@ return utterance
 The data received from the Festival output was a large block of text containing information about the utterance it had processed (See Figure 4.1). This data was fed into a text processing module implemented from scratch to extract the important information regarding the utterance and build a dictionary using these elements to link the individual words with their properties like parts-of-speech tags and phrase break strength.
 
 \begin{figure}
-%	\includegraphics[width=1.0\textwidth]{festival_output.png}
 	\begin{lstlisting}
 		id _23 ; name grandmother ;
 			pos_index 8 ;
@@ -288,9 +281,9 @@ Normally Festival is run as an interactive interface. The system used a LISP scr
 2. (save_waves_during_tts)
 \end{lstlisting}
 
-The line of code (save\_waves\_during\_tts) meant that Festival saved all synthesised speech to wave files. An issue that raised from this was that it generated an audio file for each sentence, which was not suitable for the Text-Driven Talking Heads System. This problem was solved by implementing a function in the preparation stage called \"combine\_audio\_files\" which created a new file that was the concatenation of all the sentences. This was a suitable solution as the produced output sounded quite natural.
+The line of code (save\_waves\_during\_tts) meant that Festival saved all synthesised speech to wave files. An issue that raised from this was that it generated an audio file for each sentence, which was not suitable for the Text-Driven Talking Heads System. This problem was solved by implementing a function in the preparation stage called \"combine\_audio\_files\" which created a new file that was the concatenation of all the sentences. This was a suitable solution as the produced output sounded failry natural.
 
-The Poser Script setMotion.py was taken from another Project that used Euler Angles to rotate a character's limbs, the only alterations made were to set he active body part to the head, add the speech to the scene and to load in the output of the Head Motion Synthesis by hardcoding the name and location of the output file.
+The Poser Script setMotion.py was taken from another Project that used Euler Angles to rotate a character's limbs, the only alterations made were to set he active body part to the head and to add the speech to the scene.
 
 The head motion synthesis was developed as three separate modules, increasing in complexity and building on what was successful from the previous head motion synthesis methods.
 
