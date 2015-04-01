@@ -54,7 +54,7 @@ The last chapter reviews the project and as well as discussing future improvemen
 
 \section{Project Goal}
 
-The task for the project was as follows: Using only text transcriptions of speech can we synthesise life-like head motions that seem realistic and natural to humans. The project aimed to investigate the correlation between head motions and the information present in speech unique to the speaker. The difficulty of the task comes from the lack of unique information about the speech, as we are only using the transcribed text. To tackle this we will be using a Text-to-Speech system called Festival.
+The task for the project was as follows: Using only text transcriptions of speech can we synthesise life-like head motions that seem realistic and natural to humans. The project aimed to investigate the relationship between head motions and the information present in speech unique to the speaker. The difficulty of the task comes from the lack of unique information about the speech, as we are only using the transcribed text. To tackle this we will be using a Text-to-Speech system called Festival.
 
 \section{Human Computer Interaction}
 
@@ -162,7 +162,18 @@ The main advantage of MUSHRA over the other two method of subjective evaluation 
 
 \chapter{Text-Driven Head Motion Synthesis}
 
-The goal of this project was to develop a system that was capable of synthesising life-like, realistic head motions from transcribed speech. In order to to this hypotheses about the relation of head motion events and speech content were introduced. The system built on these hypotheses, linking them together in order to synthesis the final head motions. Text itself is very limited in information, so in order to have richer input data the transcribed text would be passed through a Text to Speech system which would apply natural language processing techniques in order to synthesise speech. 
+TODO: conceptual\\
+Talk about underlying models the we assume\\
+how text information is related to head motions\\
+text gives speaker independent information\\
+text information is not enough, there is a lot of missing information needed \\
+for this project we are only using the text\\
+clarify limitation\\
+\\
+
+The goal of this project was to develop a system that was capable of synthesising life-like, realistic head motions from transcribed speech. 
+In order to synthesise realistic head motions hypotheses about the ..
+In order to to this hypotheses about the relation of head motion events and speech content were introduced. The system built on these hypotheses, linking them together in order to synthesis the final head motions. Text itself is very limited in information, so in order to have richer input data the transcribed text would be passed through a Text to Speech system which would apply natural language processing techniques in order to synthesise speech. 
 
 \section{Text Features}
 
@@ -217,7 +228,7 @@ Now that the system has a linguistic specification of the sentence like the phon
 \begin{figure}[h!]
 	\centering
 	\includegraphics[width=0.8\textwidth]{tobi.png}
-	\caption{ToBi Markers}
+	\caption{ToBi Markers \cite{tobi}}
 \end{figure}
 
 \section{Head Motion Synthesis System}
@@ -329,16 +340,14 @@ Each word in the utterance was assigned Euler values, ranging from -10 to +10 fo
 
 To synthesise smooth head motions between random points multiple interpolation algorithms were considered. Spherical Linear Interpolation (Slerp) was the first that was considered and was already used in similar research \cite{rigid_head_motion}. There was difficulty when trying to implement Slerp due to the choosing Euler angles as the unit of rotation. Euler angles are difficult to apply interpolation \cite{quartionions}, Slerp commonly uses Quartinions which are more complex. Another method of interpolation which was derived from Slerp which was considered was the Bezier Interpolation algorithm, invented by Pierre Bezier a french mathematician was much simpler to implement than Slerp.
 
-A recursive Bezier function was implemented which, given a list of points return a formula representing the a smooth interpolation between said points. Unlike Slerp, Bezier's smoothing algorithm doesn't take the interpolated line to the given points which works well given this scenario. It helped to smooth out the randomness and generate natural motions. (Figure 4.5)
-
-%$$ B_{P_0}(t) = P_0 $$
-%$$ B(t) = B_{P_0P_1..P_n}(t) = (1-t) B_{P_0P_1..P_{n-1}}(t) + tB_{P_1P_2..P_n} (t)$$
+A recursive Bezier function was implemented which, given a list of points return a formula representing the a smooth interpolation between said points. Unlike Slerp, Bezier's smoothing algorithm doesn't take the interpolated line to the given points which works well given this scenario. It helped to smooth out the randomness and generate natural motions. The recursive definition of Bezier is presented below.
 
 \begin{equation} 
-B_{P_0}(t) = P_0 
-B(t) = B_{P_0P_1..P_n}(t) = (1-t) B_{P_0P_1..P_{n-1}}(t) + tB_{P_1P_2..P_n} (t)
+	B_{P_0}(t) = P_0 
 \end{equation}
-%	\caption{Recursive Bezier Definition} 
+\begin{equation} 
+	B(t) = B_{P_0P_1..P_n}(t) = (1-t) B_{P_0P_1..P_{n-1}}(t) + tB_{P_1P_2..P_n} (t)
+\end{equation}
 
 The random system calculated a Bezier function for each of the Euler angles and returned a dictionary containing the Euler angle change for each frame of the animation which was passed to output.py.
 
@@ -402,13 +411,6 @@ As outlined in the hypotheses the system should reflect lexical lookups of uniqu
 
 The system uses the NLTK to build a Frequency Distribution of all the words in the Brown corpus \cite{brown}. This is so that each word in the utterance can be compared against this Frequency Distribution to assign a uniqueness value to that word. The system assigns a positive or negative value of 3 if the word has a uniqueness score of less than 5. The uniqueness score is assigned by the 'query\_corpus' method that divides the number occurrences of the word in the Brown corpus by the number of the most common word.
 
-%\begin{lstlisting}
-%def query_corpus(word):
-%	occur = float(brown_freq[word])
-%	return ( occur / float(top_occurence) ) * 1000
-%\end{lstlisting}
-%	
-
 \subsubsection{Sentiment Scaling}
 
 The rule based system performs sentiment analysis on the utterance. As NLTK does not come with an in built sentiment classifier other options were considered. 
@@ -426,6 +428,7 @@ Sentiment Classifier \cite{senti_class} is a sentiment analysis tool based on NL
 0 0
 >>> 
 \end{lstlisting}
+
 The example shown above was a recreation of the example on the package's website. The sentences received scores that did not match the example on their website. This error was due to package constraints not being satisfied. Sentiment Classifier requires NLTK, Numpy and the SentiWordNet corpus. TextBlob \cite{text_blob} was an alternative that did not rely on such package constrains and was far more lightweight than Sentiment Classifier. It assigns a sentiment score to a string of text between 1 and -1, 1 being an extremely positive sentiment and -1 being an extremely negative sentiment. An example of TextBlob is presented below.
 
 \begin{lstlisting}
