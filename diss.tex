@@ -30,20 +30,13 @@ Head motion is very important when it comes to human communication, a lot of inf
 % ============================================================= %
 \chapter{Introduction}
 
-Gestures are a huge part of communication \cite{kendon} and provide information that adds meaning to communication. In the recent years we have a seen a large increase in embodied conversational agents as a form of human - computer interface which replicate realistic human features to make the interaction seem as natural as possible and provide a rich user experience. These systems need to synthesise facial features and facial gestures that appear natural to humans. Systems that synthesise realistic natural head motions have typically used speech as base, however it can be difficult and expensive to record said speech.The Text-Driven Talking Heads system was developed to synthesise these head motions. 
+Gestures are a huge part of communication \cite{kendon} and provide information that adds meaning to communication. In the recent years we have a seen a large increase in embodied conversational agents as a form of human - computer interface which replicate realistic human features to make the interaction seem as natural as possible and provide a rich user experience. These systems need to synthesise facial features and facial gestures that appear natural to humans. Systems that synthesise realistic natural head motions have typically used speech as base, however it can be difficult and expensive to record said speech. 
 
-The goal of this project was to design a system capable of synthesising life like realistic head motions from text. Text itself is very limited in it's 
- TODO: REDFINE GOAL
+The goal of this project was to develop a system which is capable of synthesising realistic, life-like head motions using text as it's sole input so that speech is not needed so that systems can have avatars with realistic animations without having to spend time and money recording hours of speech.
 
-Chapter 2 outlines the background knowledge of this area of research as well as the techniques and tools used int he project. The related work is also contained in this chapter.
+The project is presented in several chapters. Chapter 2 outlines the background knowledge of this area of research as well as the techniques and tools used in the project. The related work is also contained in this chapter. Chapter 3 focuses on the design of the Text Driven Talking Heads system and the hypotheses about the relation between the text and head motions are presented.  Chapter 4 draws from the design explaining the implementation details of the system, and how the system was developed. The 5th chapter contains the evaluation of the system in which two methods of evaluation are presented and experiments are conducted in order to evaluate the system and the final chapter reviews the project and as well as discussing future improvements to the system. 
 
-The hypotheses about how head motions relate to head motions and the theoretical implementation of the system is present in chapter 3.
 
-Chapter 4 is the actual implementation of the system, explaining how the system was developed.
-
-The 5th chapter contains the evaluation of the system in which two methods of evaluation are presented and experiments are conducted in order to evaluate the system.
-
-The last chapter reviews the project and as well as discussing future improvements to the system.
 
 
 
@@ -52,7 +45,7 @@ The last chapter reviews the project and as well as discussing future improvemen
 
 \section{Project Goal}
 
-The task for the project was as follows: Using only text transcriptions of speech can we synthesise life-like head motions that seem realistic and natural to humans. The project aimed to investigate the relationship between head motions and the information present in speech unique to the speaker. The difficulty of the task comes from the lack of unique information about the speech, as we are only using the transcribed text. To tackle this we will be using a Text-to-Speech system called Festival.
+The task for the project was as follows: Using only text transcriptions of speech, synthesise life-like head motions that seem realistic and natural to humans. The project aimed to investigate the relationship between head motions and the information present in speech unique to the speaker. The difficulty of the task comes from the lack of unique information about the speech, as we are only using the transcribed text. To tackle this we will be using a Text-to-Speech system called Festival. 
 
 \section{Human Computer Interaction}
 
@@ -83,6 +76,8 @@ The data used for the project was data recordings from the Centre of Speech and 
 Festival \cite{festival} is a full Text to Speech Synthesis software developed by the Centre of Speech and Technology Research at Edinburgh University. The software provides an entire framework for text analysis and speech synthesis. The system has many features including natural language processing tools, waveform synthesisers and scripting. The software is comprised of many modules which can be independently swapped out and improves and so is fully customisable so that it can be fine tuned for specific purposes. 
 
 Festival is able to be used for many different purposes where actual speech cannot be used like screen readers for the visually impaired, dictation, video game dialogue. For this project speech was not available and because of Festival's transparency, information regarding the synthesised speech was available meaning it could be used to help synthesise head motions.
+
+
 
 \section{Euler angles}
 
@@ -194,32 +189,55 @@ Head motions correlate strongly with prosody present in speech \cite{vis_prosody
 
 \section{Text analysis with Festival}
 
-Festival \cite{festival} applies various Natural Language Processing techniques to the text to generate information  so that it can synthesise speech.  There are many steps in this pipeline, each adding a little bit more information to the text before Festival can then apply signal processing to generate audio. 
+Festival \cite{festival} applies various Natural Language Processing techniques to the text to generate information  so that it can synthesise speech. A typical interaction with the Festival system is shown below. The SayText command performs the full analysis of the text and synthesises the speech, playing it back to the user. There are many steps in this pipeline, each adding a little bit more information to the text before Festival can then apply signal processing to generate audio. 
 
-The first stage in the Text to Speech pipeline is the text processing. Festival breaks the text up into more suitable units for processing, for example expanding abbreviations. Then Parts-of-Speech tags are assigned to the units, these POS tags indicate what type of word it is and how it relates to the overall structure of the sentence allowing for phrase break prediction and are represented as a series of capital letters. For example "NNP" is a pos tag indicating that the word is a singular proper noun. POS tags are useful for the project to determine which words are the subject of the utterance and show where the emphasis should lie in the synthesised speech, which will be reflected in the synthesised head motions.
+\begin{lstlisting}
+	festival> (SayText "Hello World")
+	#<Utterance 0x104a290e0>
+	festival> 
+\end{lstlisting}
+
+The first stage in the Text to Speech pipeline is the text processing. Festival breaks the text up into more suitable units for processing, for example expanding abbreviations. Then Parts-of-Speech tags are assigned to the units, these POS tags indicate what type of word it is and how it relates to the overall structure of the sentence allowing for phrase break prediction and are represented as a series of capital letters. For example "NNP" is a pos tag indicating that the word is a singular proper noun. POS tags are useful for the project to determine which words are the subject of the utterance and show where the emphasis should lie in the synthesised speech, which will be reflected in the synthesised head motions. 
 
 Phrase break prediction assigns a break strength to each unit, which highlights where the phrases are in the sentences. Phrase break predictors are usually taggers trained on annotated data and are very accurate. This is shown in Festival as a series of tags with their assigned values. The 'pbreak' indicates what level of break has been assigned to this word, for example BB for a big break, B for a normal break or NB for no break.
 
+Below is an example of the information assigned to the input text of "Hello World". Festival has assigned the world Hello the pos tag 'UH' which is an interjection and assigned the word 'world' 'NN' for singular noun. Also in the example Festival has assigned break levels to the words. The interjection has been assigned a no break 'NB' and 'world' has been assigned a break, showing it is the end of the phrase.
+
 \begin{lstlisting}
-	pbreak_index 0 ;
-	pbreak_index_score 0 ;
-	pbreak B ; 
-	blevel 3 ; 
+name Hello ; pos_index 16 ; pos uh ; phr_pos uh ; phrase_score -13.43 ; pbreak_index 1 ; pbreak NB ; 
+name World ; pos_index 8 ; pos nn ; phr_pos n ; pbreak_index 0 ;  pbreak B ; blevel 3 ; 
 \end{lstlisting}
 
 As outlined in the hypothesis section, head motions frequently occur at the end of phrases, where there will be a strong break strength like a big break or normal break. The phrase break value will be very useful to determine these breaks to synthesise head motions.
 
 Festival generates pronunciations by performing syllabification, breaking the sentences and words into syllables and looking up phonemes in a lexicon to determine their pronunciations. Using this information the system can generate ToBi markers \cite{tobi}, a way of symbolically representing intonation. These symbols are useful as they are conceptually easy to understand and reduce the number of parameters needed to represent intonation. A typical marker will indicate the tone in terms of two letters : 'L' for a low intonation and 'H' for a high intonation, these can be combined to represent a rise from low to high intonation such as 'L-H\%' or vice versa.  This means that sudden rises or falls in intonation can be identified easily when synthesising head motions. 
 
-Similarly to phrase break predictors, Festival uses duration predictors that have been trained on annotated data using classification and regression trees to produce duration information for each phoneme.
+As well as describing the intonation events symbolically Festival also assigns the fundamental frequency value to the text to each unit of speech called a phoneme in the text. A word is a combination of phonemes.
 
-Now that the system has a linguistic specification of the sentence like the phone sequence, phone duration and pitch contour signal processing can be performed to generate the final speech output.
+\begin{lstlisting}
+113 id _151 ; f0 84.1413 ; pos 4.33792 ; 
+\end{lstlisting}
+
 
 \begin{figure}[h!]
 	\centering
 	\includegraphics[width=0.8\textwidth]{tobi.png}
 	\caption{ToBi Markers \cite{tobi}}
 \end{figure}
+
+Below is an example of the stress information that has been assigned to the inputted text 'Hello World' which has three syllables.
+
+\begin{lstlisting}
+id _6 ; name syl ; stress 0 ; 
+id _9 ; name syl ; stress 1 ; 
+id _12 ; name syl ; stress 1 ; 
+\end{lstlisting}
+
+Similarly to phrase break predictors, Festival uses duration predictors that have been trained on annotated data using classification and regression trees to produce duration information for each phoneme.
+
+Now that the system has a linguistic specification of the sentence like the phone sequence, phone duration and pitch contour signal processing can be performed to generate the final speech output.
+
+
 
 \section{Head Motion Synthesis System}
 
@@ -471,14 +489,11 @@ To evaluate the Text-Driven Head Motion System I performed both subjective analy
 
 The subjective evaluation was derived from the MUSHRA methodology outlined in chapter 2. It was designed with many factors taken into account. To effectively isolate the head motions for evaluations and make sure that participants were not affected or influenced by other factors, care was taken to ensure that as much as possible would remain constant, only changing the head motions.
 
-Volunteers were shown 5 different video clips and were asked to evaluate how natural they felt the head motions were. Of the 5 videos, 3 were synthesised from the Text Driven Talking Heads system and 2 videos were taken from real recordings. Participants were not told anything about the videos and so did not know if the videos were synthesised or real. This was to eliminate any potential bias that could be introduced by telling the participants some of the videos were real and some were not and made sure that the participants focused on the task.
+Volunteers were shown 5 different video clips and were asked to evaluate how natural they felt the head motions were. The videos shown were head motions trajectories mapped to a 3D avatar in Poser. 3 of the videos were synthesised from the Text Driven Talking Heads system and 2 videos were taken from real recordings. 
 
-It was important for participants to be able to review their evaluation and update their choices as their subjective idea of what natural head motions are could easily change after watching the videos. Participants were encouraged to watch the videos more than once and update their evaluation are necessary until they were content with their evaluation.
-
-The preliminary evaluation mapped the head motions to a character called 'Dom Casual' from the the Poser Standard Library as shown in figure 5.1.
-
-As there had no be no indication which video was which, the video were simply labelled as number 1 through 5. The key is shown below.
-
+The three synthesised videos were from the Basic System, the Random system and the Rule Based system and were all generated using the same input text of 'there once lived a man and his wife who had long wished for a child but in vain'. The other two videos were the head motions taken from real recordings when the participants said the same sentence. The two participants used were called Desmond and Jane and the videos are labelled respectively. As there had no be no indication which video was which, the video were simply labelled as number 1 through 5 in the system. The key is presented below.
+\\
+\\
 \begin{description}
   	\item[Video 1]	Basic system
   	\item[Video 2] Desmond recordings
@@ -486,6 +501,13 @@ As there had no be no indication which video was which, the video were simply la
 	\item[Video 4] Jane recordings
 	\item[Video 5] Random system
 \end{description}
+
+
+ Participants were not told anything about the videos and so did not know if the videos were synthesised or real. This was to eliminate any potential bias that could be introduced by telling the participants some of the videos were real and some were not and made sure that the participants focused on the task.
+
+It was important for participants to be able to review their evaluation and update their choices as their subjective idea of what natural head motions are could easily change after watching the videos. Participants were encouraged to watch the videos more than once and update their evaluation are necessary until they were content with their evaluation.
+
+The preliminary evaluation mapped the head motions to a character called 'Dom Casual' from the the Poser Standard Library as shown in figure 5.1.
 
 
 \subsection{Implementation}
@@ -621,33 +643,34 @@ Using Hidden Markov Models, the relation between the head motions and text infor
 
 Rather than using the individual words another approach would be to use the structural information present in the text information from festival like the Parts-of-speech tags and phrase break information. As we know head motions occurs more frequently at phrase boundaries \cite{ishi2008} training HMM's using the structural information and the head motions could build a good model of the data. This approach could provide good results as it is far more general than the naive individual words approach and there would be more data to use as the occurrence of pos tags would be far higher than individual words providing a larger training set.
 
-%\appendix
-%\chapter{Head Motion Trajectories}
-%
-%\begin{figure}
-%\caption{Basic System Head Motion Trajectories.}
-%\includegraphics[width=0.4\textwidth]{/traj/sine_out.png}
-%\end{figure}
-%
-%\begin{figure}
-%\caption{Random System Head Motion Trajectories}
-%\includegraphics[width=0.4\textwidth]{traj/random_out.png}
-%\end{figure}
-%
-%\begin{figure}
-%\caption{Rule Based Head Motion Trajectories}
-%\includegraphics[width=0.4\textwidth]{traj/rule_out.png}
-%\end{figure}
-%
-%\begin{figure}
-%\caption{Head Motion Trajectories from participant 'Desmond'}
-%\includegraphics[width=0.4\textwidth]{traj/desmond_out.png}
-%\end{figure}
-%
-%\begin{figure}
-%\caption{Head Motion Trajectories from participant 'Jane'}
-%\includegraphics[width=0.4\textwidth]{traj/jane_out.png}
-%\end{figure}
+\appendix
+\chapter{Head Motion Trajectories}
+
+The following figures are graphical visualisations of the Head Motion trajectories that were used in the evaluation. In the following graphs the red line represents the value of the Roll Euler angle. Yaw is shown as a green line and the blue line represents pitch.
+
+The synthesised head motions (1,2 and 3) were generated from the same text \"there once lived a man and his wife who had long wished for a child but in vain.\". The 4th and 5th graphs are visual representations of the head motion trajectories from the data recordings for the participants Desmond and Jane which were used in the subjective evaluation process.
+
+\begin{figure}
+	\centering
+	\caption{Basic System Head Motion Trajectories.}
+	\includegraphics[width=0.6\textwidth]{/traj/sine_out.png}
+	\centering
+	\caption{Random System Head Motion Trajectories}
+	\includegraphics[width=0.6\textwidth]{traj/random_out.png}
+	\caption{Rule Based Head Motion Trajectories}
+	\includegraphics[width=0.6\textwidth]{traj/rule_out.png}
+\end{figure}
+
+
+\begin{figure}
+	\centering
+	\caption{Head Motion Trajectories from participant 'Desmond'}
+	\includegraphics[width=0.6\textwidth]{traj/desmond_out.png}
+	\caption{Head Motion Trajectories from participant 'Jane'}
+	\includegraphics[width=0.6\textwidth]{traj/jane_out.png}
+\end{figure}
+
+
 
 \bibliographystyle{plain}
 \bibliography{diss}
