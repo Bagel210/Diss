@@ -503,7 +503,7 @@ As outlined in the design overview, only once participants were content with the
 
 \begin{figure}
 	\centering
-	\includegraphics[width=1.0\textwidth]{eval_2.png}
+	\includegraphics[width=1.1\textwidth]{eval.png}
 	\caption{Preliminary Evaluation platform}
 \end{figure}
 
@@ -522,6 +522,12 @@ This was to try and improve the user experience before the final evaluation. The
 The preliminary sessions provided good feedback on the system. Many participants stated that the avatar used for the videos was very distracting, particularly with the eyes of the avatar. Two of the six participants reported that they feel the avatar definitely influenced their evaluation. Participants reported that the length of the videos was suitable as they could re-watch the videos and re-evaluate the video.
 
 \subsection{Final Evaluation}
+
+Please enter your name into the text input\\
+Watch the videos and evaluate how "Natural" you feel the head motions are.\\
+You evaluate by dragging the sliders below the video accordingly.\\
+The sliders range from 0 (left) to 100 (right), 0 being "not natural at all" and "100" being very natural"\\
+Hit "Submit" when you are happy with your evaluation.\\
 
 Having taken on board the feedback from the preliminary results, the evaluation platform was tweaked. The head motion videos were re-exported from Poser with a different avatar. Rather than using a particular character from Poser Pro's library, the basic model called 'Andy' was used that lacks facial details like hair and appears as an emotionless manikin. This helped the participants focus solely on the head motions and not be distracted by the previous character's expression or facial features. The final subjective evaluation was performed on 15 participants.
 
@@ -544,7 +550,7 @@ The random system scored highest overall with mean value of 71.6, including the 
 \begin{figure}
 	\centering
 	\includegraphics[width=1.0\textwidth]{chart.png}
-	\caption{Mean 'naturalness' of each video}
+	\caption{Mean 'naturalness' of each video with standard deviation}
 \end{figure}
 
 \subsection{Conclusions}
@@ -616,6 +622,23 @@ Due to time constraints the project never reached a data driven system. Many exi
 Using Hidden Markov Models, the relation between the head motions and text information generated from festival would be mapped. A direct mapping between the head motions and the individual words would be a naive approach but it could capture some of the hypotheses outlined especially in regards to negation and using head shakes to represent words like "no and never"  \cite{head_shaking}.
 
 Rather than using the individual words another approach would be to use the structural information present in the text information from festival like the Parts-of-speech tags and phrase break information. As we know head motions occurs more frequently at phrase boundaries \cite{ishi2008} training HMM's using the structural information and the head motions could build a good model of the data. This approach could provide good results as it is far more general than the naive individual words approach and there would be more data to use as the occurrence of pos tags would be far higher than individual words providing a larger training set.
+
+\appendix
+\chapter{Head Motion Trajectories}
+
+\begin{figure}
+	\includegraphics[width=0.5\textwidth]{/traj/sine_out.png}
+%	\caption{Basic System output trajectories}
+	\includegraphics[width=0.5\textwidth]{traj/random_out.png}
+%	\caption{Random System output trajectories}
+	\includegraphics[width=0.5\textwidth]{traj/rule_out.png}
+%	\caption{Rule Based System output trajectories}
+	\includegraphics[width=0.5\textwidth]{traj/desmond_out.png}
+%	\caption{Basic}
+	\includegraphics[width=0.5\textwidth]{traj/jane_out.png}
+%	\caption{Basic}
+\end{figure}
+
 
 \bibliographystyle{plain}
 \bibliography{diss}
