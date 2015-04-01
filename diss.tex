@@ -80,7 +80,9 @@ The data used for the project was data recordings from the Centre of Speech and 
 
 \section{Festival}
 
-TODO: write this section 
+Festival \cite{festival} is a full Text to Speech Synthesis software developed by the Centre of Speech and Technology Research at Edinburgh University. The software provides an entire framework for text analysis and speech synthesis. The system has many features including natural language processing tools, waveform synthesisers and scripting. The software is comprised of many modules which can be independently swapped out and improves and so is fully customisable so that it can be fine tuned for specific purposes. 
+
+Festival is able to be used for many different purposes where actual speech cannot be used like screen readers for the visually impaired, dictation, video game dialogue. For this project speech was not available and because of Festival's transparency, information regarding the synthesised speech was available meaning it could be used to help synthesise head motions.
 
 \section{Euler angles}
 
@@ -92,7 +94,7 @@ Euler angles are three angles that represent the orientation of a rigid body in 
 	\caption{Euler Angles in Robotics \cite{image_gimbal}}
 \end{figure}
 
-Euler angles do have some drawbacks. One of the most common issues animators experience with Euler angles is that different results can occur depending on the order of rotation. For example the rotation Roll x Yaw x Pitch will most likely have a completely different effect to the rotation Pitch x Yaw x Roll. \cite{quartionions}. Another potential issue is the Gimbal Lock \cite{gimbal}. Euler angles were chosen because of their ease of use and these drawbacks were not an issue.
+Euler angles do have some drawbacks. One of the most common issues animators experience with Euler angles is that different results can occur depending on the order of rotation. For example, if we have an object in 3 dimensional space and apply the rotations in the order of Roll, then Pitch and then Yaw it could be in a completely different state to if we applied the rotations in the order Pitch, then Yaw and then finally Roll. The object could be pointed in a completely different direction  which is why the order in which the Euler angles are applied is important \cite{quartionions}. Another potential issue is the Gimbal Lock \cite{gimbal}. Euler angles were chosen because of their ease of use and these drawbacks were not an issue.
 
 \section{Poser Animation}
 
@@ -192,7 +194,7 @@ Head motions correlate strongly with prosody present in speech \cite{vis_prosody
 
 \section{Text analysis with Festival}
 
-Festival applies various Natural Language Processing techniques to the text to generate information  so that it can synthesise speech.  There are many steps in this pipeline, each adding a little bit more information to the text before Festival can then apply signal processing to generate audio. 
+Festival \cite{festival} applies various Natural Language Processing techniques to the text to generate information  so that it can synthesise speech.  There are many steps in this pipeline, each adding a little bit more information to the text before Festival can then apply signal processing to generate audio. 
 
 The first stage in the Text to Speech pipeline is the text processing. Festival breaks the text up into more suitable units for processing, for example expanding abbreviations. Then Parts-of-Speech tags are assigned to the units, these POS tags indicate what type of word it is and how it relates to the overall structure of the sentence allowing for phrase break prediction and are represented as a series of capital letters. For example "NNP" is a pos tag indicating that the word is a singular proper noun. POS tags are useful for the project to determine which words are the subject of the utterance and show where the emphasis should lie in the synthesised speech, which will be reflected in the synthesised head motions.
 
@@ -294,8 +296,6 @@ The head motion synthesis was developed as three separate modules, increasing in
 
 \section{Basic System} 
 
-%\subsection{Trignomietric Functions}
-
 \begin{figure}
 	\centering
 	\includegraphics[width=0.8\textwidth]{euler_change.png}
@@ -308,7 +308,9 @@ The nodding motion is a smooth repetitive oscillation of the head along one axis
 
 The file basic\_predict.py takes in the dictionary containing all the information retrieved from festival and calculates the number of frames needed for the output rotations and calculates the angle change per frame so that the motion from the first frame to the last frame represents one complete oscillation of the sine formula.
 
-The prediction system adds the rotation information for each Euler angle to the dictionary of utterance data and returns said dictionary. That dictionary is then passed to output.py, which is a generic function that also accepts the utterance dictionary and a filename so that there was no need to re-implement and output function for each system and also allowed for comparison between the systems without necessarily saving them to file allowing rapid prototyping.
+The basic system takes in the information retrieved from Festival and calculates the total number of frames for the animation.
+
+The sine formula is stretched over the whole utterance so that the first frame represents the beginning of the sine wave and the last represents one full oscillation of the sine wave. The basic system then computed the angle change for each frame and stores this in a dictionary.That dictionary is then passed to the output module (output.py) which is saves the dictionary to the desired output file as a .head file.
 
 As mentioned, the basic system only took one axis into account and so only altered the "Roll" Euler angle. This system although simple, showed promising results and provided the workflow to have a working system that synthesised head motions, saved them into a .head file containing the Euler angle change for each frame which can be read in by the PoserPython script and assigned to character to be rendered out.
 
@@ -318,9 +320,12 @@ The basic system itself produced a natural nodding motion, but after having comp
 
 \subsection{Discrete Head Motions}
 
-The next system was designed to assign random discrete numbers to each word in the utterance for all Euler angles and apply a form of smoothing to make the random assignment seem smooth and natural even though it was completely random. 
+The next system was designed to assign random discrete numbers to each word in the utterance for all Euler angles and apply a form of smoothing to make the random assignment seem smooth and natural even though it was completely random. Figure 4.3 presents a basic example of this approach.
 
-TODO: Image of the thing
+\begin{figure}
+	\includegraphics[width=1.0\textwidth]{example_interp.png}
+	\caption{How the Random System interpolates the motion.}
+\end{figure}
 
 Each word in the utterance was assigned Euler values, ranging from -10 to +10 for "Roll" and -5 to +5 for the "Pitch" and "Yaw" as the "Roll" relates to nodding motions which are found more frequently head motions. The random function was implemented using Python's random library.
 
@@ -328,7 +333,7 @@ Each word in the utterance was assigned Euler values, ranging from -10 to +10 fo
 
 To synthesise smooth head motions between random points multiple interpolation algorithms were considered. Spherical Linear Interpolation (Slerp) was the first that was considered and was already used in similar research \cite{rigid_head_motion}. There was difficulty when trying to implement Slerp due to the choosing Euler angles as the unit of rotation. Euler angles are difficult to apply interpolation \cite{quartionions}, Slerp commonly uses Quartinions which are more complex. Another method of interpolation which was derived from Slerp which was considered was the Bezier Interpolation algorithm, invented by Pierre Bezier a french mathematician was much simpler to implement than Slerp.
 
-A recursive Bezier function was implemented which, given a list of points return a formula representing the a smooth interpolation between said points. Unlike Slerp, Bezier's smoothing algorithm doesn't take the interpolated line to the given points which works well given this scenario. It helped to smooth out the randomness and generate natural motions. The recursive definition of Bezier is presented below.
+A recursive Bezier function was implemented which, given a list of points return a formula representing the a smooth interpolation between said points. The Random system then iterates through each frame in the animation, passing this in a the 'time' parameter and the formula returns the interpolated Euler angle change for that point. Unlike Slerp, Bezier's smoothing algorithm doesn't take the interpolated line to the given points which works well given this scenario. It helped to smooth out the randomness and generate natural motions. The recursive definition of Bezier is presented below. 
 
 \begin{equation} 
 	B_{P_0}(t) = P_0 
@@ -511,19 +516,24 @@ The preliminary sessions provided good feedback on the system. Many participants
 
 \subsection{Final Evaluation}
 
-Please enter your name into the text input\\
-Watch the videos and evaluate how "Natural" you feel the head motions are.\\
-You evaluate by dragging the sliders below the video accordingly.\\
-The sliders range from 0 (left) to 100 (right), 0 being "not natural at all" and "100" being very natural"\\
-Hit "Submit" when you are happy with your evaluation.\\
-
-Having taken on board the feedback from the preliminary results, the evaluation platform was tweaked. The head motion videos were re-exported from Poser with a different avatar. Rather than using a particular character from Poser Pro's library, the basic model called 'Andy' was used that lacks facial details like hair and appears as an emotionless manikin. This helped the participants focus solely on the head motions and not be distracted by the previous character's expression or facial features. The final subjective evaluation was performed on 15 participants.
-
 \begin{figure}
 	\centering
 	\includegraphics[width=0.6\textwidth]{eval_3.png}
 	\caption{Avatar used for final Evaluation}
 \end{figure}
+
+Having taken on board the feedback from the preliminary results, the evaluation platform was tweaked. G. Hofer \cite{hofer_evaluation} showed that having photo-realistic visualisation can lead to unsatisfactory results and that was certainly the case with the preliminaries. To counteract this the head motion videos were re-exported from Poser with a different avatar. Rather than using a particular character from Poser Pro's library, the basic model called 'Andy' was used that lacks facial details like hair and appears as an emotionless manikin. This helped the participants focus solely on the head motions and not be distracted by the previous character's expression or facial features. 
+
+The final subjective evaluation was performed on 15 participants from various backgrounds. Some participants had experience with 3D animation as found in video games but many had not. Their ages ranged from 18 to 25. Participants were presented with the web page for the evaluation and asked to evaluate the videos. The instructions to do so were shown on screen. The instructions are presented below.
+
+\begin{lstlisting}
+Please enter your name into the text input.
+Watch the videos and evaluate how "Natural" you feel the head motions are.
+You evaluate by dragging the sliders below the video accordingly.
+The sliders range from 0 (left) to 100 (right), 0 being "not natural at all" and "100" being very natural"
+Hit "Submit" when you are happy with your evaluation.
+\end{lstlisting}
+
 
 \subsection{Results}
 
