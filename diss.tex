@@ -32,9 +32,7 @@ Head motion is very important when it comes to human communication, a lot of inf
 
 Gestures are a huge part of communication \cite{kendon} and provide information that adds meaning to communication. In the recent years we have a seen a large increase in embodied conversational agents as a form of human - computer interface which replicate realistic human features to make the interaction seem as natural as possible and provide a rich user experience. These systems need to synthesise facial features and facial gestures that appear natural to humans. Systems that synthesise realistic natural head motions have typically used speech as base, however it can be difficult and expensive to record said speech.The Text-Driven Talking Heads system was developed to synthesise these head motions. 
 
-
-This project aimed to generate head motions solely from text by using many natural language processing to analyse the text and use that information to make head motions.  
-
+The goal of this project was to design a system capable of synthesising life like realistic head motions from text. Text itself is very limited in it's 
  TODO: REDFINE GOAL
 
 Chapter 2 outlines the background knowledge of this area of research as well as the techniques and tools used int he project. The related work is also contained in this chapter.
@@ -70,7 +68,7 @@ There are some limitations to consider when talking about ECA's, mainly to do wi
 	\caption{The Uncanny Valley effect \cite{image_uncanny}}
 \end{figure}
 
-\subsection{Data Recordings} 
+\section{Data Recordings} 
 
 The data used for the project was data recordings from the Centre of Speech and Technology Research at Edinburgh University \cite{cstr_data}. The recordings consisted of optical motion capture sessions in which participants wore 4 reflective markers on their torso and a hat with 3 reflective markers. There were 7 V100:R2 cameras that tracked the reflective markers at a sampling rate of 100Hz. Participants were asked to read out transcriptions of fairy tales.
 
@@ -162,18 +160,9 @@ The main advantage of MUSHRA over the other two method of subjective evaluation 
 
 \chapter{Text-Driven Head Motion Synthesis}
 
-TODO: conceptual\\
-Talk about underlying models the we assume\\
-how text information is related to head motions\\
-text gives speaker independent information\\
-text information is not enough, there is a lot of missing information needed \\
-for this project we are only using the text\\
-clarify limitation\\
-\\
+Head Motion synthesis is the process of turning information we know about the environment into motion trajectories. The goal of this project was to develop a system that was capable of synthesising life-like, realistic head motions when text is the only information that is available.
 
-The goal of this project was to develop a system that was capable of synthesising life-like, realistic head motions from transcribed speech. 
-In order to synthesise realistic head motions hypotheses about the ..
-In order to to this hypotheses about the relation of head motion events and speech content were introduced. The system built on these hypotheses, linking them together in order to synthesis the final head motions. Text itself is very limited in information, so in order to have richer input data the transcribed text would be passed through a Text to Speech system which would apply natural language processing techniques in order to synthesise speech. 
+Text is comprised of words and punctuation which is not enough information to map to head motion trajectories, however this information is the building blocks of spoken sentences and with analysis can produce speaker independent information about how the text will be spoken. The produced information is much richer than the raw text and can be mapped  to head motions that would match the spoken text. To synthesise head motions, hypotheses between the relation of head motion events and text features content were introduced. The system built on these hypotheses, linking them together in order to synthesis the final head motions. 
 
 \section{Text Features}
 
@@ -199,8 +188,7 @@ Phrasing plays a huge role in how something is said. It has been found that nodd
 
 Prosody is the rhythm, stress and intonation of speech. As English is the language domain for the project and English is a stress timed language \cite{stress_timed}, prosodic features in speech are very important to the meaning of speech and can change the meaning of the underlying text.
 
-Head motions correlate strongly with prosody present in speech \cite{vis_prosody}. My first hypothesis relates to the rate of change of the fundamental frequency present in the synthesised speech. This is indicated in the Festival output as values around 120 Hz for male voices and 210Hz for female voices \cite{f0_values}. Sudden changes in the frequency should be reflected in head motions. For example in the intonation falls the head should lower accordingly \cite{Kendon}.
-
+Head motions correlate strongly with prosody present in speech \cite{vis_prosody}. Another hypothesis relates to the rate of change of the fundamental frequency present in the synthesised speech. The fundamental frequency is represented as values around 120 Hz for male voices and 210Hz for female voices \cite{f0_values}. Sudden changes in the frequency should be reflected in head motions. For example in the intonation falls the head should lower accordingly \cite{Kendon}.
 
 \section{Text analysis with Festival}
 
@@ -623,22 +611,33 @@ Using Hidden Markov Models, the relation between the head motions and text infor
 
 Rather than using the individual words another approach would be to use the structural information present in the text information from festival like the Parts-of-speech tags and phrase break information. As we know head motions occurs more frequently at phrase boundaries \cite{ishi2008} training HMM's using the structural information and the head motions could build a good model of the data. This approach could provide good results as it is far more general than the naive individual words approach and there would be more data to use as the occurrence of pos tags would be far higher than individual words providing a larger training set.
 
-\appendix
-\chapter{Head Motion Trajectories}
-
-\begin{figure}
-	\includegraphics[width=0.5\textwidth]{/traj/sine_out.png}
-%	\caption{Basic System output trajectories}
-	\includegraphics[width=0.5\textwidth]{traj/random_out.png}
-%	\caption{Random System output trajectories}
-	\includegraphics[width=0.5\textwidth]{traj/rule_out.png}
-%	\caption{Rule Based System output trajectories}
-	\includegraphics[width=0.5\textwidth]{traj/desmond_out.png}
-%	\caption{Basic}
-	\includegraphics[width=0.5\textwidth]{traj/jane_out.png}
-%	\caption{Basic}
-\end{figure}
-
+%\appendix
+%\chapter{Head Motion Trajectories}
+%
+%\begin{figure}
+%\caption{Basic System Head Motion Trajectories.}
+%\includegraphics[width=0.4\textwidth]{/traj/sine_out.png}
+%\end{figure}
+%
+%\begin{figure}
+%\caption{Random System Head Motion Trajectories}
+%\includegraphics[width=0.4\textwidth]{traj/random_out.png}
+%\end{figure}
+%
+%\begin{figure}
+%\caption{Rule Based Head Motion Trajectories}
+%\includegraphics[width=0.4\textwidth]{traj/rule_out.png}
+%\end{figure}
+%
+%\begin{figure}
+%\caption{Head Motion Trajectories from participant 'Desmond'}
+%\includegraphics[width=0.4\textwidth]{traj/desmond_out.png}
+%\end{figure}
+%
+%\begin{figure}
+%\caption{Head Motion Trajectories from participant 'Jane'}
+%\includegraphics[width=0.4\textwidth]{traj/jane_out.png}
+%\end{figure}
 
 \bibliographystyle{plain}
 \bibliography{diss}
