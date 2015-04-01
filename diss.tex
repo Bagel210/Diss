@@ -20,7 +20,7 @@
 
 \date{\today}
 \abstract{
-Head motion is very important when it comes to human communication, a lot of information is given to us as head motions and dialogue is much harder to fully understand in the absence of these head motions. Generating avatars with realistic facial features has been an area of wide research in the past decade. Especially with the rise of applications like virtual reality, video games and online shopping assistants realistic head motions are vital to these interactions otherwise these application will fail. This project aimed to build a system which was capable of synthesising life-like natural head motions from text.}
+Head motion is very important when it comes to human communication, a lot of information is given to us as head motions and dialogue is much harder to fully understand in the absence of these head motions. Generating avatars with realistic facial features has been an area of wide research in the past decade. Especially with the rise of applications like virtual reality, video games and online shopping assistants, realistic head motions are vital to these interactions otherwise these applications will fail. This project aimed to build a system which was capable of synthesising life-like natural head motions from text.}
 
 \maketitle
 \section*{Acknowledgements}
@@ -73,9 +73,9 @@ The data used for the project was data recordings from the Centre of Speech and 
 
 \section{Festival}
 
-Festival \cite{festival} is a full Text to Speech Synthesis software developed by the Centre of Speech and Technology Research at Edinburgh University. The software provides an entire framework for text analysis and speech synthesis. The system has many features including natural language processing tools, waveform synthesisers and scripting. The software is comprised of many modules which can be independently swapped out and improves and so is fully customisable so that it can be fine tuned for specific purposes. 
+Festival \cite{festival} is a full Text to Speech Synthesis software developed by the Centre of Speech and Technology Research at Edinburgh University. The software provides an entire framework for text analysis and speech synthesis. The system has many features including natural language processing tools, waveform synthesisers and scripting. The software is comprised of many modules which can be independently swapped out and improved and is fully customisable so that it can be fine tuned for specific purposes. 
 
-Festival is able to be used for many different purposes where actual speech cannot be used like screen readers for the visually impaired, dictation, video game dialogue. For this project speech was not available and because of Festival's transparency, information regarding the synthesised speech was available meaning it could be used to help synthesise head motions.
+Festival is able to be used for many different purposes where actual speech cannot be used like screen readers for the visually impaired, dictation, video game dialogue. In this project speech was not usable, and because of Festival's transparency, information regarding the synthesised speech was available meaning it could be used to help synthesise head motions.
 
 
 
@@ -157,13 +157,13 @@ The main advantage of MUSHRA over the other two method of subjective evaluation 
 
 \chapter{Text-Driven Head Motion Synthesis}
 
-Head Motion synthesis is the process of turning information we know about the environment into motion trajectories. The goal of this project was to develop a system that was capable of synthesising life-like, realistic head motions when text is the only information that is available.
+Head Motion synthesis is the process of turning information we know about the environment like speech or text into motion trajectories. The goal of this project was to develop a system that was capable of synthesising life-like, realistic head motions when text is the only information that is available.
 
 Text is comprised of words and punctuation which is not enough information to map to head motion trajectories, however this information is the building blocks of spoken sentences and with analysis can produce speaker independent information about how the text will be spoken. The produced information is much richer than the raw text and can be mapped  to head motions that would match the spoken text. To synthesise head motions, hypotheses between the relation of head motion events and text features content were introduced. The system built on these hypotheses, linking them together in order to synthesis the final head motions. 
 
 \section{Text Features}
 
-It was  found that when two people have a conversation, head motions are more prevalent in the dialogue if the two people do not have a close relationship \cite{first_paper}. In dialogue the nod is commonly understood as a gesture of affirmation and agreement. A possible explanation for this effect could be that because there is no pre-existing relationship humans subconsciously overcompensate their head motions as a method of positive reenforcement to aid in building a foundation for this new relationship. In the context of Embodied Conversational Agents the system aimed to synthesise head motions that made the interaction between the user and the ECA as natural as possible in relation to head motions, to incorporate this hypotheses into the system the main head motion should primarily be a nodding motion and head motions should overcompensate similar to an interaction with a new person with the aim of making the interaction feel more like a face to face conversation and provide a  more comfortable experience.
+It was found that when two people have a conversation, head motions are more prevalent in the dialogue if the two people do not have a close relationship \cite{first_paper}. In dialogue the nod is commonly understood as a gesture of affirmation and agreement. A possible explanation for this effect could be that because there is no pre-existing relationship humans subconsciously overcompensate their head motions as a method of positive reenforcement to aid in building a foundation for this new relationship. In the context of Embodied Conversational Agents the system aimed to synthesise head motions that made the interaction between the user and the ECA as natural as possible in relation to head motions, to incorporate this hypotheses into the system the main head motion should primarily be a nodding motion and head motions should overcompensate similar to an interaction with a new person with the aim of making the interaction feel more like a face to face conversation and provide a  more comfortable experience.
 
 \subsection{Text Content}
 
@@ -175,7 +175,7 @@ Sentiment analysis is a popular area of natural language processing. It is often
 
 Sentiment or emotion in speech has various effects on head motions. In a study It was found that the absence of head motion can be easily identified as 'neutral' emotion \cite{emotion_head_motion} whereas participants in the study found it difficult to differentiate between head motions that were typical of 'happy' and 'sad' emotions. This study shows that emotive analysis on the text should be treated as an 'intensifier' of the underlying head motions derived form other areas of the text rather than altering the head motions to fit an emotion.
 
-Negation is very commonly associated with head shakes \cite{head_shaking}. For example, it is very common for people to respond to a question by shaking their head and saying "No". The head shake is strongly associated with negation. Sentiment analysis can be used to determine wether a sentence is positive or negative, however there are many other factors that relate to head shakes. Kendon states that head shakes can be used as an affirmation \cite{kendon} in many positive sentiment sentences. For example in the sentence "I have never saw anything more beautiful in my life" has a positive sentiment as the subject is talking about something beautiful but the subject will shake their head on the word 'never' to enforce the positive affirmation. As pointed out in another paper \cite{negative_sentiment} negation statements are very ambiguous and sentiment alone cannot capture the overall meaning and that the lexical structure may play a larger role.
+Negation is commonly associated with head shakes \cite{head_shaking}. For example, it is normal for people to respond to a question by shaking their head and saying "No". The head shake is strongly associated with negation. Sentiment analysis can be used to determine wether a sentence is positive or negative, however there are many other factors that relate to head shakes. Kendon states that head shakes can be used as an affirmation \cite{kendon} in many positive sentiment sentences. For example in the sentence "I have never saw anything more beautiful in my life" has a positive sentiment as the subject is talking about something beautiful but the subject will shake their head on the word 'never' to enforce the positive affirmation. As pointed out in another paper \cite{negative_sentiment} negation statements are very ambiguous and sentiment alone cannot capture the overall meaning and that the lexical structure may play a larger role.
 
 \subsection{Phrasing}
 
@@ -189,7 +189,7 @@ Head motions correlate strongly with prosody present in speech \cite{vis_prosody
 
 \section{Text analysis with Festival}
 
-Festival \cite{festival} applies various Natural Language Processing techniques to the text to generate information  so that it can synthesise speech. A typical interaction with the Festival system is shown below. The SayText command performs the full analysis of the text and synthesises the speech, playing it back to the user. There are many steps in this pipeline, each adding a little bit more information to the text before Festival can then apply signal processing to generate audio. 
+Festival \cite{festival} applies various Natural Language Processing techniques to the text to generate information  so that it can synthesise speech. There are many steps in this pipeline, each adding a little bit more information to the text before Festival can then apply signal processing to generate audio.  A typical interaction with the Festival system is shown below. The SayText command performs the full analysis of the text and synthesises the speech, playing it back to the user.
 
 \begin{lstlisting}
 	festival> (SayText "Hello World")
@@ -197,7 +197,7 @@ Festival \cite{festival} applies various Natural Language Processing techniques 
 	festival> 
 \end{lstlisting}
 
-The first stage in the Text to Speech pipeline is the text processing. Festival breaks the text up into more suitable units for processing, for example expanding abbreviations. Then Parts-of-Speech tags are assigned to the units, these POS tags indicate what type of word it is and how it relates to the overall structure of the sentence allowing for phrase break prediction and are represented as a series of capital letters. For example "NNP" is a pos tag indicating that the word is a singular proper noun. POS tags are useful for the project to determine which words are the subject of the utterance and show where the emphasis should lie in the synthesised speech, which will be reflected in the synthesised head motions. 
+The first stage in the Text to Speech pipeline is text processing. Festival breaks the text up into more suitable units for processing, for example expanding abbreviations. Then Parts-of-Speech tags are assigned to the units, these POS tags indicate what type of word it is and how it relates to the overall structure of the sentence allowing for phrase break prediction and are represented as a series of capital letters. For example "NNP" is a pos tag indicating that the word is a singular proper noun. POS tags are useful for the project to determine which words are the subject of the utterance and show where the emphasis should lie in the synthesised speech, which will be reflected in the synthesised head motions. 
 
 Phrase break prediction assigns a break strength to each unit, which highlights where the phrases are in the sentences. Phrase break predictors are usually taggers trained on annotated data and are very accurate. This is shown in Festival as a series of tags with their assigned values. The 'pbreak' indicates what level of break has been assigned to this word, for example BB for a big break, B for a normal break or NB for no break.
 
@@ -236,8 +236,6 @@ id _12 ; name syl ; stress 1 ;
 Similarly to phrase break predictors, Festival uses duration predictors that have been trained on annotated data using classification and regression trees to produce duration information for each phoneme.
 
 Now that the system has a linguistic specification of the sentence like the phone sequence, phone duration and pitch contour signal processing can be performed to generate the final speech output.
-
-
 
 \section{Head Motion Synthesis System}
 
@@ -306,9 +304,9 @@ Normally Festival is run as an interactive interface. The system used a LISP scr
 2. (save_waves_during_tts)
 \end{lstlisting}
 
-The line of code (save\_waves\_during\_tts) meant that Festival saved all synthesised speech to wave files. An issue that raised from this was that it generated an audio file for each sentence, which was not suitable for the Text-Driven Talking Heads System. This problem was solved by implementing a function in the preparation stage called \"combine\_audio\_files\" which created a new file that was the concatenation of all the sentences. This was a suitable solution as the produced output sounded failry natural.
+The line of code (save\_waves\_during\_tts) meant that Festival saved all synthesised speech to wave files. An issue that raised from this was that it generated an audio file for each sentence, which was not suitable for the Text-Driven Talking Heads System. This problem was solved by implementing a function in the preparation stage called 'combine\_audio\_files' which created a new file that was the concatenation of all the sentences. This was a suitable solution as the produced output sounded fairly natural.
 
-The Poser Script setMotion.py was taken from another Project that used Euler Angles to rotate a character's limbs, the only alterations made were to set he active body part to the head and to add the speech to the scene.
+The Poser Script setMotion.py was taken from another Project that used Euler Angles to rotate a character's limbs, the only alterations made were to set the active body part to the head and to add the speech to the scene.
 
 The head motion synthesis was developed as three separate modules, increasing in complexity and building on what was successful from the previous head motion synthesis methods.
 
@@ -328,7 +326,7 @@ The file basic\_predict.py takes in the dictionary containing all the informatio
 
 The basic system takes in the information retrieved from Festival and calculates the total number of frames for the animation.
 
-The sine formula is stretched over the whole utterance so that the first frame represents the beginning of the sine wave and the last represents one full oscillation of the sine wave. The basic system then computed the angle change for each frame and stores this in a dictionary.That dictionary is then passed to the output module (output.py) which is saves the dictionary to the desired output file as a .head file.
+The sine formula is stretched over the whole utterance so that the first frame represents the beginning of the sine wave and the last represents one full oscillation of the sine wave. The basic system then computed the angle change for each frame and stores this in a dictionary. That dictionary is then passed to the output module (output.py) which is saves the dictionary to the desired output file as a .head file.
 
 As mentioned, the basic system only took one axis into account and so only altered the "Roll" Euler angle. This system although simple, showed promising results and provided the workflow to have a working system that synthesised head motions, saved them into a .head file containing the Euler angle change for each frame which can be read in by the PoserPython script and assigned to character to be rendered out.
 
@@ -617,7 +615,7 @@ The Rule based system performed poorly in the evaluation achieving a naturalness
 
 \subsection{Better Smoothing}
 
-As previously mentioned the rule based system's smoothing was deemed very unnatural by all the participants in the subjective evaluation. To counteract this the smoothing should be improved upon. The parameters used for the parametric smoothing may have been sub-optimal for the conditions. The utterances used were very short and there were many points that needed to be smoothed between over a short distance, which explains why the movements were so jerky. To tackle this in the future the smoothing should no necessarily smooth directly between neighbouring points but smooth over a group, similar to the bezier smoothing. 
+As previously mentioned the rule based system's smoothing was deemed very unnatural by all the participants in the subjective evaluation. To counteract this the smoothing should be improved upon. The parameters used for the parametric smoothing may have been sub-optimal for the conditions. The utterances used were very short and there were many points that needed to be smoothed between over a short distance, which explains why the movements were so jerky. To tackle this in the future the smoothing should not necessarily smooth directly between neighbouring points but smooth over a group, similar to the bezier smoothing. 
 
 A suitable distribution for this could be the Gaussian distribution, as shown in figure 6.1 it produces a smooth curve rising to a point and then falling back down to where it began. The gaussian could be very useful as the rise begins slowly and increases as we get closer to the mean value, which could reduce the jerky nature of the head motions produced from the rule based system whilst maintaining it's individual motions that would be reduced using the bezier smoothing algorithm.
 
@@ -648,7 +646,7 @@ Rather than using the individual words another approach would be to use the stru
 
 The following figures are graphical visualisations of the Head Motion trajectories that were used in the evaluation. In the following graphs the red line represents the value of the Roll Euler angle. Yaw is shown as a green line and the blue line represents pitch.
 
-The synthesised head motions (1,2 and 3) were generated from the same text \"there once lived a man and his wife who had long wished for a child but in vain.\". The 4th and 5th graphs are visual representations of the head motion trajectories from the data recordings for the participants Desmond and Jane which were used in the subjective evaluation process.
+The synthesised head motions (1,2 and 3) were generated from the same text 'there once lived a man and his wife who had long wished for a child but in vain'. The 4th and 5th graphs are visual representations of the head motion trajectories from the data recordings for the participants Desmond and Jane which were used in the subjective evaluation process.
 
 \begin{figure}
 	\centering
