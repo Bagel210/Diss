@@ -1,4 +1,4 @@
-\documentclass[bsc,frontabs,twoside,singlespacing,parskip]{infthesis} 
+\documentclass[bsc,frontabs,twoside,singlespacing,parskip,deptreport]{infthesis} 
 \usepackage{graphicx}
 \usepackage{listings}
 \usepackage{url}
@@ -30,7 +30,12 @@ Head motion is very important when it comes to human communication, a lot of inf
 % ============================================================= %
 \chapter{Introduction}
 
-Gestures are a huge part of communication \cite{kendon} and provide information that adds meaning to communication. In the recent years we have a seen a large increase in embodied conversational agents as a form of human - computer interface which replicate realistic human features to make the interaction seem as natural as possible and provide a rich user experience. These systems need to synthesise facial features and facial gestures that appear natural to humans. Systems that synthesise realistic natural head motions have typically used speech as base, however it can be difficult and expensive to record said speech.The Text-Driven Talking Heads system was developed to synthesise these head motions. This project aimed to generate head motions solely from text by using many natural language processing to analyse the text and use that information to make head motions.
+Gestures are a huge part of communication \cite{kendon} and provide information that adds meaning to communication. In the recent years we have a seen a large increase in embodied conversational agents as a form of human - computer interface which replicate realistic human features to make the interaction seem as natural as possible and provide a rich user experience. These systems need to synthesise facial features and facial gestures that appear natural to humans. Systems that synthesise realistic natural head motions have typically used speech as base, however it can be difficult and expensive to record said speech.The Text-Driven Talking Heads system was developed to synthesise these head motions. 
+
+
+This project aimed to generate head motions solely from text by using many natural language processing to analyse the text and use that information to make head motions.  
+
+ TODO: REDFINE GOAL
 
 Chapter 2 outlines the background knowledge of this area of research as well as the techniques and tools used int he project. The related work is also contained in this chapter.
 
@@ -47,33 +52,37 @@ The last chapter reviews the project and as well as discussing future improvemen
 % ============================================================= %
 \chapter{Background Information}
 
+\section{Project Goal}
+
+The task for the project was as follows: Using only text transcriptions of speech can we synthesise life-like head motions that seem realistic and natural to humans. The project aimed to investigate the correlation between head motions and the information present in speech unique to the speaker. The difficulty of the task comes from the lack of unique information about the speech, as we are only using the transcribed text. To tackle this we will be using a Text-to-Speech system called Festival.
+
 \section{Human Computer Interaction}
 
-Human Computer Interaction is a field of Computer Science in constant change. With the goal of enhancing Human Computer Interaction researchers have looked to the field of Embodied Conversational Agents, where an intelligent agent is mapped to a graphical animation or body to replicate the most natural of interactions: face to face dialogue. \cite{ecas} 
+Human Computer Interaction is a field of Computer Science in constant change. With the goal of enhancing Human Computer Interaction researchers have looked to the field of Embodied Conversational Agents, where an intelligent agent is mapped to a graphical animation or body to replicate the most natural of interactions: face to face dialogue \cite{ecas}.
 
-Embodied Conversational Agents have had been found to enhance the interactions with computers \cite{conv_agents} and researchers are perpetually improving systems in order to increase user satisfaction. One of the biggest benefits to using an ECA is that the interaction is of a social nature, being more familiar to humans and aids the systems perceived trust worthiness, allowing a richer interaction between the user and the computer. Also the intelligibility of speech produced in noise is also improved when a speaker's face is visible \cite{emotion_head_motion}, this means that because the user has a physical representation of the ECA they can more easily understand what the agent is saying rather than if it was just speech output. These results suggest that nonverbal gestures such as head movements play a more direct role in the perception of speech than previously known. \cite{vis_prosody}
+Embodied Conversational Agents have had been found to enhance the interactions with computers \cite{conv_agents} and researchers are perpetually improving systems in order to increase user satisfaction. One of the biggest benefits to using an ECA is that the interaction is of a social nature, being more familiar to humans and aids the systems perceived trust worthiness, allowing a richer interaction between the user and the computer. Also the intelligibility of speech produced in noise is also improved when a speaker's face is visible \cite{emotion_head_motion}, this means that because the user has a physical representation of the ECA they can more easily understand what the agent is saying rather than if it was just speech output. These results suggest that nonverbal gestures such as head movements play a more direct role in the perception of speech than previously known \cite{vis_prosody}.
 
-There are some limitations to consider when talking about ECA's, mainly to do with what Masahiro Mori called the Uncanny Valley effect. Mori states that the familiarity with a robot or graphic representation of an avatar increases in correlation with the rise of human likeliness, but there is a distinct fall in familiarity before achieving a life-like human representation referred to as the Uncanny Valley which causes revulsion in humans. \cite{uncanny}
+There are some limitations to consider when talking about ECA's, mainly to do with what Masahiro Mori called the Uncanny Valley effect. Mori states that the familiarity with a robot or graphic representation of an avatar increases in correlation with the rise of human likeliness, but there is a distinct fall in familiarity before achieving a life-like human representation referred to as the Uncanny Valley which causes revulsion in humans \cite{uncanny}.
 
 \begin{figure}[h!]
 	\centering
 	\includegraphics[width=0.6\textwidth]{uncanny}
-	\caption{The Uncanny Valley effect}
+	\caption{The Uncanny Valley effect \cite{image_uncanny}}
 \end{figure}
 
-\section{Data and Task}
+\subsection{Data Recordings} 
 
-The task for the project was as follows: Using only text transcriptions of speech can we synthesise life-like head motions that seem realistic and natural to humans. The project aimed to investigate the correlation between head motions and the information present in speech unique to the speaker. The difficulty of the task comes from the lack of unique information about the speech, as we are only using the transcribed text. To tackle this we will be using a Text-to-Speech system called Festival.
-
-\subsection{Data Recordings}
-
-The data used for the project was data recordings from the Centre of Speech and Technology Research at Edinburgh University. The recordings consisted of optical motion capture sessions in which participants wore 4 reflective markers on their torso and a hat with 3 reflective markers. There were 7 V100:R2 cameras that tracked the reflective markers at a sampling rate of 100Hz. Participants were asked to read out transcriptions of fairy tales.
+The data used for the project was data recordings from the Centre of Speech and Technology Research at Edinburgh University \cite{cstr_data}. The recordings consisted of optical motion capture sessions in which participants wore 4 reflective markers on their torso and a hat with 3 reflective markers. There were 7 V100:R2 cameras that tracked the reflective markers at a sampling rate of 100Hz. Participants were asked to read out transcriptions of fairy tales.
 
 \begin{figure}[h!]
 	\centering
 	\includegraphics[width=.7\textwidth]{mocap.png}
 	\caption{Setup of the mo-cap environment}
 \end{figure}
+
+\section{Festival}
+
+TODO: write this section 
 
 \section{Euler angles}
 
@@ -82,10 +91,10 @@ Euler angles are three angles that represent the orientation of a rigid body in 
 \begin{figure}[h!]
 	\centering
 	\includegraphics[width=.5\textwidth]{euler_angles.png}
-	\caption{Euler Angles in Robotics}
+	\caption{Euler Angles in Robotics \cite{image_gimbal}}
 \end{figure}
 
-Euler angles do have some drawbacks. One of the most common issues animators experience with Euler angles is that different results can occur depending on the order of rotation. For example the rotation Roll x Yaw x Pitch will most likely have a completely different effect to the rotation Pitch x Yaw x Roll. \cite{quartionions} Another potential issue is the Gimbal Lock \cite{gimbal}. Euler angles were chosen because of their ease of use and these drawbacks were not an issue.
+Euler angles do have some drawbacks. One of the most common issues animators experience with Euler angles is that different results can occur depending on the order of rotation. For example the rotation Roll x Yaw x Pitch will most likely have a completely different effect to the rotation Pitch x Yaw x Roll. \cite{quartionions}. Another potential issue is the Gimbal Lock \cite{gimbal}. Euler angles were chosen because of their ease of use and these drawbacks were not an issue.
 
 \section{Poser Animation}
 
@@ -99,10 +108,6 @@ With a scripting plug-in for Python called PoserPython, \cite{poser_python} allo
 		\caption{Overview of Poser Pro}
 \end{figure}
 
-%\section{Speech Features}
-%
-%F0
-
 \section{Related Works}
 
 Creating systems that are capable of synthesising life-life human motions as facial animations is a large area of computer graphics research due to it's rapid increase in demand in computer games, feature films and communications.
@@ -115,7 +120,7 @@ Hidden Markov Models are finite state machines with probabilistic state transiti
 
 G. Hofer designed the Speech Driven Head Motion Synthesis system \cite{speech_driven_head_motion} in which a HMM based system was modelled to synthesise natural head motions by extracting important information from the speech such as the F0 values and the Mel-Frequency Cepstral Coefficients which provide a unique fingerprint of the speech derived from the Fourier transform and is commonly used in signal processing. This approach produced head motions that were within a 70\% accuracy to test data. A Ben-Yousse developed a system which improves upon the previous Speech Driven system by using articulacy features extracted the speech\cite{artic1} to synthesise head motions.
 
-Similarly C. Busso designed a system to synthesise head motions using using speech by training HMM's on data. \cite{busso_rigid} The system generated discrete vectors for the head notions and applied interpolation as a form of smoothing to create realistic head motions. The system showed that HMM's were capable of capturing the relationship between head motions and speech data.
+Similarly C. Busso designed a system to synthesise head motions using using speech by training HMM's on data \cite{busso_rigid}. The system generated discrete vectors for the head notions and applied interpolation as a form of smoothing to create realistic head motions. The system showed that HMM's were capable of capturing the relationship between head motions and speech data.
 
 Systems have also been developed that aim to synthesise facial movements to express emotions, rather than just synthesising natural head motions. Y. Cao designed the Expressive Speech-Driven Facial animation system  \cite{expressive_speech_animation} in which they used similar machine learning techniques to discover the mapping between F0 and head motions. The system takes in recorded speech, extracts key features such as the phoneme sequence and spectral envelope, performs emotion analysis and executes a graph search through their Anime data structure, designed to combine utterances with their recorded head motion. As outlined in the paper the system needs a lot of training data which is expensive to record. 
 
@@ -143,7 +148,7 @@ Preference testing is suitable for evaluating a small number of samples, simple 
 
 \subsection{Mean Opinion Score - MOS}
 
-When evaluating 'Naturalness' where the concept is not so clearly defined, the MOS test is commonly used as the method of subjective analysis. \cite{mos}
+When evaluating 'Naturalness' where the concept is not so clearly defined, the MOS test is commonly used as the method of subjective analysis \cite{mos}.
 
 The Mean Opinions Score (MOS) is a test to obtain the user's subjective measurement of quality in relation to a particular feature or concept. Generally, users will be asked to rate something on a numerical scale like 1 to 5, 1 being the worst or 'bad' and 5 being the best or 'very good'. This method is fairly trivial and is a very common form of subjective evaluation due to is ease. Results from MOS testing are easier to analyse than preference tests due to their values being numerical.
 
@@ -159,31 +164,32 @@ The main advantage of MUSHRA over the other two method of subjective evaluation 
 
 The goal of this project was to develop a system that was capable of synthesising life-like, realistic head motions from transcribed speech. In order to to this hypotheses about the relation of head motion events and speech content were introduced. The system built on these hypotheses, linking them together in order to synthesis the final head motions. Text itself is very limited in information, so in order to have richer input data the transcribed text would be passed through a Text to Speech system which would apply natural language processing techniques in order to synthesise speech. 
 
-\section{Hypotheses}
+\section{Text Features}
 
-It was  found that when two people have a conversation, head motions are more prevalent in the dialogue if the two people do not have a close relationship. \cite{first_paper} In dialogue the nod is commonly understood as a gesture of affirmation and agreement. A possible explanation for this effect could be that because there is no pre-existing relationship humans subconsciously overcompensate their head motions as a method of positive reenforcement to aid in building a foundation for this new relationship. In the context of Embodied Conversational Agents the system aimed to synthesise head motions that made the interaction between the user and the ECA as natural as possible in relation to head motions, to incorporate this hypotheses into the system the main head motion should primarily be a nodding motion and head motions should overcompensate similar to an interaction with a new person with the aim of making the interaction feel more like a face to face conversation and provide a  more comfortable experience.
+It was  found that when two people have a conversation, head motions are more prevalent in the dialogue if the two people do not have a close relationship \cite{first_paper}. In dialogue the nod is commonly understood as a gesture of affirmation and agreement. A possible explanation for this effect could be that because there is no pre-existing relationship humans subconsciously overcompensate their head motions as a method of positive reenforcement to aid in building a foundation for this new relationship. In the context of Embodied Conversational Agents the system aimed to synthesise head motions that made the interaction between the user and the ECA as natural as possible in relation to head motions, to incorporate this hypotheses into the system the main head motion should primarily be a nodding motion and head motions should overcompensate similar to an interaction with a new person with the aim of making the interaction feel more like a face to face conversation and provide a  more comfortable experience.
 
-\subsection{Prosodic Features}
+\subsection{Text Content}
 
-Prosody is the rhythm, stress and intonation of speech. As english is the language domain for the project and english is a stress timed language \cite{stress_timed}, prosodic features in speech are very important to the meaning of speech and can change the meaning of the underlying text.
-
-Head motions correlate strongly with prosody present in speech \cite{vis_prosody}. My first hypothesis relates to the rate of change of the fundamental frequency present in the synthesised speech. This is indicated in the Festival output as values around 120 Hz for male voices and 210Hz for female voices \cite{f0_values}. Sudden changes in the frequency should be reflected in head motions. For example in the intonation falls the head should lower accordingly \cite{Kendon}.
-
-\subsection{Phrasing}
-
-Phrasing plays a huge role in how something is said. It has been found that nodding head motions frequently occur at the end of phrases or at strong phrase boundaries, especially if the speaker is confident in what they are saying. \cite{ishi2008}. 
+There are two types of gestures that relate to speech. \cite{lexical_gestures} The first are motor movements which are typically simple, brief, repetitive and have a high correlation with prosodic features. The other type are lexical movements, gestures that help the speaker mentally perform lexical lookups subconsciously. These gestures are very different to motor movements and are much longer, more complex and relate more to the lexical information in the speech. To portray these ideas in this project, unique words that are not common should cause the avatar to tilt their head. This is similar to the theory that eye movements can aid with memory recall \cite{eye_movements}.
 
 \subsection{Sentiment Analysis}
 
 Sentiment analysis is a popular area of natural language processing. It is often used to gauge reviews for products\cite{sentiment_online} and films\cite{sentiment_films} due to the availability of data and ease of tagging the reviews as either positive or negative.
 
-Sentiment or emotion in speech has various effects on head motions. In a study It was found that the absence of head motion can be easily identified as 'neutral' emotion. \cite{emotion_head_motion} whereas participants in the study found it difficult to differentiate between head motions that were typical of 'happy' and 'sad' emotions. This study shows that emotive analysis on the text should be treated as an 'intensifier' of the underlying head motions derived form other areas of the text rather than altering the head motions to fit an emotion.
+Sentiment or emotion in speech has various effects on head motions. In a study It was found that the absence of head motion can be easily identified as 'neutral' emotion \cite{emotion_head_motion} whereas participants in the study found it difficult to differentiate between head motions that were typical of 'happy' and 'sad' emotions. This study shows that emotive analysis on the text should be treated as an 'intensifier' of the underlying head motions derived form other areas of the text rather than altering the head motions to fit an emotion.
 
 Negation is very commonly associated with head shakes \cite{head_shaking}. For example, it is very common for people to respond to a question by shaking their head and saying "No". The head shake is strongly associated with negation. Sentiment analysis can be used to determine wether a sentence is positive or negative, however there are many other factors that relate to head shakes. Kendon states that head shakes can be used as an affirmation \cite{kendon} in many positive sentiment sentences. For example in the sentence "I have never saw anything more beautiful in my life" has a positive sentiment as the subject is talking about something beautiful but the subject will shake their head on the word 'never' to enforce the positive affirmation. As pointed out in another paper \cite{negative_sentiment} negation statements are very ambiguous and sentiment alone cannot capture the overall meaning and that the lexical structure may play a larger role.
 
-\subsection{Text Content}
+\subsection{Phrasing}
 
-There are two types of gestures that relate to speech. \cite{lexical_gestures} The first are motor movements which are typically simple, brief, repetitive and have a high correlation with prosodic features. The other type are lexical movements, gestures that help the speaker mentally perform lexical lookups subconsciously. These gestures are very different to motor movements and are much longer, more complex and relate more to the lexical information in the speech. To portray these ideas in this project, unique words that are not common should cause the avatar to tilt their head. This is similar to the theory that eye movements can aid with memory recall. \cite{eye_movements}
+Phrasing plays a huge role in how something is said. It has been found that nodding head motions frequently occur at the end of phrases or at strong phrase boundaries, especially if the speaker is confident in what they are saying. \cite{ishi2008}. 
+
+\subsection{Prosodic Features}
+
+Prosody is the rhythm, stress and intonation of speech. As English is the language domain for the project and English is a stress timed language \cite{stress_timed}, prosodic features in speech are very important to the meaning of speech and can change the meaning of the underlying text.
+
+Head motions correlate strongly with prosody present in speech \cite{vis_prosody}. My first hypothesis relates to the rate of change of the fundamental frequency present in the synthesised speech. This is indicated in the Festival output as values around 120 Hz for male voices and 210Hz for female voices \cite{f0_values}. Sudden changes in the frequency should be reflected in head motions. For example in the intonation falls the head should lower accordingly \cite{Kendon}.
+
 
 \section{Text analysis with Festival}
 
@@ -226,9 +232,9 @@ The Text Driven Head Motion system was designed to read in text, generate inform
 
 The system is designed in a modular fashion so that sections of the system can be switched out for improvements. This also allows the system to use a different type of head motion synthesis with ease. figure 3.3 shows an overview of the system architecture and how the modules communicate to form the full Text Driven Talking Heads system. 
 
-Three different system were used to synthesise head motions each increasing in complexity. The basic head synthesis system is designed to synthesise natural nodding head motions across and utterance using sine waves. The basic system was designed on the theory that nodding head motions are the most common of head motions. \cite{first_paper}
+Three different system were used to synthesise head motions each increasing in complexity. The basic head synthesis system is designed to synthesise natural nodding head motions across and utterance using sine waves. The basic system was designed on the theory that nodding head motions are the most common of head motions \cite{first_paper}.
 
-The next head motion synthesis system was the random system. It was designed to generate smooth head motions across randomly assigned points for the head motions, various smoothing algorithms were investigated for this system. This system looked to implement the interpolation methods used in Busso's Rigid Head Motion synthesis system. \cite{busso_rigid}
+The next head motion synthesis system was the random system. It was designed to generate smooth head motions across randomly assigned points for the head motions, various smoothing algorithms were investigated for this system. This system looked to implement the interpolation methods used in Busso's Rigid Head Motion synthesis system \cite{busso_rigid}.
 
 The final system was the rule based system in which all of the hypotheses laid out previously were implemented in order to synthesise head motions. 
 
@@ -289,7 +295,7 @@ The head motion synthesis was developed as three separate modules, increasing in
 
 \section{Basic System} 
 
-\subsection{Trignomietric Functions}
+%\subsection{Trignomietric Functions}
 
 \begin{figure}
 	\centering
@@ -315,6 +321,8 @@ The basic system itself produced a natural nodding motion, but after having comp
 
 The next system was designed to assign random discrete numbers to each word in the utterance for all Euler angles and apply a form of smoothing to make the random assignment seem smooth and natural even though it was completely random. 
 
+TODO: Image of the thing
+
 Each word in the utterance was assigned Euler values, ranging from -10 to +10 for "Roll" and -5 to +5 for the "Pitch" and "Yaw" as the "Roll" relates to nodding motions which are found more frequently head motions. The random function was implemented using Python's random library.
 
 \subsection{Smoothing}
@@ -323,14 +331,14 @@ To synthesise smooth head motions between random points multiple interpolation a
 
 A recursive Bezier function was implemented which, given a list of points return a formula representing the a smooth interpolation between said points. Unlike Slerp, Bezier's smoothing algorithm doesn't take the interpolated line to the given points which works well given this scenario. It helped to smooth out the randomness and generate natural motions. (Figure 4.5)
 
-\begin{figure}
-	$$ B_{P_0}(t) = P_0 $$
-	$$ B(t) = B_{P_0P_1..P_n}(t) = (1-t) B_{P_0P_1..P_n-1}(t) + tB_{P_1P_2..P_n} (t)$$
-	\caption{Recursive Bezier Definition} 
-%	\centering
-%	\includegraphics[width=0.8\textwidth]{bezier_general.png}
-%	\caption{General Form}
-\end{figure}
+%$$ B_{P_0}(t) = P_0 $$
+%$$ B(t) = B_{P_0P_1..P_n}(t) = (1-t) B_{P_0P_1..P_{n-1}}(t) + tB_{P_1P_2..P_n} (t)$$
+
+\begin{equation} 
+B_{P_0}(t) = P_0 
+B(t) = B_{P_0P_1..P_n}(t) = (1-t) B_{P_0P_1..P_{n-1}}(t) + tB_{P_1P_2..P_n} (t)
+\end{equation}
+%	\caption{Recursive Bezier Definition} 
 
 The random system calculated a Bezier function for each of the Euler angles and returned a dictionary containing the Euler angle change for each frame of the animation which was passed to output.py.
 
@@ -437,16 +445,15 @@ To use this corpus NLTK's Plaintext Corpus reader was used to read in the text f
 
 One of the drawbacks from the initial reviews of the random system was that Bezier smoothing does not look like natural head motions. Having compared the output from the random system to the data recordings, the videos seemed to be more sharp and discontinuous, initially while smoothing out toward the end of the motion. The observed effect was similar to that of a first order differential equation, commonly used in electronics to represent the power in a circuit. Rising very quickly to begin with but slowing and smoothing off before reaching the desire level of output. 
 
-\begin{figure}
-	\centering
-	$$ Y =  K * (1 - e^{\sfrac{-t}{T}})$$
-	\\
-	K = Steady State Gain\\
-	T = Time Constant\\
-	t = time\\
-	
-	\caption{First Order Equation Definition} 
-\end{figure}
+\begin{equation}
+Y =  K * (1 - e^{\sfrac{-t}{T}})
+\end{equation}
+
+\begin{centering}
+K = Steady State Gain\\
+T = Time Constant\\
+t = time\\
+\end{centering}
 
 The parametric smoothing system used the first order differential equation shown above the determine three curve between two points. The equation requires several parameters to generate the correct, which was calculated for each pair of points as shown in Figure 4.7. The Time Constant was set to a value of 4.0. The system builds the formula and calculates the y values for each point in between the two points passed into the method 'curve\_between\_points()'. This y values represents value of the Euler angle change.
 
@@ -547,7 +554,9 @@ The main factor which seemed to influence how natural participants deemed the he
 
 To evaluate the system objectively the output of a system was compared with both data recordings used for evaluation previously. The Euler angles were periodically sampled every 10 frames and the distance between the two head positions was calculated using the Euclidian distance measure. The values were then normalised using their sampling rate so that different sampling rates could be used and compared. The neutral position was also used for the objective evaluation, that being the point (0,0,0). The sampling rate used for the objective evaluation was every 10th frame. 
 
-$$ Euclidian(x,y) = \sqrt{(x1 - y1)^2 + (x2 - y2)^2 + ... + (x_n - y_n)^2}$$
+\begin{equation}
+Euclidian(x,y) = \sqrt{(x1 - y1)^2 + (x2 - y2)^2 + ... + (x_n - y_n)^2}
+\end{equation}
 
 \subsection{Results}
 
@@ -601,7 +610,7 @@ The subjective evaluation platform that was implemented was very useful when obt
 
 Due to time constraints the project never reached a data driven system. Many existing system's are using Hidden Markov Models as a tool to develop a data-driven approach to synthesising realistic head motions as outlined previously in the related works section. The next system which was planned to be implemented was a data driven approach to synthesising head motions.
 
-Using Hidden Markov Models, the relation between the head motions and text information generated from festival would be mapped. A direct mapping between the head motions and the individual words would be a naive approach but it could capture some of the hypotheses outlined especially in regards to negation and using head shakes to represent words like "no and never".  \cite{head_shaking}
+Using Hidden Markov Models, the relation between the head motions and text information generated from festival would be mapped. A direct mapping between the head motions and the individual words would be a naive approach but it could capture some of the hypotheses outlined especially in regards to negation and using head shakes to represent words like "no and never"  \cite{head_shaking}.
 
 Rather than using the individual words another approach would be to use the structural information present in the text information from festival like the Parts-of-speech tags and phrase break information. As we know head motions occurs more frequently at phrase boundaries \cite{ishi2008} training HMM's using the structural information and the head motions could build a good model of the data. This approach could provide good results as it is far more general than the naive individual words approach and there would be more data to use as the occurrence of pos tags would be far higher than individual words providing a larger training set.
 
